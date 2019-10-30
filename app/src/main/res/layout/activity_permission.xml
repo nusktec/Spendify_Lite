@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="info"
+            type="String" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".Permissions">
+        <!--First layout-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/light_white">
+            <!--Header Style-->
+            <TextView
+                android:textColor="@color/app_color_1"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:text="Permission Control"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                app:lottie_colorFilter="@color/app_color_1"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/lt_statistics" />
+        </LinearLayout>
+
+        <!--Second layout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="-20dp"
+            android:layout_weight="3"
+            android:background="@drawable/bg_gradient_top_radius"
+            android:gravity="center"
+            android:orientation="vertical">
+            <!--Base contents-->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:padding="10dp"
+                android:text="Spendify mobile app needs your permission to access your inbox (SMS) and your storage location for the system to work properly, remember we vowed not to share your data."
+                android:textAlignment="center"
+                android:textSize="12sp"
+                android:textColor="@color/light_white"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_gravity="center"
+                android:id="@+id/btn_start_continue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_woutline"
+                android:text="@string/btn_allow_access"
+                android:textColor="@color/light_white" />
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

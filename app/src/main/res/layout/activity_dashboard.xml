@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--Data started-->
+    <data>
+
+    </data>
+
+    <!--Main layout begin-->
+    <LinearLayout
+        android:background="@color/app_color_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activities.Dashboard">
+
+        <!--Formulate the header coat-->
+        <RelativeLayout
+            android:paddingHorizontal="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_toolbar_header"
+            android:elevation="2dp">
+
+            <ImageView
+                android:layout_alignParentStart="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:elevation="2dp"
+                android:tint="@color/grey_500"
+                android:src="@drawable/ic_account_circle"
+                android:layout_centerInParent="true"
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+
+            <TextView
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/grey_500"
+                android:text="@string/spendify_mobile_lite"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+            <ImageView
+                android:layout_alignParentEnd="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:elevation="2dp"
+                android:tint="@color/grey_500"
+                android:src="@drawable/ic_more_vert"
+                android:layout_centerInParent="true"
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>
