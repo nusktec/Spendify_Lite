@@ -6,9 +6,9 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/app_color_1</item>
         <item name="colorPrimaryDark">@color/app_color_1_1</item>
-        <item name="colorAccent">@color/blue_grey_500</item>
+        <item name="colorAccent">@color/grey_600</item>
         <item name="windowActionModeOverlay">true</item>
-        <item name="android:actionModeBackground">@color/blue_grey_500</item>
+        <item name="android:actionModeBackground">@color/grey_600</item>
         <item name="android:dialogTheme">@style/Dialog.Theme</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="android:colorControlHighlight">#b9b9b9</item>

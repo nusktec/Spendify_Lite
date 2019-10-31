@@ -54,12 +54,13 @@
         <!--Main contents-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="500dp"
             android:layout_marginHorizontal="15dp"
-            android:layout_marginVertical="10dp"
+            android:layout_marginVertical="20dp"
             android:background="@drawable/bg_toolbar_header"
-            android:elevation="2dp"
+            android:elevation="0dp"
             android:orientation="vertical">
+
             <!--Children-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -77,17 +78,20 @@
                     android:textSize="12sp" />
 
                 <EditText
+                    android:id="@+id/txt_name"
                     style="@style/EditText.GreySoft"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/bg_simple_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autofillHints="Your full name"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_simple_edittext"
                     android:hint="Your full names"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:textColor="@color/grey_500"
+                    android:textColorHint="@color/grey_700" />
 
             </LinearLayout>
 
+            <!--Email control-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -104,18 +108,133 @@
                     android:textSize="12sp" />
 
                 <EditText
+                    android:id="@+id/txt_email"
                     style="@style/EditText.GreySoft"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/bg_simple_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autofillHints="Email address"
-                    android:hint="Your full names"
-                    android:inputType="textPersonName" />
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_simple_edittext"
+                    android:hint="Email address"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/grey_500"
+                    android:textColorHint="@color/grey_700" />
+
+            </LinearLayout>
+
+            <!--Phone control-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:orientation="vertical"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Phone"
+                    android:textColor="@color/grey_500"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/txt_phone"
+                    style="@style/EditText.GreySoft"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_simple_edittext"
+                    android:hint="Phone number"
+                    android:inputType="phone"
+                    android:textColor="@color/grey_500"
+                    android:textColorHint="@color/grey_700" />
+
+            </LinearLayout>
+
+            <!--Gender control-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:orientation="vertical"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gender"
+                    android:textColor="@color/grey_500"
+                    android:textSize="12sp" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radio0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Male"
+                        android:textColor="@color/grey_500" />
+
+                    <RadioButton
+                        android:id="@+id/radio2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Female"
+                        android:textColor="@color/grey_500" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <!--Quotes-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:orientation="vertical"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Favourite Quote"
+                    android:textColor="@color/grey_500"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/txt_quote"
+                    style="@style/EditText.GreySoft"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_simple_edittext"
+                    android:hint="Your quotes...it's you money"
+                    android:inputType="textMultiLine"
+                    android:lines="3"
+                    android:singleLine="false"
+                    android:textColor="@color/grey_500"
+                    android:textColorHint="@color/grey_700"
+                    android:textStyle="italic" />
 
             </LinearLayout>
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_save_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_orange"
+            android:text="Save Settings"
+            android:textColor="@color/app_color_1_1_0"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
