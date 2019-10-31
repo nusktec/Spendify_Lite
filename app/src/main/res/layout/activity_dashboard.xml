@@ -10,53 +10,127 @@
 
     <!--Main layout begin-->
     <LinearLayout
-        android:background="@color/app_color_1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/app_color_1"
+        android:orientation="vertical"
         tools:context=".activities.Dashboard">
 
         <!--Formulate the header coat-->
         <RelativeLayout
-            android:paddingHorizontal="5dp"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/bg_toolbar_header"
-            android:elevation="2dp">
+            android:elevation="2dp"
+            android:paddingHorizontal="5dp">
 
-            <ImageView
-                android:layout_alignParentStart="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:elevation="2dp"
-                android:tint="@color/grey_500"
-                android:src="@drawable/ic_account_circle"
-                android:layout_centerInParent="true"
+            <ImageButton
+                android:id="@+id/toolbar_leftBtn"
                 android:layout_width="25dp"
-                android:layout_height="25dp"/>
+                android:layout_height="25dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:cropToPadding="true"
+                android:elevation="2dp"
+                android:src="@drawable/ic_account_circle"
+                android:tint="@color/grey_500" />
 
             <TextView
-                android:textAllCaps="false"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textColor="@color/grey_500"
-                android:text="@string/spendify_mobile_lite"
-                android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/spendify_mobile_lite"
+                android:textAllCaps="false"
+                android:textColor="@color/grey_500"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
 
-            <ImageView
+            <ImageButton
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:elevation="2dp"
-                android:tint="@color/grey_500"
                 android:src="@drawable/ic_more_vert"
-                android:layout_centerInParent="true"
-                android:layout_width="25dp"
-                android:layout_height="25dp"/>
+                android:tint="@color/grey_500" />
 
         </RelativeLayout>
+        <!--Sub-mail container-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+            <!--Main content-->
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <!--child content one-->
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="4">
+                <!--child content two-->
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--Divider line-->
+        <View
+            android:background="@color/app_color_1_1_0"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+        <!--footer view-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:clipChildren="false"
+            android:elevation="2dp"
+            android:paddingHorizontal="15dp">
+            <!--Footer content-->
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:cropToPadding="true"
+                android:src="@drawable/ic_timeline"
+                android:tint="@color/grey_500" />
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:cropToPadding="true"
+                android:src="@drawable/ic_add"
+                android:tint="@color/grey_500" />
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:cropToPadding="true"
+                android:src="@drawable/ic_format_list_bulleted"
+                android:tint="@color/grey_500" />
+
+        </RelativeLayout>
     </LinearLayout>
 </layout>

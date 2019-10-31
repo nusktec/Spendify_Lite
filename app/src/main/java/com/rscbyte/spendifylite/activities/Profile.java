@@ -1,30 +1,30 @@
 package com.rscbyte.spendifylite.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+
 import com.rscbyte.spendifylite.R;
 import com.rscbyte.spendifylite.Utils.Tools;
-import com.rscbyte.spendifylite.databinding.ActivityDashboardBinding;
+import com.rscbyte.spendifylite.databinding.ActivityProfileBinding;
 
-public class Dashboard extends AppCompatActivity {
+public class Profile extends AppCompatActivity {
 
     //Main layout inflater holder
-    ActivityDashboardBinding bdx = null;
+    ActivityProfileBinding bdx = null;
     Activity ctx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //assign context
+        //initialize context
         this.ctx = this;
-        //inflate layout
-        bdx = DataBindingUtil.setContentView(ctx, R.layout.activity_dashboard);
+        this.bdx = DataBindingUtil.setContentView(ctx, R.layout.activity_profile);
         //initialize toolbar
         initToolBar();
         //initialize components
@@ -32,8 +32,10 @@ public class Dashboard extends AppCompatActivity {
     }
 
     //set header and toolbar
+    @SuppressLint("SetTextI18n")
     public void initToolBar() {
         Tools.setSystemBarColor(ctx, R.color.app_color_1);
+        bdx.toolbarTitle.setText("Account Settings");
     }
 
     //components initializer
@@ -42,7 +44,7 @@ public class Dashboard extends AppCompatActivity {
         bdx.toolbarLeftBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ctx, Profile.class));
+                finish();
             }
         });
     }

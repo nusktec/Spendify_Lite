@@ -12,7 +12,7 @@
 
     <!--genaral spacing-->
     <dimen name="spacing_xsmall">2dp</dimen>
-    <dimen name="spacing_small">3dp</dimen>
+    <dimen name="spacing_small">5dp</dimen>
     <dimen name="spacing_medium">5dp</dimen>
     <dimen name="spacing_xmedium">7dp</dimen>
     <dimen name="spacing_middle">10dp</dimen>

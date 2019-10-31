@@ -6,21 +6,20 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/app_color_1</item>
         <item name="colorPrimaryDark">@color/app_color_1_1</item>
-        <item name="colorAccent">@color/blue_grey_600</item>
+        <item name="colorAccent">@color/blue_grey_500</item>
         <item name="windowActionModeOverlay">true</item>
-        <item name="android:actionModeBackground">@color/blue_grey_600</item>
+        <item name="android:actionModeBackground">@color/blue_grey_500</item>
         <item name="android:dialogTheme">@style/Dialog.Theme</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="android:colorControlHighlight">#b9b9b9</item>
-        <item name="colorControlHighlight">@color/blue_grey_600</item>
+        <item name="colorControlHighlight">@color/blue_grey_700</item>
         <item name="android:fontFamily">@font/nunito_regular</item>
-        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
     <!--Override default-->
     <style name="WindowAnimationTransition">
-        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
-        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+        <item name="android:windowEnterAnimation">@android:anim/slide_out_right</item>
+        <item name="android:windowExitAnimation">@android:anim/slide_in_left</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

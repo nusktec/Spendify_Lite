@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--Data started-->
+    <data>
+
+    </data>
+
+    <!--Main layout begin-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_color_1"
+        android:orientation="vertical"
+        tools:context=".activities.Dashboard">
+
+        <!--Formulate the header coat-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_toolbar_header"
+            android:elevation="2dp"
+            android:paddingHorizontal="5dp">
+
+            <ImageButton
+                android:id="@+id/toolbar_leftBtn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:cropToPadding="true"
+                android:elevation="2dp"
+                android:src="@drawable/ic_arrow_back"
+                android:tint="@color/grey_500" />
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/toolbar_title"
+                android:textAllCaps="false"
+                android:textColor="@color/grey_500"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <!--Main contents-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/bg_toolbar_header"
+            android:elevation="2dp"
+            android:orientation="vertical">
+            <!--Children-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:orientation="vertical"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Names"
+                    android:textColor="@color/grey_500"
+                    android:textSize="12sp" />
+
+                <EditText
+                    style="@style/EditText.GreySoft"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_simple_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="Your full name"
+                    android:hint="Your full names"
+                    android:inputType="textPersonName" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:orientation="vertical"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textColor="@color/grey_500"
+                    android:textSize="12sp" />
+
+                <EditText
+                    style="@style/EditText.GreySoft"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_simple_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="Email address"
+                    android:hint="Your full names"
+                    android:inputType="textPersonName" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

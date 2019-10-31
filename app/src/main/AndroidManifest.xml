@@ -15,8 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:hardwareAccelerated="true"
         tools:replace="android:icon">
-
         <meta-data
             android:name="DATABASE"
             android:value="spendifyLite.db" />
@@ -54,6 +54,13 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+        <activity
+        android:name=".activities.Profile"
+        android:screenOrientation="portrait">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+        </intent-filter>
+    </activity>
     </application>
 
 </manifest>
