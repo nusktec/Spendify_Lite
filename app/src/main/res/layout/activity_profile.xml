@@ -57,7 +57,6 @@
             android:layout_height="500dp"
             android:layout_marginHorizontal="15dp"
             android:layout_marginVertical="20dp"
-            android:background="@drawable/bg_toolbar_header"
             android:elevation="0dp"
             android:orientation="vertical">
 
@@ -168,21 +167,22 @@
                     android:textSize="12sp" />
 
                 <RadioGroup
-                    android:id="@+id/radioGroup1"
+                    android:id="@+id/radio_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/radio0"
+                        android:checked="true"
+                        android:id="@+id/radio_male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Male"
                         android:textColor="@color/grey_500" />
 
                     <RadioButton
-                        android:id="@+id/radio2"
+                        android:id="@+id/radio_female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Female"
@@ -214,7 +214,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/bg_simple_edittext"
-                    android:hint="Your quotes...it's you money"
+                    android:hint="Your quotes..."
                     android:inputType="textMultiLine"
                     android:lines="3"
                     android:singleLine="false"
@@ -231,9 +231,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/btn_orange"
+            android:background="@drawable/btn_primary"
             android:text="Save Settings"
-            android:textColor="@color/app_color_1_1_0"
+            android:textColor="@color/grey_500"
             android:textStyle="bold" />
 
     </LinearLayout>
