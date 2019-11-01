@@ -312,13 +312,24 @@ public class Tools {
      * @return
      * @throws IndexOutOfBoundsException
      */
-    public static String FWUPPER(String words) throws IndexOutOfBoundsException {
+    public static String capsWords(String words) throws IndexOutOfBoundsException {
         String[] wordsSplit = words.split(" ");
         StringBuilder rebuildWords = new StringBuilder();
         for (String wd : wordsSplit) {
             rebuildWords.append(String.valueOf(wd.substring(0, 1).toUpperCase() + wd.substring(1) + " "));
         }
         return rebuildWords.toString();
+    }
+
+    /**
+     * Campitalize first latter
+     *
+     * @param str string
+     * @return
+     * @throws IndexOutOfBoundsException
+     */
+    public static String capsfLetter(String str) throws IndexOutOfBoundsException {
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
     /**

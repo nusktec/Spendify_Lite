@@ -8,10 +8,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.orm.SugarContext;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.activities.Dashboard;
+import com.rscbyte.spendifylite.models.MProfile;
 
 public class SplashScreen extends AppCompatActivity {
     boolean firstCheck = false;
@@ -20,7 +23,8 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-
+        //initialize suger orm
+        SugarContext.init(this);
         //set toolbar for mobile
         Tools.setSystemBarColor(this, R.color.app_color_1);
         //check for permission
@@ -30,6 +34,11 @@ public class SplashScreen extends AppCompatActivity {
                 checkPermission(Manifest.permission.READ_SMS);
             }
         }, 3000);
+        //load license copy text
+        if (MProfile.count(MProfile.class) > 0) {
+            String name = (MProfile.findById(MProfile.class, 1)).getNames();
+            ((TextView) findViewById(R.id.txt_license)).setText(String.valueOf("licensed to " + name.toLowerCase()));
+        }
     }
 
     //launcher
@@ -57,8 +66,6 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     //onResume activities
-
-
     @Override
     protected void onResume() {
         super.onResume();

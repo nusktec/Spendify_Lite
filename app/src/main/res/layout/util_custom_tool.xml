@@ -15,7 +15,7 @@
         android:gravity="center"
         android:minHeight="@dimen/spacing_xlarge"
         android:visibility="visible"
-        app:cardBackgroundColor="@color/blue_grey_900"
+        app:cardBackgroundColor="@color/light_white"
         app:cardCornerRadius="5dp"
         app:cardElevation="1dp">
 
@@ -31,8 +31,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="Toast text"
+                android:textStyle="bold"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textColor="@color/light_white" />
+                android:textColor="@color/app_color_1_1_0" />
 
         </RelativeLayout>
 

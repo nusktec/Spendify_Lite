@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <!--Data started-->
@@ -9,233 +8,338 @@
     </data>
 
     <!--Main layout begin-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <androidx.core.widget.NestedScrollView
         android:background="@color/app_color_1"
-        android:orientation="vertical"
-        tools:context=".activities.Dashboard">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <!--Formulate the header coat-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/bg_toolbar_header"
-            android:elevation="2dp"
-            android:paddingHorizontal="5dp">
-
-            <ImageButton
-                android:id="@+id/toolbar_leftBtn"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:cropToPadding="true"
-                android:elevation="2dp"
-                android:src="@drawable/ic_arrow_back"
-                android:tint="@color/grey_500" />
-
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/toolbar_title"
-                android:textAllCaps="false"
-                android:textColor="@color/grey_500"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
-
-        <!--Main contents-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginVertical="20dp"
-            android:elevation="0dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:background="@color/app_color_1"
+            android:orientation="vertical"
+            tools:context=".activities.Dashboard">
 
-            <!--Children-->
-            <LinearLayout
+            <!--Formulate the header coat-->
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:orientation="vertical"
-                android:paddingTop="10dp">
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_toolbar_header"
+                android:elevation="2dp"
+                android:paddingHorizontal="5dp">
+
+                <ImageButton
+                    android:id="@+id/toolbar_leftBtn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:cropToPadding="true"
+                    android:elevation="2dp"
+                    android:src="@drawable/ic_arrow_back"
+                    android:tint="@color/grey_500" />
 
                 <TextView
+                    android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Names"
+                    android:layout_centerInParent="true"
+                    android:text="@string/toolbar_title"
+                    android:textAllCaps="false"
                     android:textColor="@color/grey_500"
-                    android:textSize="12sp" />
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/txt_name"
-                    style="@style/EditText.GreySoft"
+            </RelativeLayout>
+
+            <!--Main contents-->
+            <LinearLayout
+                android:id="@+id/profile_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="20dp"
+                android:elevation="0dp"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profile Settings"
+                    android:textStyle="bold"
+                    android:textColor="@color/app_color_focus"
+                    android:textSize="20sp" />
+
+                <!--Children-->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/bg_simple_edittext"
-                    android:hint="Your full names"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/grey_500"
-                    android:textColorHint="@color/grey_700" />
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
 
-            </LinearLayout>
-
-            <!--Email control-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:orientation="vertical"
-                android:paddingTop="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Email"
-                    android:textColor="@color/grey_500"
-                    android:textSize="12sp" />
-
-                <EditText
-                    android:id="@+id/txt_email"
-                    style="@style/EditText.GreySoft"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/bg_simple_edittext"
-                    android:hint="Email address"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/grey_500"
-                    android:textColorHint="@color/grey_700" />
-
-            </LinearLayout>
-
-            <!--Phone control-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:orientation="vertical"
-                android:paddingTop="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Phone"
-                    android:textColor="@color/grey_500"
-                    android:textSize="12sp" />
-
-                <EditText
-                    android:id="@+id/txt_phone"
-                    style="@style/EditText.GreySoft"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/bg_simple_edittext"
-                    android:hint="Phone number"
-                    android:inputType="phone"
-                    android:textColor="@color/grey_500"
-                    android:textColorHint="@color/grey_700" />
-
-            </LinearLayout>
-
-            <!--Gender control-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:orientation="vertical"
-                android:paddingTop="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Gender"
-                    android:textColor="@color/grey_500"
-                    android:textSize="12sp" />
-
-                <RadioGroup
-                    android:id="@+id/radio_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:checked="true"
-                        android:id="@+id/radio_male"
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Male"
-                        android:textColor="@color/grey_500" />
+                        android:text="Names"
+                        android:textColor="@color/grey_500"
+                        android:textSize="12sp" />
 
-                    <RadioButton
-                        android:id="@+id/radio_female"
-                        android:layout_width="wrap_content"
+                    <EditText
+                        android:id="@+id/txt_name"
+                        style="@style/EditText.GreySoft"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Female"
-                        android:textColor="@color/grey_500" />
-                </RadioGroup>
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_simple_edittext"
+                        android:hint="Your full names"
+                        android:inputType="textPersonName"
+                        android:textColor="@color/grey_500"
+                        android:textColorHint="@color/grey_700" />
 
-            </LinearLayout>
+                </LinearLayout>
 
-            <!--Quotes-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:orientation="vertical"
-                android:paddingTop="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Favourite Quote"
-                    android:textColor="@color/grey_500"
-                    android:textSize="12sp" />
-
-                <EditText
-                    android:id="@+id/txt_quote"
-                    style="@style/EditText.GreySoft"
+                <!--Email control-->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/bg_simple_edittext"
-                    android:hint="Your quotes..."
-                    android:inputType="textMultiLine"
-                    android:lines="3"
-                    android:singleLine="false"
-                    android:textColor="@color/grey_500"
-                    android:textColorHint="@color/grey_700"
-                    android:textStyle="italic" />
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email"
+                        android:textColor="@color/grey_500"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/txt_email"
+                        style="@style/EditText.GreySoft"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_simple_edittext"
+                        android:hint="Email address"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/grey_500"
+                        android:textColorHint="@color/grey_700" />
+
+                </LinearLayout>
+
+                <!--Phone control-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Phone"
+                        android:textColor="@color/grey_500"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/txt_phone"
+                        style="@style/EditText.GreySoft"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_simple_edittext"
+                        android:hint="Phone number"
+                        android:inputType="phone"
+                        android:textColor="@color/grey_500"
+                        android:textColorHint="@color/grey_700" />
+
+                </LinearLayout>
+
+                <!--Gender control-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gender"
+                        android:textColor="@color/grey_500"
+                        android:textSize="12sp" />
+
+                    <RadioGroup
+                        android:id="@+id/radio_group"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_male"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="Male"
+                            android:textColor="@color/grey_500" />
+
+                        <RadioButton
+                            android:id="@+id/radio_female"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Female"
+                            android:textColor="@color/grey_500" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <!--Quotes-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
+
+
+
+                    <EditText
+                        android:id="@+id/txt_quote"
+                        style="@style/EditText.GreySoft"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_simple_edittext"
+                        android:hint="Your quotes..."
+                        android:inputType="textMultiLine"
+                        android:lines="3"
+                        android:singleLine="false"
+                        android:textColor="@color/grey_500"
+                        android:textColorHint="@color/grey_700"
+                        android:textStyle="italic" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="System Settings"
+                    android:textStyle="bold"
+                    android:textColor="@color/app_color_focus"
+                    android:textSize="20sp" />
+
+                <!--Notifications control-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Notifications"
+                        android:textColor="@color/grey_500"
+                        android:textSize="12sp" />
+
+                    <RadioGroup
+                        android:id="@+id/radio_group_noti"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_noti_on"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="Enable"
+                            android:textColor="@color/grey_500" />
+
+                        <RadioButton
+                            android:id="@+id/radio_noti_off"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Disable"
+                            android:textColor="@color/grey_500" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <!--Auto read SMS control-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Auto Synchronize SMS"
+                        android:textColor="@color/grey_500"
+                        android:textSize="12sp" />
+
+                    <RadioGroup
+                        android:id="@+id/radio_group_sms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_sms_on"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="Enable"
+                            android:textColor="@color/grey_500" />
+
+                        <RadioButton
+                            android:id="@+id/radio_sms_off"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Disable"
+                            android:textColor="@color/grey_500" />
+                    </RadioGroup>
+
+                </LinearLayout>
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_save_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_primary"
+                android:text="Save Settings"
+                android:textColor="@color/grey_500"
+                android:textStyle="bold" />
 
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-        <Button
-            android:id="@+id/btn_save_setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/btn_primary"
-            android:text="Save Settings"
-            android:textColor="@color/grey_500"
-            android:textStyle="bold" />
-
-    </LinearLayout>
 
 </layout>
