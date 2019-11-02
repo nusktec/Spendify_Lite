@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!--Data started-->
     <data>
@@ -16,50 +16,6 @@
         android:orientation="vertical"
         tools:context=".activities.Dashboard">
 
-        <!--Formulate the header coat-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/bg_toolbar_header"
-            android:elevation="2dp"
-            android:paddingHorizontal="5dp">
-
-            <ImageButton
-                android:id="@+id/toolbar_leftBtn"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:cropToPadding="true"
-                android:elevation="2dp"
-                android:src="@drawable/ic_account_circle"
-                android:tint="@color/grey_500" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/spendify_mobile_lite"
-                android:textAllCaps="false"
-                android:textColor="@color/grey_500"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-
-            <ImageButton
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:elevation="2dp"
-                android:src="@drawable/ic_more_vert"
-                android:tint="@color/grey_500" />
-
-        </RelativeLayout>
         <!--Sub-mail container-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,29 +24,18 @@
             android:orientation="vertical">
             <!--Main content-->
 
-            <LinearLayout
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/mainViewPager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-                <!--child content one-->
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4">
-                <!--child content two-->
-
-            </LinearLayout>
+                android:layout_height="match_parent"/>
 
         </LinearLayout>
         <!--Divider line-->
         <View
-            android:elevation="1dp"
-            android:background="@color/app_color_1_1_0"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            android:background="@color/app_color_1_1_0"
+            android:elevation="1dp" />
         <!--footer view-->
         <RelativeLayout
             android:layout_width="match_parent"
@@ -104,6 +49,7 @@
             <!--Footer content-->
 
             <ImageButton
+                android:id="@+id/btn_dash_home"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentStart="true"
@@ -114,15 +60,19 @@
                 android:tint="@color/grey_500" />
 
             <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:id="@+id/btn_dash_add"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_centerInParent="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:background="@drawable/shape_round_solid"
                 android:cropToPadding="true"
                 android:src="@drawable/ic_add"
-                android:tint="@color/grey_500" />
+                android:elevation="5dp"
+                android:tint="@color/app_color_1" />
 
             <ImageButton
+                android:id="@+id/btn_dash_list"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"

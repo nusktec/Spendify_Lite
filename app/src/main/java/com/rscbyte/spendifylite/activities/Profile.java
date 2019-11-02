@@ -145,7 +145,7 @@ public class Profile extends AppCompatActivity {
         //iterate for all view data
         if (bdx.txtName.getText().length() < 1 || bdx.txtEmail.getText().length() < 1 || bdx.txtPhone.getText().length() < 1 || bdx.txtQuote.getText().length() < 1) {
             //Empty fields
-            Tools.showToast(ctx, "Incomplete form...");
+            Tools.showToast(ctx, "Settings not saved");
             return;
         }
         //format data

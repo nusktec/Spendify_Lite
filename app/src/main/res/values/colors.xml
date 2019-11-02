@@ -343,5 +343,5 @@
     <color name="app_color_2_1">#CE9603</color>
     <color name="app_color_3">#fbfcfe</color>
     <color name="app_color_focus">#262A3D</color>
-    <color name="app_color_press">#24273A</color>
+    <color name="app_color_press">#262A3D</color>
 </resources>

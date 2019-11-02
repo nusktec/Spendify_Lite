@@ -19,6 +19,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -50,6 +51,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
@@ -117,9 +119,35 @@ public class Tools {
         }
     }
 
-    public static String getFormattedDateSimple(Long dateTime) {
+
+    //Get single of date and
+    public static int getDay() {
+        java.util.Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int day = cal.get(Calendar.DATE);
+        return day;
+    }
+
+    public static int getMonth() {
+        java.util.Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int month = cal.get(Calendar.MONTH);
+        return month;
+    }
+
+    public static int getYear() {
+        java.util.Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int year = cal.get(Calendar.YEAR);
+        return year;
+    }
+
+    public static String getFormattedDateSimple() {
         SimpleDateFormat newFormat = new SimpleDateFormat("MMMM dd, yyyy");
-        return newFormat.format(new Date(dateTime));
+        return newFormat.format(new Date());
     }
 
     public static String getFormattedDateEvent(Long dateTime) {
@@ -623,4 +651,23 @@ public class Tools {
         toast.show();
     }
 
+    public static Dialog warningDialog(Activity act, String msg, Drawable iconSrc, boolean touchCancel, View.OnClickListener callBack) {
+        final Dialog dialog = new Dialog(act);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
+        dialog.setContentView(R.layout.dialog_warning);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setCancelable(touchCancel);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        dialog.findViewById(R.id.bt_close).setOnClickListener(callBack);
+
+        dialog.show();
+        dialog.getWindow().setAttributes(lp);
+
+        return dialog;
+    }
 }

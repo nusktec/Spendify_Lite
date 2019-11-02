@@ -9,9 +9,9 @@
 
     <!--Main layout begin-->
     <androidx.core.widget.NestedScrollView
-        android:background="@color/app_color_1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/app_color_1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,13 +67,13 @@
 
 
                 <TextView
-                    android:layout_marginBottom="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:text="Profile Settings"
-                    android:textStyle="bold"
-                    android:textColor="@color/app_color_focus"
-                    android:textSize="20sp" />
+                    android:textColor="@color/app_color_press"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <!--Children-->
                 <LinearLayout
@@ -216,7 +216,6 @@
                     android:paddingTop="10dp">
 
 
-
                     <EditText
                         android:id="@+id/txt_quote"
                         style="@style/EditText.GreySoft"
@@ -236,13 +235,13 @@
 
 
                 <TextView
-                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="System Settings"
-                    android:textStyle="bold"
-                    android:textColor="@color/app_color_focus"
-                    android:textSize="20sp" />
+                    android:textColor="@color/app_color_press"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <!--Notifications control-->
                 <LinearLayout
