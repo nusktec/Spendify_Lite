@@ -11,7 +11,12 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.rscbyte.spendifylite.R;
+import com.rscbyte.spendifylite.adapters.ASimpleList;
 import com.rscbyte.spendifylite.databinding.ActivityFragmentListBinding;
+import com.rscbyte.spendifylite.objects.OData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FragmentList extends Fragment {
     //make a public variables
@@ -29,6 +34,20 @@ public class FragmentList extends Fragment {
 
     //main methods
     public void main() {
-
+        //make list item
+        ArrayList<OData> oData = new ArrayList<>();
+        for (int i = 0; i < 19; i++) {
+            OData oData1 = new OData();
+            oData1.setTitle("Debit/Credit");
+            oData1.setDay("" + i);
+            oData1.setDesc("Description " + i);
+            oData1.setValue(i + "2,60" + i);
+            oData1.setYear("200" + i);
+            oData1.setMonth("Nov");
+            oData.add(oData1);
+        }
+        //set recycler view
+        ASimpleList aSimpleList = new ASimpleList(oData);
+        bdx.listItemView.setAdapter(aSimpleList);
     }
 }

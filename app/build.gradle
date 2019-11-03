@@ -35,6 +35,7 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.5.0' //Shimmer
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0' // chart
     implementation 'com.squareup.retrofit2:retrofit:2.6.2' //retrofit
+    implementation 'com.google.code.gson:gson:2.8.6' //Gson converter
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
