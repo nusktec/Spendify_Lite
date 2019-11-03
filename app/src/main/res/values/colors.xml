@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#1565C0</color>
     <color name="colorPrimaryLight">#1E88E5</color>
     <color name="colorAccent">#384c55</color>
-    <color name="colorAccentDark">#a2b6c0</color>
-    <color name="colorAccentLight">#9db5c0</color>
+    <color name="colorAccentDark">@color/app_color_1</color>
+    <color name="colorAccentLight">#F57F17</color>
 
     <color name="overlay_dark_10">#1A000000</color>
     <color name="overlay_dark_20">#33000000</color>
