@@ -83,7 +83,7 @@ public class FragmentChart extends Fragment {
         prepareChart();
         pieDataSet = new PieDataSet(pieEntries, "");
         pieData = new PieData(pieDataSet);
-        pieChart.setCenterText("Spendify\nReports");
+        pieChart.setCenterText("Spendify\nExpense");
         pieChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
         pieChart.setCenterTextColor(getResources().getColor(R.color.app_color_1));
         pieChart.setVerticalFadingEdgeEnabled(true);
