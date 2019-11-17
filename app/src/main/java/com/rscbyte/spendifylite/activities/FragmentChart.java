@@ -28,8 +28,11 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.rscbyte.spendifylite.R;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.databinding.ActivityFragmentChartBinding;
+import com.rscbyte.spendifylite.models.MSms;
+import com.rscbyte.spendifylite.objects.OSms;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FragmentChart extends Fragment {
 
@@ -62,6 +65,8 @@ public class FragmentChart extends Fragment {
         bdx.txtTimeNow.setText("Summary as of " + Tools.getFormattedDateSimple());
         //print chart
         printChart();
+        //initialize
+        initComponents();
     }
 
 
@@ -70,7 +75,7 @@ public class FragmentChart extends Fragment {
     private PieData pieData;
     private PieDataSet pieDataSet;
     private ArrayList pieEntries;
-    
+
     //formulate data set
     private void printChart() {
         //initialize
@@ -109,6 +114,21 @@ public class FragmentChart extends Fragment {
         pieEntries.add(new PieEntry(1000, "Jan"));
         pieEntries.add(new PieEntry(2450, "Feb"));
         pieEntries.add(new PieEntry(2220, "Mar"));
-        pieEntries.add(new PieEntry(800, "Apr"));
+    }
+
+    //initialize components
+    private void initComponents() {
+        bdx.btnSync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MSms mSms = new MSms();
+                List<OSms> oSms = mSms.getAllSms(ctx);
+                if (oSms.size() > 0) {
+                    for (OSms sms : oSms) {
+                        Tools.showToast(ctx, sms.getMsg());
+                    }
+                }
+            }
+        });
     }
 }
