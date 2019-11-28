@@ -11,6 +11,7 @@ public class OData {
     private String day;
     private String month;
     private String year;
+    private String date;
     private MData mData;
 
     //initialize all
@@ -84,5 +85,13 @@ public class OData {
 
     public void setmData(MData mData) {
         this.mData = mData;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

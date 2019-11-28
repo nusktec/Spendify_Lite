@@ -1,5 +1,6 @@
 package com.rscbyte.spendifylite.adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,9 @@ public class ASimpleList extends RecyclerView.Adapter<ASimpleList.VH> {
                     dataClicked.onDataClicked(oDataTemp);
                 }
             });
+            if (oDataTemp.getmData().getTrxType() == 1) {
+                holder.listDataBinding.trxBgColor.setBackgroundColor(Color.parseColor("#FF232738"));
+            }
         }
     }
 

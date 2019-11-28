@@ -11,6 +11,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -45,15 +46,19 @@ import androidx.core.widget.NestedScrollView;
 import com.google.android.gms.maps.GoogleMap;
 import com.rscbyte.spendifylite.R;
 import com.rscbyte.spendifylite.activities.Dashboard;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+import java.util.TimeZone;
 
 public class Tools {
     public static void setSystemBarColor(Activity act) {
@@ -120,6 +125,39 @@ public class Tools {
     }
 
 
+    //get passed month
+    public static String getVariesTimeStamp(int difference) {
+        Calendar now = Calendar.getInstance();
+        now.setTimeZone(TimeZone.getTimeZone("GMT+01:00"));
+        now.add(Calendar.MONTH, difference);
+        String str_date = now.get(Calendar.DATE) + "-" + (now.get(Calendar.MONTH) + 1) + "-" + now.get(Calendar.YEAR) + " " + 00 + ":" + 00 + ":" + 00;
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        Date date = null;
+        try {
+            date = (Date) formatter.parse(str_date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        assert date != null;
+        return date.getTime() + "";
+    }
+
+    //get time stamp
+    public static String getDateTimeStamp() {
+        Calendar now = Calendar.getInstance();
+        now.setTimeZone(TimeZone.getTimeZone("GMT+01:00"));
+        String str_date = getDay() + "-" + getMonth() + "-" + getYear() + " " + now.get(Calendar.HOUR) + ":" + now.get(Calendar.MINUTE) + ":" + now.get(Calendar.SECOND);
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        Date date = null;
+        try {
+            date = (Date) formatter.parse(str_date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        assert date != null;
+        return date.getTime() + "";
+    }
+
     //Get single of date and
     public static int getDay() {
         java.util.Date date = new Date();
@@ -134,7 +172,7 @@ public class Tools {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int month = cal.get(Calendar.MONTH);
-        return month;
+        return month + 1;
     }
 
     public static int getYear() {
@@ -670,4 +708,54 @@ public class Tools {
 
         return dialog;
     }
+
+
+    public static void showPickerLight(Activity activity, final getDateItemsClick ItemsClick) {
+        Calendar cur_calender = Calendar.getInstance();
+        DatePickerDialog datePicker = DatePickerDialog.newInstance(
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, monthOfYear);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        long date_ship_millis = calendar.getTimeInMillis();
+                        //((TextView) findViewById(R.id.result)).setText(Tools.getFormattedDateSimple(date_ship_millis));
+                        int m = monthOfYear + 1;
+                        ItemsClick.getString(Tools.getFormattedDateSimple());
+                        ItemsClick.getDate(year, (m > 12) ? 12 : m, dayOfMonth);
+                    }
+                },
+                cur_calender.get(Calendar.YEAR),
+                cur_calender.get(Calendar.MONTH),
+                cur_calender.get(Calendar.DAY_OF_MONTH)
+        );
+
+
+        //set dark light
+        datePicker.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                ItemsClick.onCancel();
+            }
+        });
+        datePicker.setThemeDark(false);
+        datePicker.setAccentColor(activity.getResources().getColor(R.color.colorPrimary));
+        //datePicker.setMinDate(cur_calender);
+        datePicker.show(activity.getFragmentManager(), "Datepickerdialog");
+
+    }
+
+    /**
+     * Interface listener
+     */
+    public interface getDateItemsClick {
+        void getDate(int y, int m, int d);
+
+        void getString(String dateString);
+
+        void onCancel();
+    }
+
 }

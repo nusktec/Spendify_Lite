@@ -16,14 +16,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
-        android:foreground="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
         app:cardBackgroundColor="@color/app_color_1"
         app:cardCornerRadius="0dp"
         app:cardElevation="1dp">
 
         <RelativeLayout
+            android:id="@+id/trxBgColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="15dp">
@@ -117,8 +118,8 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:padding="5dp">
 
@@ -128,13 +129,14 @@
                         android:text="@{d.month, default=`Months`}"
                         android:textColor="@color/grey_500"
                         android:textSize="12sp"
+                        android:visibility="gone"
                         tools:ignore="HardcodedText" />
 
                     <TextView
                         android:id="@+id/txt_trx_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{d.year, default=`YYYY`}"
+                        android:text="@{d.date, default=`YYYY`}"
                         android:textColor="@color/grey_500"
                         android:textSize="12sp"
                         tools:ignore="HardcodedText" />

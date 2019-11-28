@@ -1,7 +1,7 @@
 package com.rscbyte.spendifylite.models;
 
-import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
@@ -12,14 +12,23 @@ import java.util.List;
 
 public class MSms {
 
-    public List<OSms> getAllSms(Activity activity) {
+    private Context ctx = null;
+
+    MSms() {
+    }
+
+    public MSms(Context ctx) {
+        this.ctx = ctx;
+    }
+
+    public List<OSms> getAllSms() {
         List<OSms> lstSms = new ArrayList<OSms>();
         OSms objSms = new OSms();
         Uri message = Uri.parse("content://sms/");
-        ContentResolver cr = activity.getContentResolver();
+        ContentResolver cr = ctx.getContentResolver();
 
         Cursor c = cr.query(message, null, null, null, null);
-        activity.startManagingCursor(c);
+        //activity.startManagingCursor(c);
         assert c != null;
         int totalSMS = c.getCount();
 

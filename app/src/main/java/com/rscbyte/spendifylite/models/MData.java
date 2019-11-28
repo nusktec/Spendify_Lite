@@ -8,14 +8,14 @@ public class MData extends SugarRecord {
 
     private String trxDesc;
     private String trxDate;
-    private String trxType;
-    private double trxValue;
+    private int trxType;
     private int trxSrc;
+    private String trxValue;
     //split year
     private String trxYear;
     private String trxMonth;
     private String trxDay;
-    private String tID;
+    private long trxSTP;
 
     //initialize the main app
     public MData() {
@@ -39,20 +39,12 @@ public class MData extends SugarRecord {
         this.trxDate = trxDate;
     }
 
-    public String getTrxType() {
+    public int getTrxType() {
         return trxType;
     }
 
-    public void setTrxType(String trxType) {
+    public void setTrxType(int trxType) {
         this.trxType = trxType;
-    }
-
-    public double getTrxValue() {
-        return trxValue;
-    }
-
-    public void setTrxValue(double trxValue) {
-        this.trxValue = trxValue;
     }
 
     public int getTrxSrc() {
@@ -61,6 +53,14 @@ public class MData extends SugarRecord {
 
     public void setTrxSrc(int trxSrc) {
         this.trxSrc = trxSrc;
+    }
+
+    public String getTrxValue() {
+        return this.trxValue;
+    }
+
+    public void setTrxValue(String trxValue) {
+        this.trxValue = trxValue;
     }
 
     public String getTrxYear() {
@@ -87,11 +87,11 @@ public class MData extends SugarRecord {
         this.trxDay = trxDay;
     }
 
-    public String gettID() {
-        return tID;
+    public long getTrxSTP() {
+        return trxSTP;
     }
 
-    public void settID(String tID) {
-        this.tID = tID;
+    public void setTrxSTP(long trxSTP) {
+        this.trxSTP = trxSTP;
     }
 }

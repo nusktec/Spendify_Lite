@@ -2,13 +2,14 @@ package com.rscbyte.spendifylite.activities;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,19 +19,28 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.orm.SugarRecord;
 import com.rscbyte.spendifylite.R;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.databinding.ActivityDashboardBinding;
+import com.rscbyte.spendifylite.databinding.DialogAddDataBinding;
+import com.rscbyte.spendifylite.models.MData;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Dashboard extends AppCompatActivity {
+
+    //number format
+    private NumberFormat nf = new DecimalFormat("#,###.00");
+    private List<MData> mData = null;
 
     //Main layout inflater holder
     ActivityDashboardBinding bdx = null;
     Activity ctx;
+    private int _scrolled_nun = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +54,7 @@ public class Dashboard extends AppCompatActivity {
         //initialize components
         componentsInit();
         //initialize main methods
-        main();
+        main(_scrolled_nun);
     }
 
     //set header and toolbar
@@ -81,11 +91,15 @@ public class Dashboard extends AppCompatActivity {
 
     //Add transaction box
     private Dialog dialog = null;
+    //selection of transaction type
+    int _transaction = 1;
 
     public void addDialog() {
+        _transaction = 1;
         dialog = new Dialog(ctx);
+        final DialogAddDataBinding dbuild = DataBindingUtil.inflate(LayoutInflater.from(ctx), R.layout.dialog_add_data, null, false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
-        dialog.setContentView(R.layout.dialog_add_data);
+        dialog.setContentView(dbuild.getRoot());
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setCancelable(false);
 
@@ -94,10 +108,21 @@ public class Dashboard extends AppCompatActivity {
         lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
-        dialog.findViewById(R.id.bt_close).setOnClickListener(new View.OnClickListener() {
+        dbuild.btClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
+            }
+        });
+
+        dbuild.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (i == dbuild.radioCredit.getId()) {
+                    _transaction = 1;
+                } else {
+                    _transaction = 2;
+                }
             }
         });
 
@@ -105,7 +130,29 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //add transaction
-                Tools.showToast(ctx, "Transaction Added");
+                MData mData = new MData();
+                //check transaction type
+                if (dbuild.txtDesc.getText().toString().isEmpty() || dbuild.txtValue.getText().toString().isEmpty()) {
+                    Tools.showToast(ctx, "Transactions fields are empty...");
+                    return;
+                }
+                mData.setTrxDay(String.valueOf(Tools.getDay()));
+                mData.setTrxMonth(String.valueOf(Tools.getMonth()));
+                mData.setTrxYear(String.valueOf(Tools.getYear()));
+                mData.setTrxDate(Tools.getFormattedDateSimple());
+
+                mData.setTrxType(_transaction);
+                mData.setTrxDesc(dbuild.txtDesc.getText().toString());
+                mData.setTrxValue(dbuild.txtValue.getText().toString());
+                mData.setTrxSrc(1);
+                mData.setTrxSTP(Long.parseLong(Tools.getDateTimeStamp()));
+
+                SugarRecord.save(mData);
+                dbuild.txtValue.getText().clear();
+                dbuild.txtDesc.getText().clear();
+                Tools.showToast(ctx, "Transaction Added " + Tools.getFormattedDateSimple());
+                main(_scrolled_nun);
+                dialog.dismiss();
             }
         });
 
@@ -115,7 +162,7 @@ public class Dashboard extends AppCompatActivity {
 
 
     //main control
-    public void main() {
+    public void main(int num) {
         //prepare view pager
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), 1);
         adapter.addFragment(new FragmentChart());
@@ -135,7 +182,7 @@ public class Dashboard extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-
+                _scrolled_nun = position;
             }
 
             @Override
@@ -143,6 +190,7 @@ public class Dashboard extends AppCompatActivity {
 
             }
         });
+        bdx.mainViewPager.setCurrentItem(_scrolled_nun);
     }
 
     //animations switcher

@@ -99,7 +99,7 @@
                         android:layout_marginTop="5dp"
                         android:background="@drawable/bg_simple_edittext"
                         android:hint="Your full names"
-                        android:inputType="textPersonName"
+                        android:inputType="textCapSentences"
                         android:textColor="@color/grey_500"
                         android:textColorHint="@color/grey_700" />
 

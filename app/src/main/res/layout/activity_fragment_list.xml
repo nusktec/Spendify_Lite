@@ -32,6 +32,14 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Transaction Search"
+                    android:textColor="@color/grey_500"
+                    android:textSize="23sp" />
+
                 <EditText
                     android:id="@+id/txt_search"
                     style="@style/EditText.GreySoft"
@@ -40,15 +48,17 @@
                     android:layout_centerInParent="true"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_toStartOf="@id/toolbar_leftBtn"
+                    android:layout_toStartOf="@id/toolbar_rightBtn"
                     android:background="@drawable/bg_simple_edittext"
                     android:hint="@string/search_for_transaction"
+                    android:imeOptions="actionSearch"
                     android:inputType="text"
                     android:textColor="@color/grey_500"
-                    android:textColorHint="@color/grey_700" />
+                    android:textColorHint="@color/grey_700"
+                    android:visibility="gone" />
 
                 <ImageButton
-                    android:id="@+id/toolbar_leftBtn"
+                    android:id="@+id/toolbar_rightBtn"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_alignParentEnd="true"
@@ -69,11 +79,21 @@
 
             <!--main body-->
             <androidx.recyclerview.widget.RecyclerView
-                android:layoutAnimation="@anim/layout_animation"
                 android:id="@+id/list_itemView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layoutAnimation="@anim/layout_animation"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <TextView
+                android:id="@+id/txt_nodata"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="50dp"
+                android:text="No Data"
+                android:textAlignment="center"
+                android:textColor="@color/grey_600"
+                android:textSize="20sp" />
 
         </LinearLayout>
 

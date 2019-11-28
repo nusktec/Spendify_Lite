@@ -15,6 +15,7 @@ import com.orm.SugarContext;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.activities.Dashboard;
 import com.rscbyte.spendifylite.models.MProfile;
+import com.rscbyte.spendifylite.services.SMSService;
 
 public class SplashScreen extends AppCompatActivity {
     boolean firstCheck = false;
@@ -43,6 +44,8 @@ public class SplashScreen extends AppCompatActivity {
 
     //launcher
     public void startMain() {
+        //start service before every other
+        startService(new Intent(this, SMSService.class));
         //Think to start the new class
         new Handler().postDelayed(new Runnable() {
             @Override

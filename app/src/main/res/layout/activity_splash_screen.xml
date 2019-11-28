@@ -58,7 +58,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:padding="5dp"
-        android:text="RO1 Codes"
+        android:text="Spendify Technology"
         android:textColor="@color/grey_800"
         android:textSize="10sp"
         android:textStyle="bold" />

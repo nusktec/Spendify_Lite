@@ -3,9 +3,9 @@ package com.rscbyte.spendifylite.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.LegendEntry;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -28,11 +23,19 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.rscbyte.spendifylite.R;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.databinding.ActivityFragmentChartBinding;
-import com.rscbyte.spendifylite.models.MSms;
-import com.rscbyte.spendifylite.objects.OSms;
+import com.rscbyte.spendifylite.models.MData;
+import com.rscbyte.spendifylite.objects.OChartPage;
+import com.rscbyte.spendifylite.services.SMSService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 public class FragmentChart extends Fragment {
 
@@ -46,6 +49,7 @@ public class FragmentChart extends Fragment {
         //ass layout binding to it parents
         this.ctx = getActivity();
         bdx = DataBindingUtil.inflate(inflater, R.layout.activity_fragment_chart, container, false);
+        bdx.setD(new OChartPage());
         //establish data
         main();
         return bdx.getRoot();
@@ -108,12 +112,26 @@ public class FragmentChart extends Fragment {
 
     }
 
+    private int tmpSpentSoFar, tmpTypical, tmpBTypical;
+
     //prepare chart entries
     private void prepareChart() {
+        //read from database
         pieEntries = new ArrayList<>();
-        pieEntries.add(new PieEntry(1000, "Jan"));
-        pieEntries.add(new PieEntry(2450, "Feb"));
-        pieEntries.add(new PieEntry(2220, "Mar"));
+        pieEntries.add(new PieEntry(0, "Jan"));
+        pieEntries.add(new PieEntry(0, "Feb"));
+        pieEntries.add(new PieEntry(0, "Mar"));
+
+        //get 3 months way back
+        long passedMonth = Long.parseLong(Tools.getVariesTimeStamp(-13));
+        /**
+         * Upper algorithms is intent, will not be used for any at this point
+         */
+        //iterate this month data
+        List<MData> trx = MData.listAll(MData.class);
+        for (MData t : trx) {
+            Tools.showToast(ctx, String.valueOf(t.getTrxSTP()));
+        }
     }
 
     //initialize components
@@ -121,13 +139,9 @@ public class FragmentChart extends Fragment {
         bdx.btnSync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MSms mSms = new MSms();
-                List<OSms> oSms = mSms.getAllSms(ctx);
-                if (oSms.size() > 0) {
-                    for (OSms sms : oSms) {
-                        Tools.showToast(ctx, sms.getMsg());
-                    }
-                }
+                Objects.requireNonNull(getActivity()).stopService(new Intent(ctx, SMSService.class));
+                getActivity().startService(new Intent(ctx, SMSService.class));
+                main();
             }
         });
     }

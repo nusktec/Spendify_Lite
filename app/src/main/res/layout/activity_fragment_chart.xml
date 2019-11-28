@@ -5,7 +5,9 @@
 
     <!--Data started-->
     <data>
-
+        <variable
+            name="d"
+            type="com.rscbyte.spendifylite.objects.OChartPage" />
     </data>
 
     <!--Main layout begin-->
@@ -93,12 +95,12 @@
                         android:text="Summary as of"
                         android:textAllCaps="false"
                         android:textColor="@color/grey_500"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textSize="20sp" />
                     <!--control base-->
                     <HorizontalScrollView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -130,7 +132,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:text="$2,340"
+                                        android:text="@{d.txtTypical, default=`0.00`}"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
                                         android:textSize="20sp"
@@ -143,8 +145,7 @@
                                         android:text="Typical"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
-                                        android:textSize="15sp"
-                                        android:textStyle="bold" />
+                                        android:textSize="15sp" />
 
                                 </LinearLayout>
 
@@ -170,7 +171,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:text="$1,340"
+                                        android:text="@{d.txtBelowTypical, default=`0.00`}"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
                                         android:textSize="20sp"
@@ -183,8 +184,7 @@
                                         android:text="Below Typical"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
-                                        android:textSize="15sp"
-                                        android:textStyle="bold" />
+                                        android:textSize="15sp" />
 
                                 </LinearLayout>
 
@@ -210,9 +210,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:text="$2,340"
+                                        android:text="@{d.txtSpentSoFar, default=`0.00`}"
                                         android:textAllCaps="false"
-                                        android:textColor="@color/orange_600"
+                                        android:textColor="@color/grey_500"
                                         android:textSize="20sp"
                                         android:textStyle="bold" />
 
@@ -222,9 +222,8 @@
                                         android:layout_gravity="center"
                                         android:text="Spent So Far"
                                         android:textAllCaps="false"
-                                        android:textColor="@color/orange_600"
-                                        android:textSize="15sp"
-                                        android:textStyle="bold" />
+                                        android:textColor="@color/grey_500"
+                                        android:textSize="15sp" />
 
                                 </LinearLayout>
 
