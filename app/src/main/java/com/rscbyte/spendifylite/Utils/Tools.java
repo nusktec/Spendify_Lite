@@ -430,7 +430,7 @@ public class Tools {
         return String.format("%06d", number);
     }
 
-    public static int getMonthAsscNumeric(String sdate) {
+    public static int getMonthAscNumeric(String sdate) {
         if (sdate.contains("January"))
             return 1;
         if (sdate.contains("February"))
@@ -456,6 +456,46 @@ public class Tools {
         if (sdate.contains("December"))
             return 12;
         return 1;
+    }
+
+    public static String getMonthAscNum(int sdate) {
+        if (sdate == 1) {
+            return "Jan";
+        }
+        if (sdate == 2) {
+            return "Feb";
+        }
+        if (sdate == 3) {
+            return "Mar";
+        }
+        if (sdate == 4) {
+            return "Apr";
+        }
+        if (sdate == 5) {
+            return "May";
+        }
+        if (sdate == 6) {
+            return "Jun";
+        }
+        if (sdate == 7) {
+            return "Jul";
+        }
+        if (sdate == 8) {
+            return "Aug";
+        }
+        if (sdate == 9) {
+            return "Sep";
+        }
+        if (sdate == 10) {
+            return "Oct";
+        }
+        if (sdate == 11) {
+            return "Nov";
+        }
+        if (sdate == 12) {
+            return "Dec";
+        }
+        return "Jan";
     }
 
     /**

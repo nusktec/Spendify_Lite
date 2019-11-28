@@ -135,7 +135,7 @@
                                         android:text="@{d.txtTypical, default=`0.00`}"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
-                                        android:textSize="20sp"
+                                        android:textSize="18sp"
                                         android:textStyle="bold" />
 
                                     <TextView
@@ -145,7 +145,7 @@
                                         android:text="Typical"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
-                                        android:textSize="15sp" />
+                                        android:textSize="13sp" />
 
                                 </LinearLayout>
 
@@ -174,7 +174,7 @@
                                         android:text="@{d.txtBelowTypical, default=`0.00`}"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
-                                        android:textSize="20sp"
+                                        android:textSize="18sp"
                                         android:textStyle="bold" />
 
                                     <TextView
@@ -184,7 +184,7 @@
                                         android:text="Below Typical"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
-                                        android:textSize="15sp" />
+                                        android:textSize="13sp" />
 
                                 </LinearLayout>
 
@@ -213,7 +213,7 @@
                                         android:text="@{d.txtSpentSoFar, default=`0.00`}"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
-                                        android:textSize="20sp"
+                                        android:textSize="18sp"
                                         android:textStyle="bold" />
 
                                     <TextView
@@ -223,7 +223,7 @@
                                         android:text="Spent So Far"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
-                                        android:textSize="15sp" />
+                                        android:textSize="13sp" />
 
                                 </LinearLayout>
 

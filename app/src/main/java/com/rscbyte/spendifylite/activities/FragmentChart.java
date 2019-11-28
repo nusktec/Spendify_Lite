@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,21 +19,21 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 import com.rscbyte.spendifylite.R;
+import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.databinding.ActivityFragmentChartBinding;
 import com.rscbyte.spendifylite.models.MData;
 import com.rscbyte.spendifylite.objects.OChartPage;
 import com.rscbyte.spendifylite.services.SMSService;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 public class FragmentChart extends Fragment {
@@ -116,22 +115,50 @@ public class FragmentChart extends Fragment {
 
     //prepare chart entries
     private void prepareChart() {
-        //read from database
-        pieEntries = new ArrayList<>();
-        pieEntries.add(new PieEntry(0, "Jan"));
-        pieEntries.add(new PieEntry(0, "Feb"));
-        pieEntries.add(new PieEntry(0, "Mar"));
-
+        //assign dictionary value holder
+        Map<String, Integer> tmpValue = new HashMap<>();
         //get 3 months way back
-        long passedMonth = Long.parseLong(Tools.getVariesTimeStamp(-13));
+        long passedMonth = Long.parseLong(Tools.getVariesTimeStamp(-3));
         /**
          * Upper algorithms is intent, will not be used for any at this point
          */
-        //iterate this month data
-        List<MData> trx = MData.listAll(MData.class);
-        for (MData t : trx) {
-            Tools.showToast(ctx, String.valueOf(t.getTrxSTP()));
+        //iterate last 3 month expense data
+        int _spent_for_the_month = 0;
+        String _month_name = "";
+        Select select = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(passedMonth));
+        List<MData> mData = select.list();
+        for (MData t : mData) {
+            //check for debit data only
+            if (t.getTrxType() == 2) {
+                //add to map
+                _spent_for_the_month += Integer.parseInt(t.getTrxValue());
+                _month_name = Tools.getMonthAscNum(Integer.parseInt(t.getTrxMonth()));
+                tmpValue.put(_month_name, _spent_for_the_month);
+            }
         }
+
+        int _spent_so_far = 0;
+        //get this month account total expense
+        Select select2 = Select.from(MData.class).where(Condition.prop("TRX_MONTH").eq(Tools.getMonth() + "")).and(Condition.prop("TRX_YEAR").eq(Tools.getYear() + ""));
+        List<MData> mData2 = select2.list();
+        for (MData t2 : mData2) {
+            //work for the current month
+            _spent_so_far += Integer.parseInt(t2.getTrxValue());
+        }
+
+        //start assignment
+        bdx.getD().setTxtSpentSoFar(Constants.getCurrency() + Tools.doCuurency(_spent_so_far));
+
+        //prepare chart
+        pieEntries = new ArrayList<>();
+        Iterator iterator = tmpValue.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry entry = (Map.Entry) iterator.next();
+            //put to chart
+            pieEntries.add(new PieEntry(Float.parseFloat(entry.getValue().toString()), String.valueOf(entry.getKey())));
+            iterator.remove();
+        }
+
     }
 
     //initialize components

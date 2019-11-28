@@ -92,10 +92,10 @@ public class Dashboard extends AppCompatActivity {
     //Add transaction box
     private Dialog dialog = null;
     //selection of transaction type
-    int _transaction = 1;
+    int _transaction = 2;
 
     public void addDialog() {
-        _transaction = 1;
+        _transaction = 2;
         dialog = new Dialog(ctx);
         final DialogAddDataBinding dbuild = DataBindingUtil.inflate(LayoutInflater.from(ctx), R.layout.dialog_add_data, null, false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before

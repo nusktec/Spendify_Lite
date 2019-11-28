@@ -146,7 +146,7 @@ public class FragmentList extends Fragment {
         List<MData> md = Select.from(MData.class).where(Condition.prop("TRX_DATE").eq(keyWords)).list();
         mData = md;
         aSimpleList.notifyDataSetChanged();
-        Tools.showToast(ctx, "Searched !");
+        Tools.showToast(ctx, "Searching...");
     }
 
     //surface clicked

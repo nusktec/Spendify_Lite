@@ -130,19 +130,20 @@
                     android:layout_marginTop="0dp"
                     android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/radio_credit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="Credit"
-                        android:textColor="@color/grey_500" />
 
                     <RadioButton
                         android:id="@+id/radio_debit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Debit"
+                        android:checked="true"
+                        android:textColor="@color/grey_500" />
+
+                    <RadioButton
+                        android:id="@+id/radio_credit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Credit"
                         android:textColor="@color/grey_500" />
                 </RadioGroup>
 
