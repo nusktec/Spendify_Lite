@@ -111,8 +111,6 @@ public class FragmentChart extends Fragment {
 
     }
 
-    private int tmpSpentSoFar, tmpTypical, tmpBTypical;
-
     //prepare chart entries
     private void prepareChart() {
         //assign dictionary value holder
@@ -125,15 +123,27 @@ public class FragmentChart extends Fragment {
         //iterate last 3 month expense data
         int _spent_for_the_month = 0;
         String _month_name = "";
+        int month_changes = 0;
+        int _moving_average = 0;
         Select select = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(passedMonth));
         List<MData> mData = select.list();
         for (MData t : mData) {
+            //check for data different
+            if (month_changes == 0) {
+                month_changes = Integer.parseInt(t.getTrxMonth());
+            }
+            //reset as data changed
+            if (month_changes != Integer.parseInt(t.getTrxMonth())) {
+                _spent_for_the_month = 0;
+                month_changes = 0;
+            }
             //check for debit data only
             if (t.getTrxType() == 2) {
                 //add to map
                 _spent_for_the_month += Integer.parseInt(t.getTrxValue());
                 _month_name = Tools.getMonthAscNum(Integer.parseInt(t.getTrxMonth()));
                 tmpValue.put(_month_name, _spent_for_the_month);
+                _moving_average += Integer.parseInt(t.getTrxValue());
             }
         }
 
@@ -143,12 +153,14 @@ public class FragmentChart extends Fragment {
         List<MData> mData2 = select2.list();
         for (MData t2 : mData2) {
             //work for the current month
-            _spent_so_far += Integer.parseInt(t2.getTrxValue());
+            if (t2.getTrxType() == 2) {
+                _spent_so_far += Integer.parseInt(t2.getTrxValue());
+            }
         }
 
         //start assignment
         bdx.getD().setTxtSpentSoFar(Constants.getCurrency() + Tools.doCuurency(_spent_so_far));
-
+        bdx.getD().setTxtTypical(Constants.getCurrency() + Tools.doCuurency(_moving_average));
         //prepare chart
         pieEntries = new ArrayList<>();
         Iterator iterator = tmpValue.entrySet().iterator();
@@ -158,7 +170,6 @@ public class FragmentChart extends Fragment {
             pieEntries.add(new PieEntry(Float.parseFloat(entry.getValue().toString()), String.valueOf(entry.getKey())));
             iterator.remove();
         }
-
     }
 
     //initialize components
