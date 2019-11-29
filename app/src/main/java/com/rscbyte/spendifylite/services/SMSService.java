@@ -24,6 +24,8 @@ public class SMSService extends Service {
     private static final String UNION_BANK = "UNION";
     private static final String FIDELITY_BANK = "FIDELITY";
     private static final String GT_BANK = "GTBank";
+    private static final String ECO_BANK = "EcoBank";
+    private static final String POLARIS_BANK = "Polaris";
 
     private Context act;
 
@@ -94,6 +96,14 @@ public class SMSService extends Service {
         }
         if (sms.getAddress().toUpperCase().contains(FIDELITY_BANK)) {
             //Fidelity Algorithms
+
+        }
+        if (sms.getAddress().toUpperCase().contains(POLARIS_BANK)) {
+            //Polaris Algorithms
+
+        }
+        if (sms.getAddress().toUpperCase().contains(ECO_BANK)) {
+            //EcoBank Algorithms
 
         }
     }
