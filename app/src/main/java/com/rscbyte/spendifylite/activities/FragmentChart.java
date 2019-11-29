@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -169,16 +172,16 @@ public class FragmentChart extends Fragment {
             bdx.getD().setTxtVariesTyical("Above Typical");
             bdx.getD().setTxtColor(R.color.red_800);
             //remark statement
-            bdx.getD().setTxtStatement("Your account is red, review your past spending to help stay on track in future.");
+            bdx.getD().setTxtStatement("Your account is above typical");
         } else if (_spent_so_far < _typicalSolve) {
             //you are below typical
             bdx.getD().setTxtVariesTyical("Below Typical");
             bdx.getD().setTxtColor(R.color.green_700);
-            bdx.getD().setTxtStatement("Your account is green, nice job !, keep your spending in check");
+            bdx.getD().setTxtStatement("Fantastic spending, It's your money");
             if ((_typicalSolve / 2) < _spent_so_far) {
                 //change color to yellow
                 bdx.getD().setTxtColor(R.color.yellow_700);
-                bdx.getD().setTxtStatement("Your account is yellow, nice job !, your closed to your previous spending");
+                bdx.getD().setTxtStatement("Careful spendify, you'r almost there...");
             }
         }
 
@@ -204,14 +207,12 @@ public class FragmentChart extends Fragment {
     }
 
     //initialize components
-    private boolean switcher = false;
+    private boolean switcher = true;
 
     private void initComponents() {
         bdx.btnSync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Objects.requireNonNull(getActivity()).stopService(new Intent(ctx, SMSService.class));
-                getActivity().startService(new Intent(ctx, SMSService.class));
                 main();
             }
         });
@@ -220,14 +221,39 @@ public class FragmentChart extends Fragment {
             @Override
             public void onClick(View view) {
                 if (switcher) {
-                    bdx.gauge.setVisibility(View.GONE);
+                    bdx.gauge.setAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_out));
                     bdx.pieChart.setVisibility(View.VISIBLE);
-                    switcher = true;
+                    bdx.pieChart.setAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_in));
+                    bdx.gauge.setVisibility(View.GONE);
+                    bdx.gauge.clearAnimation();
+                    switcher = false;
                 } else {
                     bdx.gauge.setVisibility(View.VISIBLE);
+                    bdx.gauge.setAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_in));
+                    bdx.pieChart.setAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_out));
                     bdx.pieChart.setVisibility(View.GONE);
-                    switcher = false;
+                    bdx.pieChart.clearAnimation();
+                    switcher = true;
                 }
+            }
+        });
+
+        //perform auto sync.
+        bdx.menuSyncSms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Objects.requireNonNull(getActivity()).stopService(new Intent(ctx, SMSService.class));
+                getActivity().startService(new Intent(ctx, SMSService.class));
+                bdx.menuSyncSms.setAnimation(AnimationUtils.loadAnimation(ctx, R.anim.rotate_infinite));
+                bdx.menuSyncSms.setEnabled(false);
+                //post delay
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        bdx.menuSyncSms.setEnabled(true);
+                        bdx.menuSyncSms.clearAnimation();
+                    }
+                }, 3000);
             }
         });
     }
@@ -265,5 +291,6 @@ public class FragmentChart extends Fragment {
             bdx.gauge.setMaxValue(max);
         }
         bdx.gauge.setValue(value);
+        bdx.gauge.setNeedleColor(getResources().getColor(R.color.grey_300));
     }
 }

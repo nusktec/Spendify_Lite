@@ -164,7 +164,7 @@ public class Dashboard extends AppCompatActivity {
     //main control
     public void main(int num) {
         //prepare view pager
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), 1);
+        final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), 1);
         adapter.addFragment(new FragmentChart());
         adapter.addFragment(new FragmentList());
         //add the adapter to view pager

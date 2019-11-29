@@ -192,7 +192,6 @@ public class FragmentList extends Fragment {
                         mData.delete();
                         dialog.dismiss();
                         Tools.showToast(ctx, "Deleted !");
-                        main();
                     }
                 }, "Delete", "Sure to delete this transaction ?");
             }
