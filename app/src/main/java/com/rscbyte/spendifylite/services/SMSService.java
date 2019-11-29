@@ -17,15 +17,16 @@ import java.util.Date;
 import java.util.List;
 
 public class SMSService extends Service {
-    private static final String UBA_BANK = "8164242320"; //"UBA";
+    private static final String UBA_BANK = "8164242320";
     private static final String ZENITH_BANK = "ZENITH";
     private static final String FIRST_BANK = "FIRST_BANK";
     private static final String ACCESS_BANK = "ACCESS";
     private static final String UNION_BANK = "UNION";
     private static final String FIDELITY_BANK = "FIDELITY";
-    private static final String GT_BANK = "GTBank";
-    private static final String ECO_BANK = "EcoBank";
-    private static final String POLARIS_BANK = "Polaris";
+    private static final String GT_BANK = "GTBANK";
+    private static final String ECO_BANK = "ECOBANK";
+    private static final String POLARIS_BANK = "POLARIS";
+    private static final String FCMB_BANK = "FCMB";
 
     private Context act;
 
@@ -104,6 +105,10 @@ public class SMSService extends Service {
         }
         if (sms.getAddress().toUpperCase().contains(ECO_BANK)) {
             //EcoBank Algorithms
+
+        }
+        if (sms.getAddress().toUpperCase().contains(FCMB_BANK)) {
+            //FCMB Algorithms
 
         }
     }
