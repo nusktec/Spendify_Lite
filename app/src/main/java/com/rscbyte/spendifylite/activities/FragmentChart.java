@@ -112,7 +112,7 @@ public class FragmentChart extends Fragment {
         pieDataSet.setUsingSliceColorAsValueLineColor(true);
         pieDataSet.setValueTypeface(Typeface.DEFAULT_BOLD);
         pieChart.setHoleColor(Color.WHITE);
-
+        bdx.pieChart.animate();
     }
 
     //prepare chart entries
@@ -178,9 +178,9 @@ public class FragmentChart extends Fragment {
             bdx.getD().setTxtVariesTyical("Below Typical");
             bdx.getD().setTxtColor(R.color.green_700);
             bdx.getD().setTxtStatement("Fantastic spending, It's your money");
-            if ((_typicalSolve / 2) < _spent_so_far) {
+            if (((_typicalSolve / 2) + (_typicalSolve / 4)) < _spent_so_far) {
                 //change color to yellow
-                bdx.getD().setTxtColor(R.color.yellow_700);
+                bdx.getD().setTxtColor(R.color.yellow_600);
                 bdx.getD().setTxtStatement("Careful spendify, you'r almost there...");
             }
         }
@@ -221,16 +221,16 @@ public class FragmentChart extends Fragment {
             @Override
             public void onClick(View view) {
                 if (switcher) {
-                    bdx.gauge.setAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_out));
+                    bdx.gauge.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_out));
                     bdx.pieChart.setVisibility(View.VISIBLE);
-                    bdx.pieChart.setAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_in));
+                    bdx.pieChart.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_in));
                     bdx.gauge.setVisibility(View.GONE);
                     bdx.gauge.clearAnimation();
                     switcher = false;
                 } else {
                     bdx.gauge.setVisibility(View.VISIBLE);
-                    bdx.gauge.setAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_in));
-                    bdx.pieChart.setAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_out));
+                    bdx.gauge.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_in));
+                    bdx.pieChart.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_out));
                     bdx.pieChart.setVisibility(View.GONE);
                     bdx.pieChart.clearAnimation();
                     switcher = true;
@@ -244,7 +244,7 @@ public class FragmentChart extends Fragment {
             public void onClick(View view) {
                 Objects.requireNonNull(getActivity()).stopService(new Intent(ctx, SMSService.class));
                 getActivity().startService(new Intent(ctx, SMSService.class));
-                bdx.menuSyncSms.setAnimation(AnimationUtils.loadAnimation(ctx, R.anim.rotate_infinite));
+                bdx.menuSyncSms.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.rotate_infinite));
                 bdx.menuSyncSms.setEnabled(false);
                 //post delay
                 new Handler().postDelayed(new Runnable() {
@@ -259,7 +259,7 @@ public class FragmentChart extends Fragment {
     }
 
     //configure gauge
-    void configGauge(int value, int max) {
+    private void configGauge(int value, int max) {
         Range rangeGreen = new Range();
         rangeGreen.setFrom(0);
         rangeGreen.setTo((max / 2));
@@ -291,6 +291,6 @@ public class FragmentChart extends Fragment {
             bdx.gauge.setMaxValue(max);
         }
         bdx.gauge.setValue(value);
-        bdx.gauge.setNeedleColor(getResources().getColor(R.color.grey_300));
+        bdx.gauge.setNeedleColor(getResources().getColor(R.color.orange_600));
     }
 }

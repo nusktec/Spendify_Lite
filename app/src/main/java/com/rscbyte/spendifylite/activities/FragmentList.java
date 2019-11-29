@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class FragmentList extends Fragment {
     //make a public variables
@@ -192,6 +193,7 @@ public class FragmentList extends Fragment {
                         mData.delete();
                         dialog.dismiss();
                         Tools.showToast(ctx, "Deleted !");
+                        Objects.requireNonNull(getActivity()).recreate();
                     }
                 }, "Delete", "Sure to delete this transaction ?");
             }
@@ -212,6 +214,7 @@ public class FragmentList extends Fragment {
                         Tools.showToast(ctx, "Transaction duplicated");
                         dialog.dismiss();
                         main();
+                        Objects.requireNonNull(getActivity()).recreate();
                     }
                 }, "Duplicate", "Want to duplicate this transaction ?. Today's date will be used in place");
             }

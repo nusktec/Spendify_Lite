@@ -13,7 +13,7 @@
         <item name="android:windowDisablePreview">true</item>
         <item name="android:colorControlHighlight">#b9b9b9</item>
         <item name="colorControlHighlight">@color/blue_grey_700</item>
-
+        <item name="android:fontFamily">@font/solway</item>
     </style>
 
     <!--Override default-->

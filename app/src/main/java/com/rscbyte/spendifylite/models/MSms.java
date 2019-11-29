@@ -23,7 +23,6 @@ public class MSms {
 
     public List<OSms> getAllSms() {
         List<OSms> lstSms = new ArrayList<OSms>();
-        OSms objSms = new OSms();
         Uri message = Uri.parse("content://sms/");
         ContentResolver cr = ctx.getContentResolver();
 
@@ -34,22 +33,17 @@ public class MSms {
 
         if (c.moveToFirst()) {
             for (int i = 0; i < totalSMS; i++) {
-
-                objSms = new OSms();
-                objSms.setId(c.getString(c.getColumnIndexOrThrow("_id")));
-                objSms.setAddress(c.getString(c
-                        .getColumnIndexOrThrow("address")));
-                objSms.setMsg(c.getString(c.getColumnIndexOrThrow("body")));
-                objSms.setReadState(c.getString(c.getColumnIndex("read")));
-                objSms.setTime(c.getString(c.getColumnIndexOrThrow("date")));
+                OSms objSms = new OSms();
                 if (c.getString(c.getColumnIndexOrThrow("type")).contains("1")) {
+                    objSms.setId(c.getString(c.getColumnIndexOrThrow("_id")));
+                    objSms.setAddress(c.getString(c
+                            .getColumnIndexOrThrow("address")));
+                    objSms.setMsg(c.getString(c.getColumnIndexOrThrow("body")));
+                    objSms.setReadState(c.getString(c.getColumnIndex("read")));
+                    objSms.setTime(c.getString(c.getColumnIndexOrThrow("date")));
                     objSms.setFolderName("inbox");
                     objSms.setSmsType(1);
-                } else {
-                    objSms.setSmsType(2);
-                    objSms.setFolderName("sent");
                 }
-
                 lstSms.add(objSms);
                 c.moveToNext();
             }
