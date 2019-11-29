@@ -5,6 +5,7 @@
 
     <!--Data started-->
     <data>
+
         <variable
             name="d"
             type="com.rscbyte.spendifylite.objects.OChartPage" />
@@ -55,13 +56,14 @@
 
 
                 <ImageButton
+                    android:id="@+id/menu_sync_sms"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:elevation="2dp"
-                    android:src="@drawable/ic_more_vert"
+                    android:src="@drawable/ic_sync"
                     android:tint="@color/grey_500" />
 
             </RelativeLayout>
@@ -173,18 +175,18 @@
                                         android:layout_gravity="center"
                                         android:text="@{d.txtBelowTypical, default=`0.00`}"
                                         android:textAllCaps="false"
-                                        android:textColor="@color/grey_500"
                                         android:textSize="18sp"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"
+                                        app:color="@{d.txtColor, default=@color/grey_500}" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:text="Below Typical"
+                                        android:text="@{d.txtVariesTyical, default=`Below Typical`}"
                                         android:textAllCaps="false"
-                                        android:textColor="@color/grey_500"
-                                        android:textSize="13sp" />
+                                        android:textSize="13sp"
+                                        app:color="@{d.txtColor, default=@color/grey_500}" />
 
                                 </LinearLayout>
 
@@ -232,9 +234,34 @@
                     </HorizontalScrollView>
                 </LinearLayout>
 
+                <!--Top switch menu-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:elevation="2dp"
+                    android:gravity="center|end"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnSwap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:background="@drawable/btn_press_opacity_tra"
+                        android:drawableEnd="@drawable/ic_swap_horiz"
+                        android:drawableTint="@color/grey_500"
+                        android:text="Swap chart"
+                        android:textAllCaps="false"
+                        android:textColor="@color/grey_500" />
+
+                </LinearLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="310dp"
+                    android:layout_marginTop="-40dp"
                     android:layout_weight="1">
                     <!--Chart base-->
 
@@ -243,7 +270,14 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_centerInParent="true"
-                        android:layout_margin="20dp" />
+                        android:layout_margin="20dp"
+                        android:visibility="gone" />
+
+                    <com.ekn.gruzer.gaugelibrary.HalfGauge
+                        android:id="@+id/gauge"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:visibility="visible" />
 
                 </RelativeLayout>
 
@@ -276,6 +310,7 @@
                         android:textColor="@color/app_color_1"
                         android:textSize="13sp"
                         android:textStyle="bold"
+                        android:visibility="gone"
                         tools:ignore="HardcodedText" />
 
                 </LinearLayout>

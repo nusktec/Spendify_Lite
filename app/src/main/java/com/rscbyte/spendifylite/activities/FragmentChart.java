@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.ekn.gruzer.gaugelibrary.Range;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -116,7 +117,7 @@ public class FragmentChart extends Fragment {
         //assign dictionary value holder
         Map<String, Integer> tmpValue = new HashMap<>();
         //get 3 months way back
-        long passedMonth = Long.parseLong(Tools.getVariesTimeStamp(-3));
+        long passedMonth = Long.parseLong(Tools.getVariesTimeStamp(-5));
         /**
          * Upper algorithms is intent, will not be used for any at this point
          */
@@ -125,7 +126,7 @@ public class FragmentChart extends Fragment {
         String _month_name = "";
         int month_changes = 0;
         int _moving_average = 0;
-        Select select = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(passedMonth));
+        Select select = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(passedMonth)).and(Condition.prop("TRX_MONTH").notEq(Tools.getMonth())).limit(String.valueOf(Tools.getMonth()));
         List<MData> mData = select.list();
         for (MData t : mData) {
             //check for data different
@@ -158,9 +159,34 @@ public class FragmentChart extends Fragment {
             }
         }
 
+        //solve for typical
+        int _typicalSolve = (_moving_average / 3);
+        //solve for differences
+        int _variesTypical = _spent_so_far - _typicalSolve;
+        //determine over spent or less
+        if (_spent_so_far > _typicalSolve) {
+            //you above typical
+            bdx.getD().setTxtVariesTyical("Above Typical");
+            bdx.getD().setTxtColor(R.color.red_800);
+            //remark statement
+            bdx.getD().setTxtStatement("Your account is red, review your past spending to help stay on track in future.");
+        } else if (_spent_so_far < _typicalSolve) {
+            //you are below typical
+            bdx.getD().setTxtVariesTyical("Below Typical");
+            bdx.getD().setTxtColor(R.color.green_700);
+            bdx.getD().setTxtStatement("Your account is green, nice job !, keep your spending in check");
+            if ((_typicalSolve / 2) < _spent_so_far) {
+                //change color to yellow
+                bdx.getD().setTxtColor(R.color.yellow_700);
+                bdx.getD().setTxtStatement("Your account is yellow, nice job !, your closed to your previous spending");
+            }
+        }
+
+
         //start assignment
-        bdx.getD().setTxtSpentSoFar(Constants.getCurrency() + Tools.doCuurency(_spent_so_far));
-        bdx.getD().setTxtTypical(Constants.getCurrency() + Tools.doCuurency(_moving_average));
+        bdx.getD().setTxtSpentSoFar(Constants.getCurrency() + Tools.doCuurency(_spent_so_far)); //display spent so far
+        bdx.getD().setTxtTypical(Constants.getCurrency() + Tools.doCuurency(_typicalSolve)); //display typical
+        bdx.getD().setTxtBelowTypical(Constants.getCurrency() + Tools.doCuurency(Math.abs(_variesTypical)));
         //prepare chart
         pieEntries = new ArrayList<>();
         Iterator iterator = tmpValue.entrySet().iterator();
@@ -170,6 +196,11 @@ public class FragmentChart extends Fragment {
             pieEntries.add(new PieEntry(Float.parseFloat(entry.getValue().toString()), String.valueOf(entry.getKey())));
             iterator.remove();
         }
+        //add spent so far
+        pieEntries.add(new PieEntry(_spent_so_far, Tools.getMonthAscNum(Tools.getMonth())));
+        //gauge meter
+        configGauge(_spent_so_far, _typicalSolve);
+
     }
 
     //initialize components
@@ -182,5 +213,49 @@ public class FragmentChart extends Fragment {
                 main();
             }
         });
+        //switch between gauge
+        bdx.btnSwap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Tools.showToast(ctx, "Supposed swapped !");
+                bdx.gauge.setVisibility(View.GONE);
+
+            }
+        });
+    }
+
+    //configure gauge
+    void configGauge(int value, int max) {
+        Range rangeGreen = new Range();
+        rangeGreen.setFrom(0);
+        rangeGreen.setTo((max / 2));
+        rangeGreen.setColor(getResources().getColor(R.color.green_500));
+
+        Range rangeYellow = new Range();
+        rangeYellow.setFrom((max / 2));
+        rangeYellow.setTo((max - (max / 4)));
+        rangeYellow.setColor(getResources().getColor(R.color.yellow_500));
+
+        Range rangeRed = new Range();
+        rangeRed.setFrom((max - (max / 4)));
+        rangeRed.setTo(max);
+        rangeRed.setColor(getResources().getColor(R.color.red_500));
+
+        bdx.gauge.addRange(rangeGreen);
+        bdx.gauge.addRange(rangeYellow);
+        bdx.gauge.addRange(rangeRed);
+
+        bdx.gauge.setMinValue(0);
+        if (value > max) {
+            bdx.gauge.setMaxValue(value);
+            Range rangeERed = new Range();
+            rangeERed.setFrom((max));
+            rangeERed.setTo(value);
+            rangeERed.setColor(getResources().getColor(R.color.red_800));
+            bdx.gauge.addRange(rangeERed);
+        } else {
+            bdx.gauge.setMaxValue(max);
+        }
+        bdx.gauge.setValue(value);
     }
 }

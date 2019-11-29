@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0' // chart
     implementation 'com.squareup.retrofit2:retrofit:2.6.2' //retrofit
     implementation 'com.google.code.gson:gson:2.8.6' //Gson converter
+    implementation 'com.ekn.gruzer.gaugelibrary:gaugelibrary:0.1.0' //Gauge meters
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

@@ -1,8 +1,12 @@
 package com.rscbyte.spendifylite.objects;
 
-import androidx.databinding.BaseObservable;
+import android.widget.TextView;
 
-import com.rscbyte.spendifylite.BR;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+import androidx.databinding.BindingAdapter;
+
+import com.rscbyte.spendifylite.R;
 
 public class OChartPage extends BaseObservable {
 
@@ -10,6 +14,8 @@ public class OChartPage extends BaseObservable {
     private String txtBelowTypical = "0.00";
     private String txtSpentSoFar = "0.00";
     private String txtStatement = "Your monthly remarks";
+    private String txtVariesTyical = "Determined";
+    private int txtColor = R.color.green_500;
 
     public OChartPage() {
     }
@@ -44,5 +50,26 @@ public class OChartPage extends BaseObservable {
 
     public void setTxtStatement(String txtStatement) {
         this.txtStatement = txtStatement;
+    }
+
+    public String getTxtVariesTyical() {
+        return txtVariesTyical;
+    }
+
+    public void setTxtVariesTyical(String txtVariesTyical) {
+        this.txtVariesTyical = txtVariesTyical;
+    }
+
+    public int getTxtColor() {
+        return txtColor;
+    }
+
+    @BindingAdapter({"app:color"})
+    public static void setTxtColorBinder(TextView view, int txtColor) {
+        view.setTextColor(view.getContext().getResources().getColor(txtColor));
+    }
+
+    public void setTxtColor(int txtColor) {
+        this.txtColor = txtColor;
     }
 }
