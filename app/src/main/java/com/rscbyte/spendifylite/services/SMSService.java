@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.models.BankChecker;
 import com.rscbyte.spendifylite.models.MData;
 import com.rscbyte.spendifylite.models.MSms;
 import com.rscbyte.spendifylite.objects.OAlerts;
 import com.rscbyte.spendifylite.objects.OSms;
 
+import java.util.Date;
 import java.util.List;
 
 public class SMSService extends Service {
@@ -112,5 +114,7 @@ public class SMSService extends Service {
         //insert in db
         MData data = new MData();
         Log.e("Db Msg", "You can insert");
+        Date d = Tools.timeStamp(Long.parseLong(o.getTimeStp()));
+        Log.e("Data Converted", d.toGMTString());
     }
 }

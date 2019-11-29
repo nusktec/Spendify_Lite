@@ -419,6 +419,12 @@ public class Tools {
         return STR_HOLDER.toString();
     }
 
+    public static Date timeStamp(long timestamp) {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(timestamp);
+        return c.getTime();
+    }
+
     @SuppressLint("DefaultLocale")
     public static String getRandomNumberString() {
         // It will generate 6 digit random Number.
