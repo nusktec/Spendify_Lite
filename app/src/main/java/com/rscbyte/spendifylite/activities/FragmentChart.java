@@ -204,6 +204,8 @@ public class FragmentChart extends Fragment {
     }
 
     //initialize components
+    private boolean switcher = false;
+
     private void initComponents() {
         bdx.btnSync.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,9 +219,15 @@ public class FragmentChart extends Fragment {
         bdx.btnSwap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Tools.showToast(ctx, "Supposed swapped !");
-                bdx.gauge.setVisibility(View.GONE);
-
+                if (switcher) {
+                    bdx.gauge.setVisibility(View.GONE);
+                    bdx.pieChart.setVisibility(View.VISIBLE);
+                    switcher = true;
+                } else {
+                    bdx.gauge.setVisibility(View.VISIBLE);
+                    bdx.pieChart.setVisibility(View.GONE);
+                    switcher = false;
+                }
             }
         });
     }
