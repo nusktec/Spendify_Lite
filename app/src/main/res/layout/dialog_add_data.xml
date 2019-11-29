@@ -101,6 +101,7 @@
                     android:background="@drawable/bg_wgrey_edittext"
                     android:hint="0.00"
                     android:inputType="numberDecimal"
+                    android:maxLength="11"
                     android:textColor="@color/grey_800"
                     android:textColorHint="@color/grey_400" />
 
@@ -135,8 +136,8 @@
                         android:id="@+id/radio_debit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Debit"
                         android:checked="true"
+                        android:text="Debit"
                         android:textColor="@color/grey_500" />
 
                     <RadioButton

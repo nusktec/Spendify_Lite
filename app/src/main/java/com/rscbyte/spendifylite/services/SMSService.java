@@ -7,7 +7,9 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.rscbyte.spendifylite.models.BankChecker;
+import com.rscbyte.spendifylite.models.MData;
 import com.rscbyte.spendifylite.models.MSms;
+import com.rscbyte.spendifylite.objects.OAlerts;
 import com.rscbyte.spendifylite.objects.OSms;
 
 import java.util.List;
@@ -60,10 +62,10 @@ public class SMSService extends Service {
             //Uba Algorithms
             BankChecker.ubaBank(sms, new BankChecker.MoneyBack() {
                 @Override
-                public void isMoney(Boolean isOkay, String moneyValue, OSms s) {
+                public void isMoney(Boolean isOkay, OAlerts o) {
                     //call inserting methods
                     if (isOkay) {
-                        insertOnly(moneyValue, s);
+                        insertOnly(o);
                     }
                 }
             });
@@ -95,7 +97,20 @@ public class SMSService extends Service {
     }
 
     //filter specifically
-    void insertOnly(String money, OSms sms) {
-        Log.e("Errrrrrr", sms.getMsg());
+    void insertOnly(OAlerts o) {
+        Log.e("Money", o.getMoney());
+        Log.e("Date", o.getRawDate());
+        Log.e("TimeStp", o.getTimeStp());
+        Log.e("Desc", o.getDescr());
+        Log.e("MsgID", o.getMsgID());
+        String msgID = o.getMsgID();
+        long chk = MData.count(MData.class, "WHERE TRX_SMS_ID=?", new String[]{msgID});
+        if (chk > 0) {
+            Log.e("Db MsgErr", "ALerdy inserted");
+            return;
+        }
+        //insert in db
+        MData data = new MData();
+        Log.e("Db Msg", "You can insert");
     }
 }

@@ -16,6 +16,7 @@ public class MData extends SugarRecord {
     private String trxMonth;
     private String trxDay;
     private long trxSTP;
+    private String trxMSgID;
 
     //initialize the main app
     public MData() {
@@ -93,5 +94,13 @@ public class MData extends SugarRecord {
 
     public void setTrxSTP(long trxSTP) {
         this.trxSTP = trxSTP;
+    }
+
+    public String getTrxMSgID() {
+        return trxMSgID;
+    }
+
+    public void setTrxMSgID(String trxMSgID) {
+        this.trxMSgID = trxMSgID;
     }
 }
