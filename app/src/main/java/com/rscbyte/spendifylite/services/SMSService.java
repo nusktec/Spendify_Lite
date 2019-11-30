@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.orm.SugarRecord;
 import com.orm.util.NamingHelper;
 import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
@@ -179,7 +180,7 @@ public class SMSService extends Service {
         data.setTrxMonth(c.get(Calendar.MONTH) + 1 + "");
         data.setTrxYear(c.get(Calendar.YEAR) + "");
         //insert into db
-        //SugarRecord.save(data);
+        SugarRecord.save(data);
         _counter++;
         getBaseContext().getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit()
                 .putInt(Constants.SHARED_ALERT_KEY, _counter).apply();
@@ -192,7 +193,7 @@ public class SMSService extends Service {
     }
 
 
-    //Completed {UBA, UNION, GTBank, Stanbic Bank}
+    //Completed {UBA, UNION, GTBank, Stanbic Bank, Access Bank, Zenith}
 
 
     protected void tester() {

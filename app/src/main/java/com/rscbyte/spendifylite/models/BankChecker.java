@@ -65,7 +65,7 @@ public class BankChecker {
             for (String i : body) {
                 //do each line
                 if (i.substring(0, 3).toUpperCase().equals("AMT")) {
-                    oAlerts.setMoney(i.replaceAll("[^\\d.,]", ""));
+                    oAlerts.setMoney(i.replaceAll("[^\\d.]", ""));
                 }
                 if (i.substring(0, 4).toUpperCase().equals("DESC")) {
                     oAlerts.setDescr(i.split(":")[1]);
@@ -94,7 +94,7 @@ public class BankChecker {
     }
 
     //gt bank
-    public static void gtBank(OSms sms, MoneyBack moneyBack) throws ArrayIndexOutOfBoundsException, StringIndexOutOfBoundsException {
+    public static void gtBank(OSms sms, MoneyBack moneyBack) {
         //algorithms shuffler
         OAlerts oAlerts = new OAlerts();
         try {
@@ -209,7 +209,7 @@ public class BankChecker {
             for (String i : body) {
                 //do each line
                 if (i.substring(0, 5).toUpperCase().equals("DEBIT") || i.substring(0, 6).toUpperCase().equals("CREDIT")) {
-                    oAlerts.setMoney(i.replaceAll("[^\\d.,]", ""));
+                    oAlerts.setMoney(i.replaceAll("[^\\d.]", ""));
                 }
                 if (i.substring(0, 4).toUpperCase().equals("DESC")) {
                     oAlerts.setDescr(i.split(":")[1]);
