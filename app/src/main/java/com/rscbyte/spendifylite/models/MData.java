@@ -2,6 +2,7 @@ package com.rscbyte.spendifylite.models;
 
 import com.orm.SugarRecord;
 import com.orm.dsl.Table;
+import com.orm.dsl.Unique;
 
 @Table
 public class MData extends SugarRecord {
@@ -16,7 +17,8 @@ public class MData extends SugarRecord {
     private String trxMonth;
     private String trxDay;
     private long trxSTP;
-    private String trxMSgID;
+    @Unique
+    private String trxMsgID;
 
     //initialize the main app
     public MData() {
@@ -96,11 +98,11 @@ public class MData extends SugarRecord {
         this.trxSTP = trxSTP;
     }
 
-    public String getTrxMSgID() {
-        return trxMSgID;
+    public String getTrxMsgID() {
+        return trxMsgID;
     }
 
-    public void setTrxMSgID(String trxMSgID) {
-        this.trxMSgID = trxMSgID;
+    public void setTrxMsgID(String trxMsgID) {
+        this.trxMsgID = trxMsgID;
     }
 }

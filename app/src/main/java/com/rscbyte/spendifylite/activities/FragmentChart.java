@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
@@ -118,17 +117,17 @@ public class FragmentChart extends Fragment {
     //prepare chart entries
     private void prepareChart() {
         //assign dictionary value holder
-        Map<String, Integer> tmpValue = new HashMap<>();
+        Map<String, Float> tmpValue = new HashMap<>();
         //get 3 months way back
-        long passedMonth = Long.parseLong(Tools.getVariesTimeStamp(-5));
+        long passedMonth = Long.parseLong(Tools.getVariesTimeStamp(-4));
         /**
          * Upper algorithms is intent, will not be used for any at this point
          */
         //iterate last 3 month expense data
-        int _spent_for_the_month = 0;
+        float _spent_for_the_month = 0;
         String _month_name = "";
         int month_changes = 0;
-        int _moving_average = 0;
+        float _moving_average = 0;
         Select select = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(passedMonth)).and(Condition.prop("TRX_MONTH").notEq(Tools.getMonth())).limit(String.valueOf(Tools.getMonth()));
         List<MData> mData = select.list();
         for (MData t : mData) {
@@ -144,28 +143,28 @@ public class FragmentChart extends Fragment {
             //check for debit data only
             if (t.getTrxType() == 2) {
                 //add to map
-                _spent_for_the_month += Integer.parseInt(t.getTrxValue());
+                _spent_for_the_month += Float.parseFloat(t.getTrxValue());
                 _month_name = Tools.getMonthAscNum(Integer.parseInt(t.getTrxMonth()));
                 tmpValue.put(_month_name, _spent_for_the_month);
-                _moving_average += Integer.parseInt(t.getTrxValue());
+                _moving_average += Float.parseFloat(t.getTrxValue());
             }
         }
 
-        int _spent_so_far = 0;
+        float _spent_so_far = 0;
         //get this month account total expense
         Select select2 = Select.from(MData.class).where(Condition.prop("TRX_MONTH").eq(Tools.getMonth() + "")).and(Condition.prop("TRX_YEAR").eq(Tools.getYear() + ""));
         List<MData> mData2 = select2.list();
         for (MData t2 : mData2) {
             //work for the current month
             if (t2.getTrxType() == 2) {
-                _spent_so_far += Integer.parseInt(t2.getTrxValue());
+                _spent_so_far += Float.parseFloat(t2.getTrxValue());
             }
         }
 
         //solve for typical
-        int _typicalSolve = (_moving_average / 3);
+        float _typicalSolve = (_moving_average / 3);
         //solve for differences
-        int _variesTypical = _spent_so_far - _typicalSolve;
+        float _variesTypical = _spent_so_far - _typicalSolve;
         //determine over spent or less
         if (_spent_so_far > _typicalSolve) {
             //you above typical
@@ -202,7 +201,7 @@ public class FragmentChart extends Fragment {
         //add spent so far
         pieEntries.add(new PieEntry(_spent_so_far, Tools.getMonthAscNum(Tools.getMonth())));
         //gauge meter
-        configGauge(_spent_so_far, _typicalSolve);
+        configGauge(_spent_so_far, Float.parseFloat(Tools.doFloat(_typicalSolve)));
 
     }
 
@@ -259,7 +258,7 @@ public class FragmentChart extends Fragment {
     }
 
     //configure gauge
-    private void configGauge(int value, int max) {
+    private void configGauge(float value, float max) {
         Range rangeGreen = new Range();
         rangeGreen.setFrom(0);
         rangeGreen.setTo((max / 2));
@@ -281,14 +280,14 @@ public class FragmentChart extends Fragment {
 
         bdx.gauge.setMinValue(0);
         if (value > max) {
-            bdx.gauge.setMaxValue(value);
+            bdx.gauge.setMaxValue((int) Float.parseFloat(Tools.doFloat(value)));
             Range rangeERed = new Range();
             rangeERed.setFrom((max));
             rangeERed.setTo(value);
             rangeERed.setColor(getResources().getColor(R.color.red_800));
             bdx.gauge.addRange(rangeERed);
         } else {
-            bdx.gauge.setMaxValue(max);
+            bdx.gauge.setMaxValue((int) Float.parseFloat(Tools.doFloat(max)));
         }
         bdx.gauge.setValue(value);
         bdx.gauge.setNeedleColor(getResources().getColor(R.color.orange_600));

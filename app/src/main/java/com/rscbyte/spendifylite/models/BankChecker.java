@@ -79,8 +79,33 @@ public class BankChecker {
     public static void unionBank(OSms sms, MoneyBack moneyBack) {
         //algorithms shuffler
         OAlerts oAlerts = new OAlerts();
-
-        moneyBack.isMoney(true, oAlerts);
+        try {
+            if (sms.getMsg().toUpperCase().contains("DR ALERT")) {
+                oAlerts.setMode(2);
+            } else {
+                oAlerts.setMode(1);
+            }
+            //it's a debit alert
+            String[] body = sms.getMsg().split("[\\r?\\n]+");
+            for (String i : body) {
+                //do each line
+                if (i.substring(0, 3).toUpperCase().equals("AMT")) {
+                    oAlerts.setMoney(i.replaceAll("[^\\d.]", ""));
+                }
+                if (i.substring(0, 4).toUpperCase().equals("DESC")) {
+                    oAlerts.setDescr(i.split(":")[1]);
+                }
+                if (i.substring(0, 4).toUpperCase().equals("DATE")) {
+                    oAlerts.setRawDate(i.split(":")[1]);
+                }
+            }
+            oAlerts.setMsgID(sms.getId());
+            oAlerts.setTimeStp(sms.getTime());
+            moneyBack.isMoney(true, oAlerts);
+        } catch (StringIndexOutOfBoundsException exp) {
+            //keep silence
+            moneyBack.isMoney(false, null);
+        }
     }
 
     //General callback

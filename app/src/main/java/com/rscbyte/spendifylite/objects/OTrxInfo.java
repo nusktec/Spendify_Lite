@@ -1,8 +1,15 @@
 package com.rscbyte.spendifylite.objects;
 
+import android.text.Layout;
+import android.view.View;
+import android.widget.LinearLayout;
+
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.library.baseAdapters.BR;
+
+import com.rscbyte.spendifylite.R;
 
 public class OTrxInfo extends BaseObservable {
     private String desc;
@@ -63,5 +70,14 @@ public class OTrxInfo extends BaseObservable {
     public void setSource(String source) {
         this.source = source;
         notifyPropertyChanged(BR.source);
+    }
+
+    @BindingAdapter({"app:colorswitch"})
+    public static void changeBG(LinearLayout layout, String s) {
+        if (s.contains("Credit")) {
+            layout.setBackgroundColor(layout.getContext().getResources().getColor(R.color.green_600));
+        } else {
+            layout.setBackgroundColor(layout.getContext().getResources().getColor(R.color.pink_600));
+        }
     }
 }

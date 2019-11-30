@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.orm.SugarContext;
+import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.activities.Dashboard;
 import com.rscbyte.spendifylite.models.MProfile;
@@ -40,6 +41,9 @@ public class SplashScreen extends AppCompatActivity {
             String name = (MProfile.findById(MProfile.class, 1)).getNames();
             ((TextView) findViewById(R.id.txt_license)).setText(String.valueOf("licensed to " + name.toLowerCase()));
         }
+        //clear preference
+        getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit()
+                .putInt(Constants.SHARED_ALERT_KEY, 0).apply();
     }
 
     //launcher

@@ -20,7 +20,9 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.orm.SugarRecord;
+import com.orm.util.NamingHelper;
 import com.rscbyte.spendifylite.R;
+import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.databinding.ActivityDashboardBinding;
 import com.rscbyte.spendifylite.databinding.DialogAddDataBinding;
@@ -191,6 +193,16 @@ public class Dashboard extends AppCompatActivity {
             }
         });
         bdx.mainViewPager.setCurrentItem(_scrolled_nun);
+        checkNewThing();
+    }
+
+    //check for newer things
+    private void checkNewThing() {
+        int getNewAlert = getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).getInt(Constants.SHARED_ALERT_KEY, 0);
+        if (getNewAlert > 0) {
+            Tools.msgDialog(ctx, "New Alert Sync.", "some alerts were sync and added to your transaction time ago, check your list...", R.drawable.ic_textsms, R.color.green_600);
+        }
+
     }
 
     //animations switcher
@@ -230,5 +242,10 @@ public class Dashboard extends AppCompatActivity {
         public void addFragment(Fragment fragment) {
             fragments.add(fragment);
         }
+    }
+
+    //special db name caller
+    protected String dbName(String s) {
+        return NamingHelper.toSQLNameDefault(s);
     }
 }

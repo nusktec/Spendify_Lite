@@ -29,6 +29,7 @@ import android.os.StrictMode;
 import android.util.Base64;
 import android.util.Base64OutputStream;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,10 +43,12 @@ import androidx.annotation.ColorRes;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
+import androidx.databinding.DataBindingUtil;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.rscbyte.spendifylite.R;
 import com.rscbyte.spendifylite.activities.Dashboard;
+import com.rscbyte.spendifylite.databinding.DialogInfoBinding;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.ByteArrayOutputStream;
@@ -419,10 +422,10 @@ public class Tools {
         return STR_HOLDER.toString();
     }
 
-    public static Date timeStamp(long timestamp) {
+    public static Calendar timeStamp(long timestamp) {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(timestamp);
-        return c.getTime();
+        return c;
     }
 
     @SuppressLint("DefaultLocale")
@@ -511,7 +514,11 @@ public class Tools {
      * @return
      */
     public static String doCuurency(double amount) {
-        return String.format("%,.0f", (double) amount);
+        return String.format("%,.01f", (double) amount);
+    }
+
+    public static String doFloat(double amount) {
+        return String.format("%.01f", (double) amount);
     }
 
     /**
@@ -791,6 +798,36 @@ public class Tools {
         //datePicker.setMinDate(cur_calender);
         datePicker.show(activity.getFragmentManager(), "Datepickerdialog");
 
+    }
+
+    //message dialog
+    public static void msgDialog(Context ctx, String title, String msg, int icon, int color) {
+        final Dialog dialog = new Dialog(ctx);
+        DialogInfoBinding infoBinding = DataBindingUtil.inflate(LayoutInflater.from(ctx), R.layout.dialog_info, null, false);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
+        dialog.setContentView(infoBinding.getRoot());
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setCancelable(false);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        infoBinding.bgLayout.setBackgroundColor(ctx.getResources().getColor(color));
+        infoBinding.title.setText(title);
+        infoBinding.content.setText(msg);
+        infoBinding.icon.setImageDrawable(ctx.getResources().getDrawable(icon));
+        infoBinding.btClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        //display info
+        dialog.show();
+        dialog.getWindow().setAttributes(lp);
     }
 
     /**
