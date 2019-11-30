@@ -200,7 +200,7 @@ public class Dashboard extends AppCompatActivity {
     private void checkNewThing() {
         int getNewAlert = getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).getInt(Constants.SHARED_ALERT_KEY, 0);
         if (getNewAlert > 0) {
-            Tools.msgDialog(ctx, "New Alert Sync.", "some alerts were sync and added to your transaction time ago, check your list...", R.drawable.ic_textsms, R.color.green_600);
+            Tools.msgDialog(ctx, "New Alert Sync.", getNewAlert + " alert(s) were sync and added to your transaction time ago, check your list...", R.drawable.ic_textsms, R.color.green_600);
         }
 
     }

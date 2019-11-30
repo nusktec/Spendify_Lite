@@ -151,6 +151,7 @@ public class FragmentChart extends Fragment {
         }
 
         float _spent_so_far = 0;
+        float _income_this_month = 0;
         //get this month account total expense
         Select select2 = Select.from(MData.class).where(Condition.prop("TRX_MONTH").eq(Tools.getMonth() + "")).and(Condition.prop("TRX_YEAR").eq(Tools.getYear() + ""));
         List<MData> mData2 = select2.list();
@@ -158,6 +159,9 @@ public class FragmentChart extends Fragment {
             //work for the current month
             if (t2.getTrxType() == 2) {
                 _spent_so_far += Float.parseFloat(t2.getTrxValue());
+            } else {
+                //calculations for income
+                _income_this_month += Float.parseFloat(t2.getTrxValue());
             }
         }
 
@@ -184,11 +188,11 @@ public class FragmentChart extends Fragment {
             }
         }
 
-
         //start assignment
         bdx.getD().setTxtSpentSoFar(Constants.getCurrency() + Tools.doCuurency(_spent_so_far)); //display spent so far
         bdx.getD().setTxtTypical(Constants.getCurrency() + Tools.doCuurency(_typicalSolve)); //display typical
-        bdx.getD().setTxtBelowTypical(Constants.getCurrency() + Tools.doCuurency(Math.abs(_variesTypical)));
+        bdx.getD().setTxtBelowTypical(Constants.getCurrency() + Tools.doCuurency(Math.abs(_variesTypical))); //below typical
+        bdx.getD().setTxtIncomeThisM(Constants.getCurrency() + Tools.doCuurency(Math.abs(_income_this_month))); //this months
         //prepare chart
         pieEntries = new ArrayList<>();
         Iterator iterator = tmpValue.entrySet().iterator();
@@ -289,7 +293,7 @@ public class FragmentChart extends Fragment {
         } else {
             bdx.gauge.setMaxValue((int) Float.parseFloat(Tools.doFloat(max)));
         }
-        bdx.gauge.setValue(value);
+        bdx.gauge.setValue((int) Float.parseFloat(Tools.doFloat(value)));
         bdx.gauge.setNeedleColor(getResources().getColor(R.color.orange_600));
     }
 }

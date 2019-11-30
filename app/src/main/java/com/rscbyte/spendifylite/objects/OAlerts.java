@@ -6,6 +6,7 @@ public class OAlerts {
     private String timeStp = "000000000";
     private String msgID = "0";
     private String rawDate = "";
+    private String bankName = "";
     private int mode = 2;
 
     public String getMoney() {
@@ -51,8 +52,15 @@ public class OAlerts {
     public String getRawDate() {
         return rawDate;
     }
-
     public void setRawDate(String rawDate) {
         this.rawDate = rawDate;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
     }
 }

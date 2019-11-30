@@ -168,9 +168,9 @@ public class FragmentList extends Fragment {
         dbuild.setD(new OTrxInfo());
         dbuild.getD().setDesc(data.getDesc());
         dbuild.getD().setDate(data.getDate());
-        dbuild.getD().setSource(data.getmData().getTrxSrc() == 1 ? "Manual" : "Alert");
+        dbuild.getD().setSource(data.getmData().getTrxSrc() == 1 ? "Manual" : "Alert-" + data.getmData().getTrxBankName());
         dbuild.getD().setType(data.getmData().getTrxType() == 1 ? "Credit" : "Debit");
-        dbuild.getD().setValue(String.valueOf(Constants.getCurrency() + nf.format(Double.valueOf(data.getmData().getTrxValue()))));
+        dbuild.getD().setValue(Constants.getCurrency() + nf.format(Double.valueOf(data.getmData().getTrxValue())));
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
         dialog.setContentView(dbuild.getRoot());

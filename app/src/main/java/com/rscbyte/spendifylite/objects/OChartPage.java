@@ -15,6 +15,7 @@ public class OChartPage extends BaseObservable {
     private String txtSpentSoFar = "0.00";
     private String txtStatement = "Your monthly remarks";
     private String txtVariesTyical = "Determined";
+    private String txtIncomeThisM = "Income, this months";
     private int txtColor = R.color.green_500;
 
     public OChartPage() {
@@ -71,5 +72,13 @@ public class OChartPage extends BaseObservable {
 
     public void setTxtColor(int txtColor) {
         this.txtColor = txtColor;
+    }
+
+    public String getTxtIncomeThisM() {
+        return txtIncomeThisM;
+    }
+
+    public void setTxtIncomeThisM(String txtIncomeThisM) {
+        this.txtIncomeThisM = txtIncomeThisM;
     }
 }

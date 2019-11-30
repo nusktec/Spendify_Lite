@@ -62,6 +62,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 import java.util.TimeZone;
+import java.util.regex.Pattern;
 
 public class Tools {
     public static void setSystemBarColor(Activity act) {
@@ -428,6 +429,11 @@ public class Tools {
         return c;
     }
 
+    public static String timeStampStr(Long time) {
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy");
+        return formatter.format(time);
+    }
+
     @SuppressLint("DefaultLocale")
     public static String getRandomNumberString() {
         // It will generate 6 digit random Number.
@@ -519,6 +525,13 @@ public class Tools {
 
     public static String doFloat(double amount) {
         return String.format("%.01f", (double) amount);
+    }
+
+    public static boolean stringContainsNumber(String s) {
+        if (s != null || !s.equals("")) {
+            return Pattern.compile("[0-9]").matcher(s).find();
+        }
+        return false;
     }
 
     /**
