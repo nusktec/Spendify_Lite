@@ -229,6 +229,42 @@ public class BankChecker {
         }
     }
 
+    //zenith bank
+    public static void zenitBank(OSms sms, MoneyBack moneyBack) {
+        //algorithms shuffler
+        OAlerts oAlerts = new OAlerts();
+        try {
+            if (sms.getMsg().toUpperCase().contains("DEBIT")) {
+                oAlerts.setMode(2);
+            } else if (sms.getMsg().toUpperCase().contains("CREDIT")) {
+                oAlerts.setMode(1);
+            } else {
+                return;
+            }
+            //it's a debit alert
+            String[] body = sms.getMsg().split("[\\r?\\n]+");
+            for (String i : body) {
+                //do each line
+                if (i.substring(0, 3).toUpperCase().equals("AMT")) {
+                    oAlerts.setMoney(i.replaceAll("[^\\d.]", ""));
+                }
+                if (i.substring(0, 4).toUpperCase().equals("DESC")) {
+                    oAlerts.setDescr(i.split(":")[1]);
+                }
+                if (i.substring(0, 4).toUpperCase().equals("TIME")) {
+                    oAlerts.setRawDate(i.split(":")[1]);
+                }
+            }
+            oAlerts.setMsgID(sms.getId());
+            oAlerts.setTimeStp(sms.getTime());
+            oAlerts.setBankName("Access Bank");
+            moneyBack.isMoney(true, oAlerts);
+        } catch (Exception exp) {
+            //keep silence
+            moneyBack.isMoney(false, null);
+            exp.printStackTrace();
+        }
+    }
 
     //General callback interface
     public interface MoneyBack {
