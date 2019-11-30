@@ -202,7 +202,7 @@ public class Dashboard extends AppCompatActivity {
         if (getNewAlert > 0) {
             Tools.msgDialog(ctx, "New Alert Sync.", getNewAlert + " alert(s) were sync and added to your transaction time ago, check your list...", R.drawable.ic_textsms, R.color.green_600);
         }
-
+        getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit().putInt(Constants.SHARED_ALERT_KEY, 0).apply();
     }
 
     //animations switcher

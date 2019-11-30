@@ -85,12 +85,41 @@ public class BankChecker {
         }
     }
 
-    //first bank
-    public static void firstBank(OSms sms, MoneyBack moneyBack) {
+    //fcmb bank
+    public static void fcmbBank(OSms sms, MoneyBack moneyBack) {
         //algorithms shuffler
         OAlerts oAlerts = new OAlerts();
-
-        moneyBack.isMoney(true, oAlerts);
+        try {
+            if (sms.getMsg().toUpperCase().contains("DR ALERT")) {
+                oAlerts.setMode(2);
+            } else if (sms.getMsg().toUpperCase().contains("CR ALERT")) {
+                oAlerts.setMode(1);
+            } else {
+                return;
+            }
+            //it's a debit alert
+            String[] body = sms.getMsg().split("[\\r?\\n]+");
+            for (String i : body) {
+                //do each line
+                if (i.substring(0, 3).toUpperCase().equals("AMT")) {
+                    oAlerts.setMoney(i.replaceAll("[^\\d.]", ""));
+                }
+                if (i.substring(0, 4).toUpperCase().equals("DESC")) {
+                    oAlerts.setDescr(i.split(":")[1]);
+                }
+                if (i.substring(0, 4).toUpperCase().equals("DATE")) {
+                    oAlerts.setRawDate(i.split(":")[1]);
+                }
+            }
+            oAlerts.setMsgID(sms.getId());
+            oAlerts.setTimeStp(sms.getTime());
+            oAlerts.setBankName("FCMB Bank");
+            moneyBack.isMoney(true, oAlerts);
+        } catch (Exception exp) {
+            //keep silence
+            moneyBack.isMoney(false, null);
+            exp.printStackTrace();
+        }
     }
 
     //gt bank
@@ -146,14 +175,6 @@ public class BankChecker {
             moneyBack.isMoney(false, null);
             ex.printStackTrace();
         }
-    }
-
-    //fidelity bank
-    public static void fidelityBank(OSms sms, MoneyBack moneyBack) {
-        //algorithms shuffler
-        OAlerts oAlerts = new OAlerts();
-
-        moneyBack.isMoney(true, oAlerts);
     }
 
     //union bank
@@ -229,8 +250,8 @@ public class BankChecker {
         }
     }
 
-    //zenith bank
-    public static void zenitBank(OSms sms, MoneyBack moneyBack) {
+    //polaris bank
+    public static void polarisBank(OSms sms, MoneyBack moneyBack) {
         //algorithms shuffler
         OAlerts oAlerts = new OAlerts();
         try {
@@ -248,22 +269,73 @@ public class BankChecker {
                 if (i.substring(0, 3).toUpperCase().equals("AMT")) {
                     oAlerts.setMoney(i.replaceAll("[^\\d.]", ""));
                 }
-                if (i.substring(0, 4).toUpperCase().equals("DESC")) {
+                if (i.substring(0, 3).toUpperCase().equals("REF")) {
                     oAlerts.setDescr(i.split(":")[1]);
                 }
-                if (i.substring(0, 4).toUpperCase().equals("TIME")) {
-                    oAlerts.setRawDate(i.split(":")[1]);
-                }
+                String tmpdate = Tools.timeStampStr(Long.parseLong(sms.getTime()));
+                oAlerts.setRawDate(tmpdate);
             }
             oAlerts.setMsgID(sms.getId());
             oAlerts.setTimeStp(sms.getTime());
-            oAlerts.setBankName("Access Bank");
+            oAlerts.setBankName("Polaris Bank");
             moneyBack.isMoney(true, oAlerts);
         } catch (Exception exp) {
             //keep silence
             moneyBack.isMoney(false, null);
             exp.printStackTrace();
         }
+    }
+
+    //zenith bank
+    public static void zenithBank(OSms sms, MoneyBack moneyBack) {
+        //algorithms shuffler
+        OAlerts oAlerts = new OAlerts();
+        try {
+            if (sms.getMsg().toUpperCase().contains("DR")) {
+                oAlerts.setMode(2);
+            } else if (sms.getMsg().toUpperCase().contains("CR")) {
+                oAlerts.setMode(1);
+            } else {
+                return;
+            }
+            //it's a debit alert
+            String[] body = sms.getMsg().split("[\\r?\\n]+");
+            for (String i : body) {
+                //do each line
+                if (i.substring(0, 6).toUpperCase().equals("DR AMT")) {
+                    oAlerts.setMoney(i.replaceAll("[^\\d.]", ""));
+                }
+                if (i.substring(0, 2).toUpperCase().equals("DT")) {
+                    oAlerts.setDescr(i.split(":")[1]);
+                }
+                String tmpdate = Tools.timeStampStr(Long.parseLong(sms.getTime()));
+                oAlerts.setRawDate(tmpdate);
+            }
+            oAlerts.setMsgID(sms.getId());
+            oAlerts.setTimeStp(sms.getTime());
+            oAlerts.setBankName("Zenith Bank");
+            moneyBack.isMoney(true, oAlerts);
+        } catch (Exception exp) {
+            //keep silence
+            moneyBack.isMoney(false, null);
+            exp.printStackTrace();
+        }
+    }
+
+    //first bank
+    public static void firstBank(OSms sms, MoneyBack moneyBack) {
+        //algorithms shuffler
+        OAlerts oAlerts = new OAlerts();
+
+        moneyBack.isMoney(true, oAlerts);
+    }
+
+    //fidelity bank
+    public static void fidelityBank(OSms sms, MoneyBack moneyBack) {
+        //algorithms shuffler
+        OAlerts oAlerts = new OAlerts();
+
+        moneyBack.isMoney(true, oAlerts);
     }
 
     //General callback interface
