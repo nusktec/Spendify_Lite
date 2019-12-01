@@ -24,9 +24,11 @@ import com.orm.util.NamingHelper;
 import com.rscbyte.spendifylite.R;
 import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
+import com.rscbyte.spendifylite.adapters.ASimpleFeeds;
 import com.rscbyte.spendifylite.databinding.ActivityDashboardBinding;
 import com.rscbyte.spendifylite.databinding.DialogAddDataBinding;
 import com.rscbyte.spendifylite.models.MData;
+import com.rscbyte.spendifylite.objects.OAdverts;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -88,7 +90,21 @@ public class Dashboard extends AppCompatActivity {
             }
         });
         //make control (misc)
+        getAdverts();
+    }
 
+    //pull adverts
+    private void getAdverts() {
+        List<OAdverts> alists = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            OAdverts a = new OAdverts();
+            a.setImgUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSYInZ082VcxfKsSir7nhosHbF3Cio-c3hD3C0PQJDx0XnXWZWr");
+            a.setLinkUrl("http://google.com");
+            a.setTextBody("Hello, this is my body text, Hello, this is my body text");
+            alists.add(a);
+        }
+        ASimpleFeeds feeds = new ASimpleFeeds(alists);
+        bdx.adsRecycler.setAdapter(feeds);
     }
 
     //Add transaction box

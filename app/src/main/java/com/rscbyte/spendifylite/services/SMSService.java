@@ -31,6 +31,7 @@ public class SMSService extends Service {
     private static final String FCMB_BANK = "8149384264"; //"FCMB"; //Bridget
     private static final String STANBIC_BANK = "7036877205"; //"STANBIC"; //Sweetness frend 2
     private static final String ZENITH_BANK = "9073555666"; //"ZENITH"; //Reve2
+    private static final String KEYSTONE_BANK = "9051676263"; //"KEYSTONE"; //Rooth
     private static final String FIRST_BANK = "FIRST_BANK";
     private static final String ECO_BANK = "ECOBANK";
 
@@ -182,6 +183,18 @@ public class SMSService extends Service {
                 }
             });
         }
+        if (sms.getAddress().toUpperCase().contains(KEYSTONE_BANK)) {
+            //Kyestone bank Algorithms
+            BankChecker.keystoneBank(sms, new BankChecker.MoneyBack() {
+                @Override
+                public void isMoney(Boolean isOkay, OAlerts o) {
+                    //call inserting methods
+                    if (isOkay) {
+                        insertOnly(o);
+                    }
+                }
+            });
+        }
         if (sms.getAddress().toUpperCase().contains(FIRST_BANK)) {
             //First bank Algorithms
 
@@ -247,7 +260,7 @@ public class SMSService extends Service {
     }
 
 
-    //Completed {UBA, UNION, GTBank, Stanbic Bank, Access Bank, Polaris, FCMB, Zenith}
+    //Completed {UBA, UNION, GTBank, Stanbic Bank, Access Bank, Polaris, FCMB, Zenith, Keystone}
 
 
     protected void tester() {

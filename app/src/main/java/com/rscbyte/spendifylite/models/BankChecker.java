@@ -322,6 +322,43 @@ public class BankChecker {
         }
     }
 
+    //keystone bank
+    public static void keystoneBank(OSms sms, MoneyBack moneyBack) {
+        //algorithms shuffler
+        OAlerts oAlerts = new OAlerts();
+        try {
+            if (sms.getMsg().toUpperCase().contains("DEBIT ALERT")) {
+                oAlerts.setMode(2);
+            } else if (sms.getMsg().toUpperCase().contains("CREDIT ALERT")) {
+                oAlerts.setMode(1);
+            } else {
+                return;
+            }
+            //it's a debit alert
+            String[] body = sms.getMsg().split("[\\r?\\n]+");
+            for (String i : body) {
+                //do each line
+                if (i.substring(0, 3).toUpperCase().equals("AMT")) {
+                    oAlerts.setMoney(i.replaceAll("[^\\d.]", ""));
+                }
+                if (i.substring(0, 4).toUpperCase().equals("DESC")) {
+                    oAlerts.setDescr(i.split(":")[1]);
+                }
+                if (i.substring(0, 4).toUpperCase().equals("DATE")) {
+                    oAlerts.setRawDate(i.split(":")[1]);
+                }
+            }
+            oAlerts.setMsgID(sms.getId());
+            oAlerts.setTimeStp(sms.getTime());
+            oAlerts.setBankName("Keystone Bank");
+            moneyBack.isMoney(true, oAlerts);
+        } catch (Exception exp) {
+            //keep silence
+            moneyBack.isMoney(false, null);
+            exp.printStackTrace();
+        }
+    }
+
     //first bank
     public static void firstBank(OSms sms, MoneyBack moneyBack) {
         //algorithms shuffler

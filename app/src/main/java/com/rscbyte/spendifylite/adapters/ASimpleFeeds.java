@@ -21,6 +21,7 @@ public class ASimpleFeeds extends RecyclerView.Adapter<ASimpleFeeds.VH> {
     //initialize
     public ASimpleFeeds(List<OAdverts> oAdverts) {
         this.oAdverts = oAdverts;
+        notifyDataSetChanged();
     }
 
     @NonNull

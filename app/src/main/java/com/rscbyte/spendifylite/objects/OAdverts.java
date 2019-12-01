@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;
+import androidx.databinding.library.baseAdapters.BR;
 
 public class OAdverts extends BaseObservable {
     private String imgUrl = "";
@@ -22,6 +23,7 @@ public class OAdverts extends BaseObservable {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+        notifyPropertyChanged(BR.imgUrl);
     }
 
     @Bindable
@@ -31,6 +33,7 @@ public class OAdverts extends BaseObservable {
 
     public void setTextBody(String textBody) {
         this.textBody = textBody;
+        notifyPropertyChanged(BR.textBody);
     }
 
     @Bindable
@@ -40,6 +43,7 @@ public class OAdverts extends BaseObservable {
 
     public void setLinkUrl(String linkUrl) {
         this.linkUrl = linkUrl;
+        notifyPropertyChanged(BR.linkUrl);
     }
 
     //Apply images

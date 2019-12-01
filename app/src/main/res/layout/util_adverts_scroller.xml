@@ -10,7 +10,7 @@
     </data>
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
         android:layout_height="40dp"
         android:background="@color/transparent"
         android:orientation="horizontal"
@@ -33,7 +33,9 @@
             android:layout_toStartOf="@id/ad_click"
             android:layout_toEndOf="@id/ad_logo"
             android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:text="@{d.textBody, default=@string/common_google_play_services_install_title}"
+            android:textColor="@color/grey_500"
             android:textSize="13sp" />
 
         <androidx.appcompat.widget.AppCompatButton
