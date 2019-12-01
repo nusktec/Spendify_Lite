@@ -6,13 +6,13 @@ import com.orm.dsl.Table;
 @Table
 public class MProfile extends SugarRecord {
 
-    private String names;
-    private String email;
-    private String phone;
-    private String gender;
-    private String quotes;
-    private int notifications;
-    private int sms;
+    private String names = "";
+    private String email = "";
+    private String phone = "";
+    private String gender = "";
+    private String quotes = "";
+    private int notifications = 0;
+    private int sms = 0;
 
     //initialize
     public MProfile() {

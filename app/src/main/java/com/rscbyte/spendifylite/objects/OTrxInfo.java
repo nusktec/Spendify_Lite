@@ -1,7 +1,5 @@
 package com.rscbyte.spendifylite.objects;
 
-import android.text.Layout;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.databinding.BaseObservable;

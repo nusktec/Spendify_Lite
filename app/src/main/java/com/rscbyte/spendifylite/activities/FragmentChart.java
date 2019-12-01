@@ -29,21 +29,22 @@ import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.databinding.ActivityFragmentChartBinding;
 import com.rscbyte.spendifylite.models.MData;
+import com.rscbyte.spendifylite.models.MProfile;
 import com.rscbyte.spendifylite.objects.OChartPage;
-import com.rscbyte.spendifylite.services.SMSService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class FragmentChart extends Fragment {
 
     //make a public variables
     private ActivityFragmentChartBinding bdx = null;
     private Activity ctx = null;
+    //Default settings
+    private MProfile mProfile = new MProfile();
 
     @Nullable
     @Override
@@ -245,20 +246,39 @@ public class FragmentChart extends Fragment {
         bdx.menuSyncSms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Objects.requireNonNull(getActivity()).stopService(new Intent(ctx, SMSService.class));
-                getActivity().startService(new Intent(ctx, SMSService.class));
-                bdx.menuSyncSms.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.rotate_infinite));
-                bdx.menuSyncSms.setEnabled(false);
-                //post delay
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        bdx.menuSyncSms.setEnabled(true);
-                        bdx.menuSyncSms.clearAnimation();
-                    }
-                }, 3000);
+                syncAction();
             }
         });
+        bdx.btnSync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                syncAction();
+            }
+        });
+    }
+
+    //auto sync.
+    private void syncAction() {
+        if (mProfile.getSms() == 0) {
+            Tools.showToast(ctx, "Please enable sms auto sync.");
+            return;
+        }
+        //Objects.requireNonNull(getActivity()).stopService(new Intent(ctx, SMSService.class));
+        //getActivity().startService(new Intent(ctx, SMSService.class));
+        bdx.menuSyncSms.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.rotate_infinite));
+        bdx.btnSync.setEnabled(false);
+        bdx.menuSyncSms.setEnabled(false);
+        Tools.showToast(ctx, "Synchronizing...");
+        //post delay
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                bdx.btnSync.setEnabled(true);
+                bdx.menuSyncSms.setEnabled(true);
+                bdx.menuSyncSms.clearAnimation();
+                Tools.showToast(ctx, "Sync completed.");
+            }
+        }, 3000);
     }
 
     //configure gauge
@@ -295,5 +315,21 @@ public class FragmentChart extends Fragment {
         }
         bdx.gauge.setValue((int) Float.parseFloat(Tools.doFloat(value)));
         bdx.gauge.setNeedleColor(getResources().getColor(R.color.orange_600));
+    }
+
+    //onResume for auto action
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //disturbed for account update
+        //check sms settings
+        MProfile check = MProfile.findById(MProfile.class, 1);
+        if (check != null) {
+            mProfile = check;
+        } else {
+            mProfile.setSms(1);
+            mProfile.setNotifications(1);
+        }
     }
 }

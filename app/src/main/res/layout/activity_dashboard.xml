@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!--Data started-->
     <data>
@@ -27,9 +27,16 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/mainViewPager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
         </LinearLayout>
+        <!--Adverts recycler-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/adsRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         <!--Divider line-->
         <View
             android:layout_width="match_parent"
@@ -64,11 +71,11 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerInParent="true"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:background="@drawable/shape_round_solid"
                 android:cropToPadding="true"
-                android:src="@drawable/ic_add"
                 android:elevation="5dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_add"
                 android:tint="@color/app_color_1" />
 
             <ImageButton

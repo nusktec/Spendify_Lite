@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.orm.SugarContext;
 import com.orm.SugarRecord;
 import com.orm.util.NamingHelper;
 import com.rscbyte.spendifylite.Utils.Constants;
@@ -46,9 +47,9 @@ public class SMSService extends Service {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public int onStartCommand(Intent intent, int flags, int startId) {
         this.act = getApplicationContext();
+        SugarContext.init(this);
         //check user settings
         tester();
         long chkUser = MProfile.count(MData.class);
@@ -58,13 +59,14 @@ public class SMSService extends Service {
             } else {
                 //check sync. settings
                 List<MProfile> data = MProfile.listAll(MProfile.class);
-                if (data.get(0).getSms() == 0) {
+                if (data.get(0).getSms() == 1) {
                     startSMSFiltering();
                 }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return START_NOT_STICKY;
     }
 
     //insert sms filtered
@@ -198,6 +200,17 @@ public class SMSService extends Service {
 
     //filter specifically
     void insertOnly(OAlerts o) {
+        //Check inbound for null
+        if (o.getBankName().equals("") ||
+                o.getMoney().equals("") ||
+                o.getDescr().equals("") ||
+                o.getMsgID().equals("") ||
+                o.getTimeStp().equals("") ||
+                o.getRawDate().equals("")) {
+            //not a valid alert
+            return;
+        }
+        //proceed to data computations
         String msgID = o.getMsgID();
         long chk = MData.count(MData.class, dbName("trxMsgID") + "=?", new String[]{msgID});
         if (chk > 0) {
@@ -225,6 +238,8 @@ public class SMSService extends Service {
         getBaseContext().getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit()
                 .putInt(Constants.SHARED_ALERT_KEY, _counter).apply();
         Log.e("Alert Saved", "Inserted " + o.getMsgID() + " : " + o.getBankName());
+        //Fire notifications
+
     }
 
     protected String dbName(String s) {
@@ -232,7 +247,7 @@ public class SMSService extends Service {
     }
 
 
-    //Completed {UBA, UNION, GTBank, Stanbic Bank, Access Bank, Zenith, Polaris, FCMB}
+    //Completed {UBA, UNION, GTBank, Stanbic Bank, Access Bank, Polaris, FCMB, Zenith}
 
 
     protected void tester() {

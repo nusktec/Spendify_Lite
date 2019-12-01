@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="d"
+            type="com.rscbyte.spendifylite.objects.OAdverts" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/transparent"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/ad_logo"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/ic_launcher"
+            app:loader="@{d.imgUrl}" />
+
+        <TextView
+            android:id="@+id/ad_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toStartOf="@id/ad_click"
+            android:layout_toEndOf="@id/ad_logo"
+            android:paddingStart="5dp"
+            android:text="@{d.textBody, default=@string/common_google_play_services_install_title}"
+            android:textSize="13sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/ad_click"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/btn_press_opacity_tra"
+            android:paddingStart="5dp"
+            android:text="Check In"
+            android:textAllCaps="false"
+            android:textSize="13sp"
+            app:link="@{d.linkUrl}" />
+
+    </RelativeLayout>
+
+</layout>

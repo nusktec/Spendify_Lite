@@ -1,10 +1,10 @@
 package com.rscbyte.spendifylite.objects;
 
 public class OAlerts {
-    private String money = "0.00";
-    private String descr = "No desc";
-    private String timeStp = "000000000";
-    private String msgID = "0";
+    private String money = "";
+    private String descr = "";
+    private String timeStp = "";
+    private String msgID = "";
     private String rawDate = "";
     private String bankName = "";
     private int mode = 2;

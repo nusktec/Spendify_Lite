@@ -84,7 +84,7 @@ public class FragmentList extends Fragment {
             oData1.setTitle(md.getTrxType() == 1 ? "Credit" : "Debit");
             oData1.setDay(md.getTrxDay());
             oData1.setDesc(md.getTrxDesc());
-            oData1.setValue(String.valueOf(Constants.getCurrency() + nf.format(Double.valueOf(md.getTrxValue()))));
+            oData1.setValue(Constants.getCurrency() + nf.format(Double.valueOf(md.getTrxValue())));
             oData1.setYear(md.getTrxYear());
             oData1.setMonth(md.getTrxMonth());
             oData1.setDate(md.getTrxDate());
@@ -205,16 +205,20 @@ public class FragmentList extends Fragment {
                     @Override
                     public void onOkay() {
                         MData mData = data.getmData();
-                        mData.setTrxDate(Tools.getFormattedDateSimple());
-                        mData.setTrxYear(String.valueOf(Tools.getYear()));
-                        mData.setTrxMonth(String.valueOf(Tools.getMonth()));
-                        mData.setTrxDay(String.valueOf(Tools.getDay()));
-                        mData.setId(null);
-                        SugarRecord.save(mData);
-                        Tools.showToast(ctx, "Transaction duplicated");
-                        dialog.dismiss();
-                        main();
-                        Objects.requireNonNull(getActivity()).recreate();
+                        if (mData.getTrxSrc() == 1) {
+                            mData.setTrxDate(Tools.getFormattedDateSimple());
+                            mData.setTrxYear(String.valueOf(Tools.getYear()));
+                            mData.setTrxMonth(String.valueOf(Tools.getMonth()));
+                            mData.setTrxDay(String.valueOf(Tools.getDay()));
+                            mData.setId(null);
+                            SugarRecord.save(mData);
+                            Tools.showToast(ctx, "Transaction duplicated");
+                            dialog.dismiss();
+                            main();
+                            Objects.requireNonNull(getActivity()).recreate();
+                        } else {
+                            Tools.showToast(ctx, "Cannot duplicate alert");
+                        }
                     }
                 }, "Duplicate", "Want to duplicate this transaction ?. Today's date will be used in place");
             }
