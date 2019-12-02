@@ -29,10 +29,8 @@ public class MSms {
         Cursor c = cr.query(message, null, null, null, null);
         //activity.startManagingCursor(c);
         assert c != null;
-        int totalSMS = c.getCount();
-
         if (c.moveToFirst()) {
-            for (int i = 0; i < totalSMS; i++) {
+            for (c.moveToLast(); !c.isBeforeFirst(); c.moveToPrevious()) {
                 OSms objSms = new OSms();
                 if (c.getString(c.getColumnIndexOrThrow("type")).contains("1")) {
                     objSms.setId(c.getString(c.getColumnIndexOrThrow("_id")));
@@ -45,7 +43,6 @@ public class MSms {
                     objSms.setSmsType(1);
                 }
                 lstSms.add(objSms);
-                c.moveToNext();
             }
         }
         // else {

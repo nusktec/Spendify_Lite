@@ -776,28 +776,28 @@ public class Tools {
     }
 
 
-    public static void showPickerLight(Activity activity, final getDateItemsClick ItemsClick) {
+    public static void showPickerLight(final Activity activity, final getDateItemsClick ItemsClick) {
         Calendar cur_calender = Calendar.getInstance();
         DatePickerDialog datePicker = DatePickerDialog.newInstance(
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar calendar = Calendar.getInstance();
+                        calendar.add(Calendar.MONTH, dayOfMonth + 1);
                         calendar.set(Calendar.YEAR, year);
                         calendar.set(Calendar.MONTH, monthOfYear);
-                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                         long date_ship_millis = calendar.getTimeInMillis();
                         //((TextView) findViewById(R.id.result)).setText(Tools.getFormattedDateSimple(date_ship_millis));
-                        int m = monthOfYear + 1;
+                        //int m = monthOfYear + 1;
                         ItemsClick.getString(Tools.getFormattedDateSimple());
-                        ItemsClick.getDate(year, (m > 12) ? 12 : m, dayOfMonth);
+                        //ItemsClick.getDate(year, (m > 12) ? 12 : m, dayOfMonth);
+                        Tools.showToast(activity, monthOfYear + "");
                     }
                 },
                 cur_calender.get(Calendar.YEAR),
                 cur_calender.get(Calendar.MONTH),
-                cur_calender.get(Calendar.DAY_OF_MONTH)
+                cur_calender.get(Calendar.MONTH + 1)
         );
-
 
         //set dark light
         datePicker.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -810,7 +810,6 @@ public class Tools {
         datePicker.setAccentColor(activity.getResources().getColor(R.color.colorPrimary));
         //datePicker.setMinDate(cur_calender);
         datePicker.show(activity.getFragmentManager(), "Datepickerdialog");
-
     }
 
     //message dialog

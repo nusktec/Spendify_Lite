@@ -144,10 +144,10 @@ public class FragmentList extends Fragment {
 
     //start searching in database
     void searchDataBase(String keyWords) {
-        List<MData> md = Select.from(MData.class).where(Condition.prop("TRX_DATE").eq(keyWords)).list();
+        List<MData> md = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(keyWords)).or(Condition.prop("TRX_STP").eq(keyWords)).list();
         mData = md;
         aSimpleList.notifyDataSetChanged();
-        Tools.showToast(ctx, "Searching...");
+        Tools.showToast(ctx, "Searching month range...");
     }
 
     //surface clicked

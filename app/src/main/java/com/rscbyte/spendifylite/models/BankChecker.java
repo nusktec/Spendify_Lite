@@ -140,7 +140,12 @@ public class BankChecker {
                 //do each line
                 try {
                     if (i.substring(0, 3).toUpperCase().equals("AMT")) {
-                        String split[] = (i + " DR PathData").split("DR");
+                        String split[];
+                        if (i.contains("DR")) {
+                            split = (i + " DR PathData").split("DR");
+                        } else {
+                            split = (i + " DR PathData").split("CR");
+                        }
                         String value1 = split[0], value2 = split[1];
                         value1 = value1.replaceAll("[^\\d.]", "");
                         if (Tools.stringContainsNumber(value2)) {
@@ -152,7 +157,7 @@ public class BankChecker {
                         Float money = Float.parseFloat(value1) + Float.parseFloat(value2);
                         oAlerts.setMoney(money + "");
                     }
-                } catch (ArrayIndexOutOfBoundsException arr) {
+                } catch (NullPointerException arr) {
                     //print error
                     arr.printStackTrace();
                 }
@@ -291,9 +296,9 @@ public class BankChecker {
         //algorithms shuffler
         OAlerts oAlerts = new OAlerts();
         try {
-            if (sms.getMsg().toUpperCase().contains("DR")) {
+            if (sms.getMsg().toUpperCase().contains("DR AMT")) {
                 oAlerts.setMode(2);
-            } else if (sms.getMsg().toUpperCase().contains("CR")) {
+            } else if (sms.getMsg().toUpperCase().contains("CR AMT")) {
                 oAlerts.setMode(1);
             } else {
                 return;
@@ -302,11 +307,11 @@ public class BankChecker {
             String[] body = sms.getMsg().split("[\\r?\\n]+");
             for (String i : body) {
                 //do each line
-                if (i.substring(0, 6).toUpperCase().equals("DR AMT")) {
+                if (i.substring(0, 6).toUpperCase().equals("DR AMT") || i.substring(0, 6).toUpperCase().equals("CR AMT")) {
                     oAlerts.setMoney(i.replaceAll("[^\\d.]", ""));
                 }
                 if (i.substring(0, 2).toUpperCase().equals("DT")) {
-                    oAlerts.setDescr(i.split(":")[1]);
+                    oAlerts.setDescr(sms.getMsg().split("Bal")[0]);
                 }
                 String tmpdate = Tools.timeStampStr(Long.parseLong(sms.getTime()));
                 oAlerts.setRawDate(tmpdate);

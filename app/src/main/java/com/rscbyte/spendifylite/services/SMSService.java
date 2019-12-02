@@ -11,7 +11,6 @@ import com.orm.SugarRecord;
 import com.orm.util.NamingHelper;
 import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
-import com.rscbyte.spendifylite.activities.Dashboard;
 import com.rscbyte.spendifylite.models.BankChecker;
 import com.rscbyte.spendifylite.models.MData;
 import com.rscbyte.spendifylite.models.MProfile;
@@ -26,15 +25,16 @@ public class SMSService extends Service {
     private static final String UBA_BANK = "8164242320"; //"UBA" //Revelation;
     private static final String ACCESS_BANK = "8175868104";//"ACCESS"; // sweetness friend
     private static final String UNION_BANK = "7011278753";//"UNION" //Sweetness;
-    private static final String FIDELITY_BANK = "FIDELITY";
     private static final String GT_BANK = "9090232814"; //"GTBANK"; //Vera
     private static final String POLARIS_BANK = "8108032812";//"POLARIS"; //Bridget Friend
     private static final String FCMB_BANK = "8149384264"; //"FCMB"; //Bridget
     private static final String STANBIC_BANK = "7036877205"; //"STANBIC"; //Sweetness frend 2
-    private static final String ZENITH_BANK = "9073555666"; //"ZENITH"; //Reve2
+    private static final String ZENITH_BANK = "ZENITH"; //"ZENITH"; //Reve2
     private static final String KEYSTONE_BANK = "9051676263"; //"KEYSTONE"; //Rooth
     private static final String FIRST_BANK = "FIRST_BANK";
     private static final String ECO_BANK = "ECOBANK";
+    private static final String FIDELITY_BANK = "FIDELITY";
+    private static final String HERITAGE_BANK = "HERITAGE";
 
     private Context act;
     private MProfile mProfile;
@@ -56,7 +56,6 @@ public class SMSService extends Service {
         //check user settings
         tester();
         MProfile chkUser = MProfile.findById(MProfile.class, 1);
-        Log.e("dcsjdhvsjkfbisdbfsbdnf", chkUser + "");
         try {
             if (chkUser == null) {
                 startSMSFiltering();
@@ -213,6 +212,10 @@ public class SMSService extends Service {
             //EcoBank Algorithms
 
         }
+        if (sms.getAddress().toUpperCase().contains(HERITAGE_BANK)) {
+            //EcoBank Algorithms
+
+        }
     }
 
     private int _counter = 0;
@@ -258,9 +261,9 @@ public class SMSService extends Service {
                 .putInt(Constants.SHARED_ALERT_KEY, _counter).apply();
         Log.e("Alert Saved", "Inserted " + o.getMsgID() + " : " + o.getBankName());
         //Fire notifications
-        if (mProfile == null || mProfile.getNotifications() == 1) {
-            Tools.Notification(act, "New Bank Alert", "SMS Synchronized", _counter + " alert(s) were synchronized just now, tap to view", 1, Dashboard.class, "No Data");
-        }
+//        if (mProfile == null || mProfile.getNotifications() == 1) {
+//            Tools.Notification(act, "New Bank Alert", "SMS Synchronized", _counter + " Alert(s) were synchronized just now, tap to view", 1, Dashboard.class, "No Data");
+//        }
     }
 
     protected String dbName(String s) {
@@ -268,7 +271,7 @@ public class SMSService extends Service {
     }
 
 
-    //Completed {UBA, UNION, GTBank, Stanbic Bank, Access Bank, Polaris, FCMB, Zenith, Keystone}
+    //Completed {UBA, UNION, GTBank, Stanbic Bank, Access Ban˚k, Polaris, FCMB, Zenith, Keystone}
 
 
     protected void tester() {

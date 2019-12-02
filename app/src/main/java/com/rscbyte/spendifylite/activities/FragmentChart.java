@@ -71,10 +71,14 @@ public class FragmentChart extends Fragment {
         });
         //set today's time
         bdx.txtTimeNow.setText("Summary as of " + Tools.getFormattedDateSimple());
-        //print chart
-        printChart();
-        //initialize
-        initComponents();
+        try {
+            //print chart
+            printChart();
+            //initialize
+            initComponents();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 
@@ -122,15 +126,12 @@ public class FragmentChart extends Fragment {
         Map<String, Float> tmpValue = new HashMap<>();
         //get 3 months way back
         long passedMonth = Long.parseLong(Tools.getVariesTimeStamp(-4));
-        /**
-         * Upper algorithms is intent, will not be used for any at this point
-         */
         //iterate last 3 month expense data
         float _spent_for_the_month = 0;
         String _month_name = "";
         int month_changes = 0;
         float _moving_average = 0;
-        Select select = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(passedMonth)).and(Condition.prop("TRX_MONTH").notEq(Tools.getMonth())).limit(String.valueOf(Tools.getMonth()));
+        Select select = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(passedMonth)).and(Condition.prop("TRX_MONTH").notEq(Tools.getMonth()));
         List<MData> mData = select.list();
         for (MData t : mData) {
             //check for data different
