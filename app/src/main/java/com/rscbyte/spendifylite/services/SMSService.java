@@ -11,6 +11,7 @@ import com.orm.SugarRecord;
 import com.orm.util.NamingHelper;
 import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
+import com.rscbyte.spendifylite.activities.Dashboard;
 import com.rscbyte.spendifylite.models.BankChecker;
 import com.rscbyte.spendifylite.models.MData;
 import com.rscbyte.spendifylite.models.MProfile;
@@ -36,6 +37,7 @@ public class SMSService extends Service {
     private static final String ECO_BANK = "ECOBANK";
 
     private Context act;
+    private MProfile mProfile;
 
     public SMSService() {
     }
@@ -53,14 +55,18 @@ public class SMSService extends Service {
         SugarContext.init(this);
         //check user settings
         tester();
-        long chkUser = MProfile.count(MData.class);
+        MProfile chkUser = MProfile.findById(MProfile.class, 1);
+        Log.e("dcsjdhvsjkfbisdbfsbdnf", chkUser + "");
         try {
-            if (chkUser == 0) {
+            if (chkUser == null) {
                 startSMSFiltering();
             } else {
                 //check sync. settings
-                List<MProfile> data = MProfile.listAll(MProfile.class);
-                if (data.get(0).getSms() == 1) {
+                MProfile data = MProfile.findById(MProfile.class, 1);
+                if (data != null) {
+                    mProfile = data;
+                }
+                if ((data != null ? data.getSms() : 0) == 1) {
                     startSMSFiltering();
                 }
             }
@@ -77,7 +83,7 @@ public class SMSService extends Service {
         for (OSms ms : oSmsList) {
             try {
                 checkBankAndInsert(ms);
-            } catch (NullPointerException npe) {
+            } catch (Exception npe) {
                 //keep silence
                 //Log.e("No Data", "One data escaped...");
                 npe.printStackTrace();
@@ -252,7 +258,9 @@ public class SMSService extends Service {
                 .putInt(Constants.SHARED_ALERT_KEY, _counter).apply();
         Log.e("Alert Saved", "Inserted " + o.getMsgID() + " : " + o.getBankName());
         //Fire notifications
-
+        if (mProfile == null || mProfile.getNotifications() == 1) {
+            Tools.Notification(act, "New Bank Alert", "SMS Synchronized", _counter + " alert(s) were synchronized just now, tap to view", 1, Dashboard.class, "No Data");
+        }
     }
 
     protected String dbName(String s) {

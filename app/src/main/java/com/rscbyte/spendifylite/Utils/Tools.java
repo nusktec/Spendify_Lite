@@ -714,7 +714,7 @@ public class Tools {
 
         PendingIntent pendingIntent = null;
         if (aClass != null) {
-            Intent intent = new Intent(context, aClass).putExtra("meta-data", meta_data);
+            Intent intent = new Intent(context, aClass).putExtra("data", meta_data);
             // Creating a pending intent and wrapping our intent
             pendingIntent = PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         } else {
