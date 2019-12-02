@@ -2,6 +2,7 @@ package com.rscbyte.spendifylite.Utils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -840,6 +841,18 @@ public class Tools {
         //display info
         dialog.show();
         dialog.getWindow().setAttributes(lp);
+    }
+
+    //service runner
+    public static boolean isMyServiceRunning(Context ctx, Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
+        assert manager != null;
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

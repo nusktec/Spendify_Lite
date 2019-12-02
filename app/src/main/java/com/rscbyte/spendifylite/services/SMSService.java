@@ -3,6 +3,7 @@ package com.rscbyte.spendifylite.services;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -11,6 +12,7 @@ import com.orm.SugarRecord;
 import com.orm.util.NamingHelper;
 import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
+import com.rscbyte.spendifylite.activities.Dashboard;
 import com.rscbyte.spendifylite.models.BankChecker;
 import com.rscbyte.spendifylite.models.MData;
 import com.rscbyte.spendifylite.models.MProfile;
@@ -22,15 +24,15 @@ import java.util.Calendar;
 import java.util.List;
 
 public class SMSService extends Service {
-    private static final String UBA_BANK = "8164242320"; //"UBA" //Revelation;
-    private static final String ACCESS_BANK = "8175868104";//"ACCESS"; // sweetness friend
-    private static final String UNION_BANK = "7011278753";//"UNION" //Sweetness;
-    private static final String GT_BANK = "9090232814"; //"GTBANK"; //Vera
-    private static final String POLARIS_BANK = "8108032812";//"POLARIS"; //Bridget Friend
-    private static final String FCMB_BANK = "8149384264"; //"FCMB"; //Bridget
-    private static final String STANBIC_BANK = "7036877205"; //"STANBIC"; //Sweetness frend 2
+    private static final String UBA_BANK = "UBA"; //"8164242320" //Revelation;
+    private static final String ACCESS_BANK = "ACCESS";//"8175868104"; // sweetness friend
+    private static final String UNION_BANK = "UNION";//"7011278753" //Sweetness;
+    private static final String GT_BANK = "GTBANK"; //"9090232814"; //Vera
+    private static final String POLARIS_BANK = "POLARIS";//"8108032812"; //Bridget Friend
+    private static final String FCMB_BANK = "FCMB"; //"8149384264"; //Bridget
+    private static final String STANBIC_BANK = "STANBIC"; //"7036877205"; //Sweetness frend 2
     private static final String ZENITH_BANK = "ZENITH"; //"ZENITH"; //Reve2
-    private static final String KEYSTONE_BANK = "9051676263"; //"KEYSTONE"; //Rooth
+    private static final String KEYSTONE_BANK = "KEYSTONE"; //"9051676263"; //Rooth
     private static final String FIRST_BANK = "FIRST_BANK";
     private static final String ECO_BANK = "ECOBANK";
     private static final String FIDELITY_BANK = "FIDELITY";
@@ -88,6 +90,7 @@ public class SMSService extends Service {
                 npe.printStackTrace();
             }
         }
+        //synchronizing is completed
     }
 
     //void do banking format and insert
@@ -261,9 +264,9 @@ public class SMSService extends Service {
                 .putInt(Constants.SHARED_ALERT_KEY, _counter).apply();
         Log.e("Alert Saved", "Inserted " + o.getMsgID() + " : " + o.getBankName());
         //Fire notifications
-//        if (mProfile == null || mProfile.getNotifications() == 1) {
-//            Tools.Notification(act, "New Bank Alert", "SMS Synchronized", _counter + " Alert(s) were synchronized just now, tap to view", 1, Dashboard.class, "No Data");
-//        }
+        if (mProfile == null || mProfile.getNotifications() == 1) {
+            Tools.Notification(act, "New Bank Alert", "SMS Synchronized", _counter + " Alert(s) were synchronized just now, tap to view", 1, Dashboard.class, "No Data");
+        }
     }
 
     protected String dbName(String s) {
