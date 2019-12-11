@@ -29,7 +29,7 @@ public class Permissions extends AppCompatActivity {
         this.ctx = this;
         this.bdx = DataBindingUtil.setContentView(ctx, R.layout.activity_permission);
         //apply associated layout
-        Tools.setSystemBarColor(ctx, R.color.app_color_1);
+        Tools.setSystemBarColor(ctx, R.color.app_color_1Dp);
         initControls();
     }
 

@@ -30,7 +30,7 @@
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="5dp"
                 android:clipChildren="false"
-                android:elevation="2dp"
+                android:elevation="0dp"
                 android:paddingHorizontal="5dp">
 
                 <ImageButton
@@ -72,9 +72,9 @@
             <!--Divider line-->
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="1px"
                 android:background="@color/app_color_1_1_0"
-                android:elevation="1dp" />
+                android:elevation="0px" />
 
             <!--Main content-->
             <LinearLayout
@@ -98,30 +98,30 @@
                         android:text="Summary as of"
                         android:textAllCaps="false"
                         android:textColor="@color/grey_500"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
                     <!--control base-->
                     <HorizontalScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:divider="@drawable/divider_width"
                             android:dividerPadding="10dp"
                             android:gravity="center_vertical|center"
                             android:orientation="horizontal"
-                            android:padding="10dp"
+                            android:padding="2dp"
                             android:showDividers="middle">
                             <!--Summary control-->
                             <!--Typical text-->
                             <androidx.cardview.widget.CardView
-                                android:layout_width="120dp"
-                                android:layout_height="60dp"
-                                android:clipChildren="true"
+                                android:layout_width="130dp"
+                                android:layout_height="50dp"
                                 app:cardBackgroundColor="@color/app_color_1_1"
-                                app:cardCornerRadius="10dp"
-                                app:cardElevation="2dp">
+                                app:cardCornerRadius="2dp"
+                                app:cardElevation="1dp">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -138,7 +138,7 @@
                                         android:text="@{d.txtTypical, default=`0.00`}"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
-                                        android:textSize="18sp"
+                                        android:textSize="13sp"
                                         android:textStyle="bold" />
 
                                     <TextView
@@ -148,19 +148,19 @@
                                         android:text="Typical"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
-                                        android:textSize="13sp" />
+                                        android:textSize="12sp" />
 
                                 </LinearLayout>
 
                             </androidx.cardview.widget.CardView>
                             <!--Below typical text-->
                             <androidx.cardview.widget.CardView
-                                android:layout_width="120dp"
-                                android:layout_height="60dp"
+                                android:layout_width="130dp"
+                                android:layout_height="50dp"
                                 android:clipChildren="true"
                                 app:cardBackgroundColor="@color/app_color_1_1"
-                                app:cardCornerRadius="10dp"
-                                app:cardElevation="2dp">
+                                app:cardCornerRadius="2dp"
+                                app:cardElevation="1dp">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -176,7 +176,7 @@
                                         android:layout_gravity="center"
                                         android:text="@{d.txtBelowTypical, default=`0.00`}"
                                         android:textAllCaps="false"
-                                        android:textSize="18sp"
+                                        android:textSize="13sp"
                                         android:textStyle="bold"
                                         app:color="@{d.txtColor, default=@color/grey_500}" />
 
@@ -186,7 +186,7 @@
                                         android:layout_gravity="center"
                                         android:text="@{d.txtVariesTyical, default=`Below Typical`}"
                                         android:textAllCaps="false"
-                                        android:textSize="13sp"
+                                        android:textSize="12sp"
                                         app:color="@{d.txtColor, default=@color/grey_500}" />
 
                                 </LinearLayout>
@@ -194,12 +194,12 @@
                             </androidx.cardview.widget.CardView>
                             <!--Spent so far-->
                             <androidx.cardview.widget.CardView
-                                android:layout_width="120dp"
-                                android:layout_height="60dp"
+                                android:layout_width="130dp"
+                                android:layout_height="50dp"
                                 android:clipChildren="true"
                                 app:cardBackgroundColor="@color/app_color_1_1"
-                                app:cardCornerRadius="10dp"
-                                app:cardElevation="2dp">
+                                app:cardCornerRadius="2dp"
+                                app:cardElevation="1dp">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -216,7 +216,7 @@
                                         android:text="@{d.txtSpentSoFar, default=`0.00`}"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
-                                        android:textSize="18sp"
+                                        android:textSize="13sp"
                                         android:textStyle="bold" />
 
                                     <TextView
@@ -226,13 +226,94 @@
                                         android:text="Spent So Far"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
-                                        android:textSize="13sp" />
+                                        android:textSize="12sp" />
 
                                 </LinearLayout>
 
                             </androidx.cardview.widget.CardView>
                         </LinearLayout>
                     </HorizontalScrollView>
+
+                    <!--Moving average as of today's date-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="2dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/app_color_1_1"
+                            app:cardCornerRadius="2dp"
+                            app:cardElevation="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="Moving Average"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/grey_500"
+                                    android:textSize="18sp"
+                                    app:color="@{d.txtColor2, default=@color/grey_500}" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="3 Months Typical"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/grey_500"
+                                    android:textSize="13sp"
+                                    app:color="@{d.txtColor2, default=@color/grey_500}" />
+
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/app_color_1_1"
+                            app:cardCornerRadius="2dp"
+                            app:cardElevation="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <TextView
+                                    android:id="@+id/txt_mtypical"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="@{d.txtTypical2, default=`0.00`}"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/grey_500"
+                                    android:textSize="23sp"
+                                    android:textStyle="bold"
+                                    app:color="@{d.txtColor2, default=@color/grey_500}" />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <!--Top switch menu-->
@@ -247,12 +328,12 @@
                     android:padding="5dp">
 
                     <TextView
-                        android:textSize="12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
                         android:text="@{`Income, This month: `+d.txtIncomeThisM, default=`Income, This month: `}"
-                        android:textColor="@color/grey_600" />
+                        android:textColor="@color/grey_600"
+                        android:textSize="12sp" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnSwap"
@@ -270,7 +351,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="310dp"
+                    android:layout_height="260dp"
                     android:layout_marginTop="-20dp"
                     android:layout_weight="1">
                     <!--Chart base-->
@@ -307,7 +388,7 @@
                         android:text="@{d.txtStatement, default=`Remarks statements...`}"
                         android:textAllCaps="false"
                         android:textColor="@color/grey_500"
-                        android:textSize="13sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -319,6 +400,7 @@
                         android:textAllCaps="false"
                         android:textColor="@color/grey_500"
                         android:textSize="13sp"
+                        android:visibility="gone"
                         tools:ignore="HardcodedText" />
 
                 </LinearLayout>

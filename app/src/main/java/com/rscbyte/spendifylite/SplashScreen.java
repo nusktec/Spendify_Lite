@@ -28,7 +28,7 @@ public class SplashScreen extends AppCompatActivity {
         //initialize suger orm
         SugarContext.init(this);
         //set toolbar for mobile
-        Tools.setSystemBarColor(this, R.color.app_color_1);
+        Tools.setSystemBarColor(this, R.color.app_color_1Dp);
         //check for permission
         new Handler().postDelayed(new Runnable() {
             @Override

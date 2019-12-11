@@ -134,6 +134,10 @@ public class FragmentChart extends Fragment {
         Select select = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(passedMonth)).and(Condition.prop("TRX_MONTH").notEq(Tools.getMonth()));
         List<MData> mData = select.list();
         for (MData t : mData) {
+            //check date and break
+            if (Integer.parseInt(t.getTrxDay()) > Tools.getDay()) {
+                break;
+            }
             //check for data different
             if (month_changes == 0) {
                 month_changes = Integer.parseInt(t.getTrxMonth());
@@ -168,6 +172,7 @@ public class FragmentChart extends Fragment {
             }
         }
 
+
         //solve for typical
         float _typicalSolve = (_moving_average / 3);
         //solve for differences
@@ -191,9 +196,24 @@ public class FragmentChart extends Fragment {
             }
         }
 
+
+        //fetch strictly on moving date
+        float _moving_average3 = 0;
+        Select select3 = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(passedMonth)).and(Condition.prop("TRX_MONTH").notEq(Tools.getMonth()));
+        List<MData> mData3 = select3.list();
+        for (MData t : mData3) {
+            //check for debit data only
+            if (t.getTrxType() == 2) {
+                //add to map
+                _moving_average3 += Float.parseFloat(t.getTrxValue());
+            }
+        }
+
+
         //start assignment
         bdx.getD().setTxtSpentSoFar(Constants.getCurrency() + Tools.doCuurency(_spent_so_far)); //display spent so far
-        bdx.getD().setTxtTypical(Constants.getCurrency() + Tools.doCuurency(_typicalSolve)); //display typical
+        bdx.getD().setTxtTypical2(Constants.getCurrency() + Tools.doCuurency(_moving_average3 / 3)); //display typical 3 months
+        bdx.getD().setTxtTypical(Constants.getCurrency() + Tools.doCuurency(_typicalSolve)); //display typical 3 months
         bdx.getD().setTxtBelowTypical(Constants.getCurrency() + Tools.doCuurency(Math.abs(_variesTypical))); //below typical
         bdx.getD().setTxtIncomeThisM(Constants.getCurrency() + Tools.doCuurency(Math.abs(_income_this_month))); //this months
         //prepare chart

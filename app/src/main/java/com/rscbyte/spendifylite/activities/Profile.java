@@ -75,7 +75,7 @@ public class Profile extends AppCompatActivity {
     //set header and toolbar
     @SuppressLint("SetTextI18n")
     public void initToolBar() {
-        Tools.setSystemBarColor(ctx, R.color.app_color_1);
+        Tools.setSystemBarColor(ctx, R.color.app_color_1Dp);
         bdx.toolbarTitle.setText("Account Settings");
         //left btn initializer
         bdx.toolbarLeftBtn.setOnClickListener(new View.OnClickListener() {

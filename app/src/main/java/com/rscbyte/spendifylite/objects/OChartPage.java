@@ -11,12 +11,14 @@ import com.rscbyte.spendifylite.R;
 public class OChartPage extends BaseObservable {
 
     private String txtTypical = "0.00";
+    private String txtTypical2 = "0.00";
     private String txtBelowTypical = "0.00";
     private String txtSpentSoFar = "0.00";
     private String txtStatement = "Your monthly remarks";
-    private String txtVariesTyical = "Determined";
+    private String txtVariesTyical = "Balance";
     private String txtIncomeThisM = "Income, this months";
     private int txtColor = R.color.green_500;
+    private int txtColor2 = R.color.grey_500;
 
     public OChartPage() {
     }
@@ -80,5 +82,21 @@ public class OChartPage extends BaseObservable {
 
     public void setTxtIncomeThisM(String txtIncomeThisM) {
         this.txtIncomeThisM = txtIncomeThisM;
+    }
+
+    public String getTxtTypical2() {
+        return txtTypical2;
+    }
+
+    public void setTxtTypical2(String txtTypical2) {
+        this.txtTypical2 = txtTypical2;
+    }
+
+    public int getTxtColor2() {
+        return txtColor2;
+    }
+
+    public void setTxtColor2(int txtColor2) {
+        this.txtColor2 = txtColor2;
     }
 }

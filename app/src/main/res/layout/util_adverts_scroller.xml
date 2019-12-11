@@ -10,10 +10,9 @@
     </data>
 
     <RelativeLayout
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/transparent"
-        android:orientation="horizontal"
         android:padding="5dp">
 
         <ImageView
@@ -39,6 +38,7 @@
             android:textSize="13sp" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:visibility="gone"
             android:id="@+id/ad_click"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

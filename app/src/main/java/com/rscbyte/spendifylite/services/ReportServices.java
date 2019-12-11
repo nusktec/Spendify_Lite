@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 
 public class ReportServices extends Service {
 
+    //Good morning Rev....Your total expense is N71,000 as of yesterday! Spend Wisely!
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {

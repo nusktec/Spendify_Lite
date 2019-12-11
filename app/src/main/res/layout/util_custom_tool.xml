@@ -33,7 +33,7 @@
                 android:text="Toast text"
                 android:textStyle="bold"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textColor="@color/app_color_1_1_0" />
+                android:textColor="@color/app_color_1Dp" />
 
         </RelativeLayout>
 

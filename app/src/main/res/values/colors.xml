@@ -308,7 +308,7 @@
     <color name="grey_200">#EEEEEE</color>
     <color name="grey_300">#E0E0E0</color>
     <color name="grey_400">#BDBDBD</color>
-    <color name="grey_500">#9E9E9E</color>
+    <color name="grey_500">#2A2E43</color>
     <color name="grey_600">#757575</color>
     <color name="grey_700">#616161</color>
     <color name="grey_800">#424242</color>
@@ -335,13 +335,24 @@
     </array>
 
     <!--Spendify Color-->
+<!--    <color name="transparent">#0018ABDB</color>-->
+<!--    <color name="app_color_1">#2A2E43</color>-->
+<!--    <color name="app_color_1_1">#181A27</color>-->
+<!--    <color name="app_color_1_1_0">#292D41</color>-->
+<!--    <color name="app_color_2">#FFB900</color>-->
+<!--    <color name="app_color_2_1">#CE9603</color>-->
+<!--    <color name="app_color_3">#fbfcfe</color>-->
+<!--    <color name="app_color_focus">#262A3D</color>-->
+<!--    <color name="app_color_press">#262A3D</color>-->
+
+    <color name="app_color_1Dp">#2A2E43</color>
     <color name="transparent">#0018ABDB</color>
-    <color name="app_color_1">#2A2E43</color>
-    <color name="app_color_1_1">#181A27</color>
-    <color name="app_color_1_1_0">#292D41</color>
+    <color name="app_color_1">#EBECEE</color>
+    <color name="app_color_1_1">#F2F2F5</color>
+    <color name="app_color_1_1_0">#BABBBD</color>
     <color name="app_color_2">#FFB900</color>
     <color name="app_color_2_1">#CE9603</color>
     <color name="app_color_3">#fbfcfe</color>
-    <color name="app_color_focus">#262A3D</color>
-    <color name="app_color_press">#262A3D</color>
+    <color name="app_color_focus">#F6F6FA</color>
+    <color name="app_color_press">#F1F1F3</color>
 </resources>

@@ -27,7 +27,7 @@
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/bg_toolbar_header"
-                android:elevation="2dp"
+                android:elevation="0dp"
                 android:paddingHorizontal="5dp">
 
                 <ImageButton

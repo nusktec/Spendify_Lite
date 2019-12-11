@@ -40,9 +40,9 @@
         <!--Divider line-->
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="1px"
             android:background="@color/app_color_1_1_0"
-            android:elevation="1dp" />
+            android:elevation="1px" />
         <!--footer view-->
         <RelativeLayout
             android:layout_width="match_parent"

@@ -15,7 +15,7 @@ public class MData extends SugarRecord {
     //split year
     private String trxYear;
     private String trxMonth;
-    private String trxDay;
+    private long trxDay;
     private long trxSTP;
     private String trxBankName;
     @Unique
@@ -84,11 +84,11 @@ public class MData extends SugarRecord {
     }
 
     public String getTrxDay() {
-        return trxDay;
+        return String.valueOf(trxDay);
     }
 
     public void setTrxDay(String trxDay) {
-        this.trxDay = trxDay;
+        this.trxDay = Integer.parseInt(trxDay);
     }
 
     public long getTrxSTP() {
