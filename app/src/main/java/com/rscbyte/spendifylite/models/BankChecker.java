@@ -442,3 +442,4 @@ public class BankChecker {
     public interface MoneyBack {
         void isMoney(Boolean isOkay, OAlerts oa);
     }
+}

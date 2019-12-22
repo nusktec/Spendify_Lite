@@ -116,6 +116,7 @@ public class Dashboard extends AppCompatActivity {
     boolean isAdsAvailable = false;
 
     private void getAdverts() {
+        runnable.run();
         List<OAdverts> alists = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             OAdverts a = new OAdverts();
