@@ -19,7 +19,6 @@ import com.rscbyte.spendifylite.models.MProfile;
 import com.rscbyte.spendifylite.models.MSms;
 import com.rscbyte.spendifylite.objects.OAlerts;
 import com.rscbyte.spendifylite.objects.OSms;
-
 import java.util.Calendar;
 import java.util.List;
 

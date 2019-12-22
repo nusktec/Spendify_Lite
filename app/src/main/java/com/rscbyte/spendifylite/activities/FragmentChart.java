@@ -37,7 +37,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class FragmentChart extends Fragment {
 
@@ -95,9 +94,9 @@ public class FragmentChart extends Fragment {
         prepareChart();
         pieDataSet = new PieDataSet(pieEntries, "");
         pieData = new PieData(pieDataSet);
-        pieChart.setCenterText("Spendify\nExpense");
+        pieChart.setCenterText("Your Monthly\nExpense");
         pieChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
-        pieChart.setCenterTextColor(getResources().getColor(R.color.app_color_1));
+        pieChart.setCenterTextColor(getResources().getColor(R.color.app_color_1Dp));
         pieChart.setVerticalFadingEdgeEnabled(true);
         pieChart.setData(pieData);
         pieChart.setEntryLabelColor(getResources().getColor(R.color.grey_500));
@@ -107,7 +106,7 @@ public class FragmentChart extends Fragment {
         //apply colors
         pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
         pieDataSet.setSliceSpace(2f);
-        pieDataSet.setValueTextColor(R.color.app_color_1);
+        pieDataSet.setValueTextColor(R.color.app_color_1Dp);
         pieDataSet.setValueTextSize(13f);
         pieDataSet.setSliceSpace(5f);
         pieDataSet.setValueLinePart1Length(.5f);
@@ -164,12 +163,9 @@ public class FragmentChart extends Fragment {
         List<MData> mData2 = select2.list();
         for (MData t2 : mData2) {
             //work for the current month
-            if (t2.getTrxType() == 2) {
-                _spent_so_far += Float.parseFloat(t2.getTrxValue());
-            } else {
-                //calculations for income
-                _income_this_month += Float.parseFloat(t2.getTrxValue());
-            }
+            //calculations for income
+            if (t2.getTrxType() == 2) _spent_so_far += Float.parseFloat(t2.getTrxValue());
+            else _income_this_month += Float.parseFloat(t2.getTrxValue());
         }
 
 
@@ -188,7 +184,7 @@ public class FragmentChart extends Fragment {
             //you are below typical
             bdx.getD().setTxtVariesTyical("Below Typical");
             bdx.getD().setTxtColor(R.color.green_700);
-            bdx.getD().setTxtStatement("Fantastic spending, It's your money");
+            bdx.getD().setTxtStatement("Great expense manager");
             if (((_typicalSolve / 2) + (_typicalSolve / 4)) < _spent_so_far) {
                 //change color to yellow
                 bdx.getD().setTxtColor(R.color.yellow_600);

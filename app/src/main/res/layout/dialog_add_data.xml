@@ -21,7 +21,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/app_color_1"
+                android:background="@color/pink_500"
                 android:gravity="center"
                 android:minHeight="100dp"
                 android:orientation="vertical"
@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Description"
-                    android:textColor="@color/grey_400"
+                    android:textColor="@color/grey_500"
                     android:textSize="12sp" />
 
                 <EditText
@@ -89,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Value (Amount)"
-                    android:textColor="@color/grey_400"
+                    android:textColor="@color/grey_500"
                     android:textSize="12sp" />
 
                 <EditText
@@ -121,7 +121,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Transaction Type"
-                    android:textColor="@color/grey_400"
+                    android:textColor="@color/grey_500"
                     android:textSize="12sp" />
 
                 <RadioGroup
@@ -174,7 +174,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@color/app_color_1"
+                    android:background="@color/app_color_1Dp"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:paddingLeft="@dimen/spacing_mlarge"
                     android:paddingRight="@dimen/spacing_mlarge"

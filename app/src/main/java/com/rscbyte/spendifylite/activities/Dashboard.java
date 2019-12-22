@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -59,6 +60,13 @@ public class Dashboard extends AppCompatActivity {
         componentsInit();
         //initialize main methods
         main(_scrolled_nun);
+        //wait and run
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                checkAfter3Open();
+            }
+        }, 3000);
     }
 
     //set header and toolbar
@@ -263,5 +271,10 @@ public class Dashboard extends AppCompatActivity {
     //special db name caller
     protected String dbName(String s) {
         return NamingHelper.toSQLNameDefault(s);
+    }
+
+    //check if logged
+    private void checkAfter3Open() {
+
     }
 }

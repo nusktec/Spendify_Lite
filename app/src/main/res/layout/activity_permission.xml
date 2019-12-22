@@ -25,7 +25,7 @@
             android:background="@color/light_white">
             <!--Header Style-->
             <TextView
-                android:textColor="@color/app_color_1"
+                android:textColor="@color/app_color_1Dp"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:textAlignment="center"
@@ -36,7 +36,7 @@
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                app:lottie_colorFilter="@color/app_color_1"
+                app:lottie_colorFilter="@color/app_color_1Dp"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/lt_statistics" />
@@ -61,7 +61,7 @@
                 android:text="Spendify mobile app needs your permission to access your inbox (SMS) and your storage location for the system to work properly, remember we vowed not to share your data."
                 android:textAlignment="center"
                 android:textSize="12sp"
-                android:textColor="@color/light_white"/>
+                android:textColor="@color/app_color_1Dp"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_gravity="center"
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_woutline"
                 android:text="@string/btn_allow_access"
-                android:textColor="@color/light_white" />
+                android:textColor="@color/app_color_1Dp" />
 
         </LinearLayout>
     </LinearLayout>
