@@ -18,6 +18,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.orm.SugarRecord;
@@ -101,7 +102,19 @@ public class Dashboard extends AppCompatActivity {
         getAdverts();
     }
 
+    //global runner
+    private Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (isAdsAvailable) scrollerBanner(bdx.adsRecycler, 1);
+            handler.postDelayed(this, 3000);
+        }
+    };
     //pull adverts
+    int SCROLL_COUNT = 2;
+    boolean isAdsAvailable = false;
+
     private void getAdverts() {
         List<OAdverts> alists = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -111,8 +124,31 @@ public class Dashboard extends AppCompatActivity {
             a.setTextBody("Hello, this is my body text, Hello, this is my body text");
             alists.add(a);
         }
+        //set ads available
+        if (alists.size() > 1) isAdsAvailable = true;
         ASimpleFeeds feeds = new ASimpleFeeds(alists);
         bdx.adsRecycler.setAdapter(feeds);
+
+        //set scroller repeat here
+        bdx.adsRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerView.canScrollHorizontally(1)) {
+                    SCROLL_COUNT = -2;
+                }
+            }
+        });
+    }
+
+    //scroll banners front and back
+    void scrollerBanner(final RecyclerView recyclerView, final int count) {
+        SCROLL_COUNT++;
+        try {
+            recyclerView.smoothScrollToPosition(SCROLL_COUNT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //Add transaction box

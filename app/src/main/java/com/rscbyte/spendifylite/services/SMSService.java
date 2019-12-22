@@ -19,6 +19,7 @@ import com.rscbyte.spendifylite.models.MProfile;
 import com.rscbyte.spendifylite.models.MSms;
 import com.rscbyte.spendifylite.objects.OAlerts;
 import com.rscbyte.spendifylite.objects.OSms;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class SMSService extends Service {
     private static final String ECO_BANK = "ECOBANK";
     private static final String FIDELITY_BANK = "FIDELITY";
     private static final String HERITAGE_BANK = "HERITAGE";
+    private static final String WEMA_BANK = "WEMA";
 
     private Context act;
     private MProfile mProfile;
@@ -215,8 +217,20 @@ public class SMSService extends Service {
 
         }
         if (sms.getAddress().toUpperCase().contains(HERITAGE_BANK)) {
-            //EcoBank Algorithms
+            //Heritage Algorithms
 
+        }
+        if (sms.getAddress().toUpperCase().contains(WEMA_BANK)) {
+            //Wema bank Algorithms
+            BankChecker.wemaBank(sms, new BankChecker.MoneyBack() {
+                @Override
+                public void isMoney(Boolean isOkay, OAlerts o) {
+                    //call inserting methods
+                    if (isOkay) {
+                        insertOnly(o);
+                    }
+                }
+            });
         }
     }
 

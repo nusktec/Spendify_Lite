@@ -380,8 +380,65 @@ public class BankChecker {
         moneyBack.isMoney(true, oAlerts);
     }
 
+    //eco bank
+    public static void ecoBank(OSms sms, MoneyBack moneyBack) {
+        //algorithms shuffler
+        OAlerts oAlerts = new OAlerts();
+
+        moneyBack.isMoney(true, oAlerts);
+    }
+
+    //heritage bank
+    public static void heritageBank(OSms sms, MoneyBack moneyBack) {
+        //algorithms shuffler
+        OAlerts oAlerts = new OAlerts();
+
+        moneyBack.isMoney(true, oAlerts);
+    }
+
+    //wema bank
+    public static void wemaBank(OSms sms, MoneyBack moneyBack) {
+        //algorithms shuffler
+        OAlerts oAlerts = new OAlerts();
+        try {
+            if (sms.getMsg().toUpperCase().contains("WEMA DEBIT")) {
+                oAlerts.setMode(2);
+            } else if (sms.getMsg().toUpperCase().contains("WEMA CREDIT")) {
+                oAlerts.setMode(1);
+            } else {
+                return;
+            }
+            //it's a debit alert
+            String[] body = sms.getMsg().split("[\\r?\\n]+");
+            for (String i : body) {
+                //do each line
+                if (i.substring(0, 3).toUpperCase().equals("NGN")) {
+                    oAlerts.setMoney(i.replaceAll("[^\\d.]", ""));
+                }
+                if (i.substring(0, 4).toUpperCase().equals("DESC")) {
+                    oAlerts.setDescr(i.split(":")[1]);
+                }
+                String tmpdate = Tools.timeStampStr(Long.parseLong(sms.getTime()));
+                oAlerts.setRawDate(tmpdate);
+            }
+            oAlerts.setMsgID(sms.getId());
+            oAlerts.setTimeStp(sms.getTime());
+            oAlerts.setBankName("Keystone Bank");
+            moneyBack.isMoney(true, oAlerts);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    //fidelity bank
+    public static void temBank(OSms sms, MoneyBack moneyBack) {
+        //algorithms shuffler
+        OAlerts oAlerts = new OAlerts();
+
+        moneyBack.isMoney(true, oAlerts);
+    }
+
     //General callback interface
     public interface MoneyBack {
         void isMoney(Boolean isOkay, OAlerts oa);
     }
-}
