@@ -273,7 +273,8 @@
                                     android:text="3 Months Typical"
                                     android:textAllCaps="false"
                                     android:textColor="@color/grey_500"
-                                    android:textSize="13sp"
+                                    android:textSize="14sp"
+                                    android:visibility="gone"
                                     app:color="@{d.txtColor2, default=@color/grey_500}" />
 
 

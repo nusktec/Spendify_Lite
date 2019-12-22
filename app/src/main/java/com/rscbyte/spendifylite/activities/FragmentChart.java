@@ -205,7 +205,6 @@ public class FragmentChart extends Fragment {
             }
         }
 
-
         //start assignment
         bdx.getD().setTxtSpentSoFar(Constants.getCurrency() + Tools.doCuurency(_spent_so_far)); //display spent so far
         bdx.getD().setTxtTypical2(Constants.getCurrency() + Tools.doCuurency(_moving_average3 / 3)); //display typical 3 months
@@ -322,21 +321,23 @@ public class FragmentChart extends Fragment {
 
         bdx.gauge.setMinValue(0);
         if (value > max) {
-            bdx.gauge.setMaxValue((int) Float.parseFloat(Tools.doFloat(value)));
+            //bdx.gauge.setMaxValue((int) Float.parseFloat(Tools.doFloat(value))); //deprecated
+            bdx.gauge.setMaxValue(100); //measure in percentage
             Range rangeERed = new Range();
             rangeERed.setFrom((max));
             rangeERed.setTo(value);
             rangeERed.setColor(getResources().getColor(R.color.red_800));
             bdx.gauge.addRange(rangeERed);
         } else {
-            bdx.gauge.setMaxValue((int) Float.parseFloat(Tools.doFloat(max)));
+            //bdx.gauge.setMaxValue((int) Float.parseFloat(Tools.doFloat(max))); deprecated
+            bdx.gauge.setMaxValue(100);
         }
-        bdx.gauge.setValue((int) Float.parseFloat(Tools.doFloat(value)));
+        //bdx.gauge.setValue((int) Float.parseFloat(Tools.doFloat(value))); deprecated
+        bdx.gauge.setValue((Float.parseFloat(Tools.doFloat(value)) / (int) Float.parseFloat(Tools.doFloat(max))) * 100);  //measure in percentage
         bdx.gauge.setNeedleColor(getResources().getColor(R.color.orange_600));
     }
 
     //onResume for auto action
-
     @Override
     public void onResume() {
         super.onResume();

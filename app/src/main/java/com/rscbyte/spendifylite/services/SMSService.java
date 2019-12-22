@@ -38,6 +38,7 @@ public class SMSService extends Service {
     private static final String FIDELITY_BANK = "FIDELITY";
     private static final String HERITAGE_BANK = "HERITAGE";
     private static final String WEMA_BANK = "WEMA";
+    private static final String MOBILEMONEY = "MOBILEMONEY";
 
     private Context act;
     private MProfile mProfile;
@@ -223,6 +224,19 @@ public class SMSService extends Service {
         if (sms.getAddress().toUpperCase().contains(WEMA_BANK)) {
             //Wema bank Algorithms
             BankChecker.wemaBank(sms, new BankChecker.MoneyBack() {
+                @Override
+                public void isMoney(Boolean isOkay, OAlerts o) {
+                    //call inserting methods
+                    if (isOkay) {
+                        insertOnly(o);
+                    }
+                }
+            });
+        }
+
+        if (sms.getAddress().toUpperCase().contains(MOBILEMONEY)) {
+            //Mobile money bank Algorithms
+            BankChecker.mobileMoney(sms, new BankChecker.MoneyBack() {
                 @Override
                 public void isMoney(Boolean isOkay, OAlerts o) {
                     //call inserting methods
