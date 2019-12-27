@@ -19,8 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-
-        <!--Services for all-->
+        <activity android:name=".activities.AdvertsScreen"></activity>
+        <activity android:name=".activities.ScreenLock" /> <!-- Services for all -->
         <service
             android:name=".services.SMSService"
             android:enabled="true"
@@ -28,10 +28,8 @@
         <service
             android:name=".services.ReportServices"
             android:enabled="true"
-            android:exported="true" />
-        <!--End of services-->
-
-        <!--Broadcaster for all-->
+            android:exported="true" /> <!-- End of services -->
+        <!-- Broadcaster for all -->
         <receiver
             android:name=".broadcaster.AutoStart"
             android:enabled="true"
@@ -56,9 +54,7 @@
                 <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
-        </receiver>
-        <!--End of broadcast-->
-
+        </receiver> <!-- End of broadcast -->
         <activity android:name=".activities.FragmentList" />
         <activity android:name=".activities.FragmentChart" />
 
