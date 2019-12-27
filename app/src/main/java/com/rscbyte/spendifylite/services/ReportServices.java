@@ -1,11 +1,14 @@
 package com.rscbyte.spendifylite.services;
 
-import android.app.AlarmManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
+
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ReportServices extends Service {
 
@@ -25,12 +28,23 @@ public class ReportServices extends Service {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 
     //start circle clock
     private void circleClock() {
-        
+        Calendar date6am = Calendar.getInstance();
+        date6am.set(Calendar.HOUR_OF_DAY, 18);
+        date6am.set(Calendar.MINUTE, 0);
+
+        Timer timer = new Timer();
+
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+
+            }
+        }, date6am.getTime(), 86400000);
     }
 
     //give report every morning (6.00am)
