@@ -8,6 +8,6 @@ import android.widget.Toast;
 public class Global extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "Hello infoema", Toast.LENGTH_LONG).show();
+        //anything can happen
     }
 }

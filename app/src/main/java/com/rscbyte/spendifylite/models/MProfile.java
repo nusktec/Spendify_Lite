@@ -11,6 +11,7 @@ public class MProfile extends SugarRecord {
     private String phone = "";
     private String gender = "";
     private String quotes = "";
+    private String passcode = "";
     private int notifications = 0;
     private int sms = 0;
 
@@ -75,5 +76,13 @@ public class MProfile extends SugarRecord {
 
     public void setSms(int sms) {
         this.sms = sms;
+    }
+
+    public String getPasscode() {
+        return passcode;
+    }
+
+    public void setPasscode(String passcode) {
+        this.passcode = passcode;
     }
 }
