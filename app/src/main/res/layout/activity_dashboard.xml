@@ -30,13 +30,7 @@
                 android:layout_height="match_parent" />
 
         </LinearLayout>
-        <!--Adverts recycler-->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/adsRecycler"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
         <!--Divider line-->
         <View
             android:layout_width="match_parent"

@@ -179,12 +179,12 @@ public class FragmentChart extends Fragment {
             bdx.getD().setTxtVariesTyical("Above Typical");
             bdx.getD().setTxtColor(R.color.red_800);
             //remark statement
-            bdx.getD().setTxtStatement("Your account is above typical");
+            bdx.getD().setTxtStatement("You are spending beyond usual");
         } else if (_spent_so_far < _typicalSolve) {
             //you are below typical
             bdx.getD().setTxtVariesTyical("Below Typical");
             bdx.getD().setTxtColor(R.color.green_700);
-            bdx.getD().setTxtStatement("Great expense manager");
+            bdx.getD().setTxtStatement("You are doing great with your expenses");
             if (((_typicalSolve / 2) + (_typicalSolve / 4)) < _spent_so_far) {
                 //change color to yellow
                 bdx.getD().setTxtColor(R.color.yellow_600);

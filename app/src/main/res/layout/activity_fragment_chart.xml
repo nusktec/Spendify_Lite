@@ -145,7 +145,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:text="Typical"
+                                        android:text="Usual"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
                                         android:textSize="12sp" />
@@ -184,7 +184,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:text="@{d.txtVariesTyical, default=`Below Typical`}"
+                                        android:text="@{d.txtVariesTyical, default=`Below Usual`}"
                                         android:textAllCaps="false"
                                         android:textSize="12sp"
                                         app:color="@{d.txtColor, default=@color/grey_500}" />
@@ -332,7 +332,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
-                        android:text="@{`Income, This month: `+d.txtIncomeThisM, default=`Income, This month: `}"
+                        android:text="@{`Percentage income: `+d.txtIncomeThisM, default=`Income, This month: `}"
                         android:textColor="@color/grey_600"
                         android:textSize="12sp" />
 
