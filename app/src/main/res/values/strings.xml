@@ -6,5 +6,8 @@
     <string name="spendify_mobile_lite">Spendify Mobile</string>
     <string name="profile_settings">Profile Settings</string>
     <string name="toolbar_title">Toolbar Title</string>
-    <string name="search_for_transaction">Search for transactions...</string>
+    <string name="search_for_transaction">Search for transactions…</string>
+    <string name="dummy_firstbank">
+        Your Acct 200XXXX145 Has Been Credited with NGN500.00 On 10-DEC-2019 22:37:45 By FIP:UTY/OGBAAH ODACHI CHAR/USSD-00001119. Bal: NGN954.23CR
+    </string>
 </resources>

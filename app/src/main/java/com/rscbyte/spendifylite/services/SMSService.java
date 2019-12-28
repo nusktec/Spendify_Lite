@@ -3,7 +3,6 @@ package com.rscbyte.spendifylite.services;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -33,13 +32,14 @@ public class SMSService extends Service {
     private static final String STANBIC_BANK = "STANBIC"; //"7036877205"; //Sweetness frend 2
     private static final String ZENITH_BANK = "ZENITH"; //"ZENITH"; //Reve2
     private static final String KEYSTONE_BANK = "KEYSTONE"; //"9051676263"; //Rooth
-    private static final String FIRST_BANK = "FIRST_BANK";
+    private static final String FIRST_BANK = "FIRSTBANK";
     private static final String ECO_BANK = "ECOBANK";
     private static final String FIDELITY_BANK = "FIDELITY";
     private static final String HERITAGE_BANK = "HERITAGE";
     private static final String WEMA_BANK = "WEMA";
     private static final String MOBILEMONEY = "MOBILEMONEY";
-    private static final String FIDELITY = "FIDELITY";
+    private static final String SUN_TRUST_BANK = "SUNTRUST";
+
 
     private Context act;
     private MProfile mProfile;
@@ -230,14 +230,6 @@ public class SMSService extends Service {
                 }
             });
         }
-        if (sms.getAddress().toUpperCase().contains(FIRST_BANK)) {
-            //First bank Algorithms
-
-        }
-        if (sms.getAddress().toUpperCase().contains(HERITAGE_BANK)) {
-            //Heritage Algorithms
-
-        }
         if (sms.getAddress().toUpperCase().contains(WEMA_BANK)) {
             //Wema bank Algorithms
             BankChecker.wemaBank(sms, new BankChecker.MoneyBack() {
@@ -250,7 +242,34 @@ public class SMSService extends Service {
                 }
             });
         }
+        if (sms.getAddress().toUpperCase().contains(SUN_TRUST_BANK)) {
+            //Sun bank Algorithms
+            BankChecker.suntrustBank(sms, new BankChecker.MoneyBack() {
+                @Override
+                public void isMoney(Boolean isOkay, OAlerts o) {
+                    //call inserting methods
+                    if (isOkay) {
+                        insertOnly(o);
+                    }
+                }
+            });
+        }
+        if (sms.getAddress().toUpperCase().contains(FIRST_BANK)) {
+            //First bank Algorithms
+            BankChecker.firstBank(sms, new BankChecker.MoneyBack() {
+                @Override
+                public void isMoney(Boolean isOkay, OAlerts o) {
+                    //call inserting methods
+                    if (isOkay) {
+                        insertOnly(o);
+                    }
+                }
+            });
+        }
+        if (sms.getAddress().toUpperCase().contains(HERITAGE_BANK)) {
+            //Heritage Algorithms
 
+        }
         if (sms.getAddress().toUpperCase().contains(MOBILEMONEY)) {
             //Mobile money bank Algorithms
             BankChecker.mobileMoney(sms, new BankChecker.MoneyBack() {

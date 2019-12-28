@@ -2,8 +2,8 @@ package com.rscbyte.spendifylite.objects;
 
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;
 
 import com.rscbyte.spendifylite.R;
@@ -14,9 +14,9 @@ public class OChartPage extends BaseObservable {
     private String txtTypical2 = "0.00";
     private String txtBelowTypical = "0.00";
     private String txtSpentSoFar = "0.00";
-    private String txtStatement = "Your monthly remarks";
+    private String txtStatement = "Expense Indicator";
     private String txtVariesTyical = "Balance";
-    private String txtIncomeThisM = "Income, this months";
+    private String txtIncomeThisM = "Percentage Income Spent";
     private int txtColor = R.color.green_500;
     private int txtColor2 = R.color.grey_500;
 
@@ -69,7 +69,12 @@ public class OChartPage extends BaseObservable {
 
     @BindingAdapter({"app:color"})
     public static void setTxtColorBinder(TextView view, int txtColor) {
-        view.setTextColor(view.getContext().getResources().getColor(txtColor));
+        //view.setCardBackgroundColor(view.getContext().getResources().getColor(txtColor));
+    }
+
+    @BindingAdapter({"app:colorbg"})
+    public static void setTxtColorBg(CardView view, int txtColor) {
+        view.setCardBackgroundColor(view.getContext().getResources().getColor(txtColor));
     }
 
     public void setTxtColor(int txtColor) {

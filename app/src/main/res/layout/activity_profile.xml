@@ -50,7 +50,7 @@
                     android:text="@string/toolbar_title"
                     android:textAllCaps="false"
                     android:textColor="@color/grey_500"
-                    android:textSize="15sp"
+                    android:textSize="25sp"
                     android:textStyle="bold" />
 
             </RelativeLayout>
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:text="Profile Settings"
-                    android:textColor="@color/app_color_press"
+                    android:textColor="@color/app_color_1Dp"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -239,7 +239,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="System Settings"
-                    android:textColor="@color/app_color_press"
+                    android:textColor="@color/app_color_1Dp"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 

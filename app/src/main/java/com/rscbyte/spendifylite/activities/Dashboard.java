@@ -69,7 +69,7 @@ public class Dashboard extends AppCompatActivity {
 
     //set header and toolbar
     public void initToolBar() {
-        Tools.setSystemBarColor(ctx, R.color.app_color_2);
+        Tools.setHeaderColor(this);
     }
 
     //components initializer

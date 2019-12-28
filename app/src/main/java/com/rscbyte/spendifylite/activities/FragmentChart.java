@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import com.ekn.gruzer.gaugelibrary.Range;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -100,15 +98,15 @@ public class FragmentChart extends Fragment {
         pieChart.setCenterTextColor(getResources().getColor(R.color.app_color_1Dp));
         pieChart.setVerticalFadingEdgeEnabled(true);
         pieChart.setData(pieData);
-        pieChart.setEntryLabelColor(getResources().getColor(R.color.grey_500));
+        pieChart.setEntryLabelColor(getResources().getColor(R.color.grey_800));
         pieChart.setEntryLabelTypeface(Typeface.DEFAULT_BOLD);
         pieChart.setDrawSlicesUnderHole(true);
         pieChart.animateX(500);
         //apply colors
-        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         pieDataSet.setSliceSpace(2f);
         pieDataSet.setValueTextColor(R.color.app_color_1Dp);
-        pieDataSet.setValueTextSize(13f);
+        pieDataSet.setValueTextSize(10f);
         pieDataSet.setSliceSpace(5f);
         pieDataSet.setValueLinePart1Length(.5f);
         pieDataSet.setValueLinePart2Length(.2f);
@@ -123,7 +121,7 @@ public class FragmentChart extends Fragment {
     //prepare chart entries
     private void prepareChart() {
         //monthly moving average
-        int _monthly_average = 1;
+        int _monthly_average_target = 1;
         //assign dictionary value holder
         Map<String, Float> tmpValue = new HashMap<>();
         //get 3 months way back
@@ -136,7 +134,7 @@ public class FragmentChart extends Fragment {
         Select select = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(passedMonth)).and(Condition.prop("TRX_MONTH").notEq(Tools.getMonth()));
         List<MData> mData = select.list();
         for (MData t : mData) {
-            //check date and break
+            //check date and break if passed today
             if (Integer.parseInt(t.getTrxDay()) > Tools.getDay()) {
                 break;
             }
@@ -148,7 +146,7 @@ public class FragmentChart extends Fragment {
             if (month_changes != Integer.parseInt(t.getTrxMonth())) {
                 _spent_for_the_month = 0;
                 month_changes = 0;
-                _monthly_average++;
+                _monthly_average_target++;
             }
             //check for debit data only
             if (t.getTrxType() == 2) {
@@ -156,6 +154,9 @@ public class FragmentChart extends Fragment {
                 _spent_for_the_month += Float.parseFloat(t.getTrxValue());
                 _month_name = Tools.getMonthAscNum(Integer.parseInt(t.getTrxMonth()));
                 tmpValue.put(_month_name, _spent_for_the_month);
+            }
+            //check for the last month
+            if (t.getTrxMonth().equals(String.valueOf(Tools.getMonth() - 1))) {
                 _moving_average += Float.parseFloat(t.getTrxValue());
             }
         }
@@ -174,25 +175,25 @@ public class FragmentChart extends Fragment {
 
 
         //solve for typical
-        float _typicalSolve = (_moving_average / _monthly_average);
+        float _typicalSolve = (_moving_average / 1);
         //solve for differences
         float _variesTypical = _spent_so_far - _typicalSolve;
         //determine over spent or less
         if (_spent_so_far > _typicalSolve) {
             //you above typical
-            bdx.getD().setTxtVariesTyical("Above Usual");
+            bdx.getD().setTxtVariesTyical("Above Typical");
             bdx.getD().setTxtColor(R.color.red_800);
             //remark statement
-            bdx.getD().setTxtStatement("You are spending beyond usual");
+            bdx.getD().setTxtStatement("You are in the red zone.\nReview your past spending to stay on track");
         } else if (_spent_so_far < _typicalSolve) {
             //you are below typical
-            bdx.getD().setTxtVariesTyical("Below Usual");
+            bdx.getD().setTxtVariesTyical("Below Typical");
             bdx.getD().setTxtColor(R.color.green_700);
-            bdx.getD().setTxtStatement("You are doing great with your expenses");
+            bdx.getD().setTxtStatement("You are in the green zone. fantastic!!!\nContinue to keep your spending in check");
             if (((_typicalSolve / 2) + (_typicalSolve / 4)) < _spent_so_far) {
                 //change color to yellow
-                bdx.getD().setTxtColor(R.color.yellow_600);
-                bdx.getD().setTxtStatement("You are close to usual, Easy with  your expense");
+                bdx.getD().setTxtColor(R.color.orange_800);
+                bdx.getD().setTxtStatement("You are close to typical, Easy with  your expenses");
             }
         }
 
@@ -211,7 +212,7 @@ public class FragmentChart extends Fragment {
 
         //start assignment
         bdx.getD().setTxtSpentSoFar(Constants.getCurrency() + Tools.doCuurency(_spent_so_far)); //display spent so far
-        bdx.getD().setTxtTypical2(Constants.getCurrency() + Tools.doCuurency(_moving_average3 / 3)); //display typical 3 months
+        bdx.getD().setTxtTypical2(Constants.getCurrency() + Tools.doCuurency(_moving_average3 / _monthly_average_target)); //display typical 3 months
         bdx.getD().setTxtTypical(Constants.getCurrency() + Tools.doCuurency(_typicalSolve)); //display typical 3 months
         bdx.getD().setTxtBelowTypical(Constants.getCurrency() + Tools.doCuurency(Math.abs(_variesTypical))); //below typical
         bdx.getD().setTxtIncomeThisM(Constants.getCurrency() + Tools.doCuurency(Math.abs(_income_this_month))); //this months

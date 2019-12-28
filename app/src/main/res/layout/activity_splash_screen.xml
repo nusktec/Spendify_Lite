@@ -22,7 +22,7 @@
                 style="@style/TextAppearance.AppCompat.Headline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Spendify Lite"
+                android:text="Spendify Mobile"
                 android:textColor="@color/app_color_1Dp"
                 android:textSize="@dimen/spacing_xlarge"
                 android:textStyle="bold" />

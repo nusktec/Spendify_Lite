@@ -129,6 +129,11 @@ public class Tools {
         }
     }
 
+    //set global header
+    public static void setHeaderColor(Activity activity) {
+        Tools.setSystemBarColor(activity, R.color.light_white);
+        Tools.setSystemBarLight(activity);
+    }
 
     //get passed month
     public static String getVariesTimeStamp(int difference) {

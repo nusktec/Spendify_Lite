@@ -136,16 +136,16 @@ public class BankChecker {
             }
             //it's a debit alert
             String[] body = sms.getMsg().split("[\\r?\\n]+");
-            if (body[0].contains("DR")) {
+            if (body[1].contains("DR")) {
                 oAlerts.setMode(2);
-            } else {
+            } else if (body[1].contains("CR")) {
                 oAlerts.setMode(1);
             }
             for (String i : body) {
                 //do each line
                 try {
                     if (i.substring(0, 3).toUpperCase().equals("AMT")) {
-                        String split[];
+                        String[] split;
                         if (i.contains("DR")) {
                             split = (i + " DR PathData").split("DR");
                         } else {
@@ -469,14 +469,50 @@ public class BankChecker {
         }
     }
 
+    //suntrust bank
+    public static void suntrustBank(OSms sms, MoneyBack moneyBack) {
+        //algorithms shuffler
+        OAlerts oAlerts = new OAlerts();
+        try {
+            if (sms.getMsg().toUpperCase().contains("SUNTRUST DEBIT")) {
+                oAlerts.setMode(2);
+            } else if (sms.getMsg().toUpperCase().contains("SUTRUST CREDIT")) {
+                oAlerts.setMode(1);
+            } else {
+                return;
+            }
+            //it's a debit alert
+            String[] body = sms.getMsg().split("[\\r?\\n]+");
+            if (body[2].contains("DR")) {
+                oAlerts.setMode(2);
+            } else if (body[2].contains("CR")) {
+                oAlerts.setMode(1);
+            }
+            for (String i : body) {
+                //do each line
+                if (i.substring(0, 4).toUpperCase().equals("AMT:")) {
+                    oAlerts.setMoney(i.replaceAll("[^\\d.]", ""));
+                }
+                if (i.substring(0, 4).toUpperCase().equals("DESC")) {
+                    oAlerts.setDescr(i.split(":")[1]);
+                }
+                String tmpdate = Tools.timeStampStr(Long.parseLong(sms.getTime()));
+                oAlerts.setRawDate(tmpdate);
+            }
+            oAlerts.setMsgID(sms.getId());
+            oAlerts.setTimeStp(sms.getTime());
+            oAlerts.setBankName("SunTrust Bank");
+            moneyBack.isMoney(true, oAlerts);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     //first bank
     public static void firstBank(OSms sms, MoneyBack moneyBack) {
         //algorithms shuffler
-        OAlerts oAlerts = new OAlerts();
-
-        moneyBack.isMoney(true, oAlerts);
+        
     }
-
 
     //heritage bank
     public static void heritageBank(OSms sms, MoneyBack moneyBack) {
@@ -512,13 +548,14 @@ public class BankChecker {
         }
     }
 
+
+
     /////////////////////INTERNATIONAL BANKS\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     //temporal bank
     public static void mobileMoney(OSms sms, MoneyBack moneyBack) {
         //algorithms shuffler
     }
-
 
     //temporal bank
     public static void temBank(OSms sms, MoneyBack moneyBack) {
