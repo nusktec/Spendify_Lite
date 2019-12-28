@@ -11,12 +11,11 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/app_color_1">
+        android:background="@color/light_white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/app_color_1"
             android:orientation="vertical"
             tools:context=".activities.Dashboard">
 
@@ -26,7 +25,6 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/bg_toolbar_header"
                 android:elevation="0dp"
                 android:paddingHorizontal="5dp">
 
@@ -88,7 +86,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Names"
-                        android:textColor="@color/grey_500"
+                        android:textColor="@color/grey_400"
                         android:textSize="12sp" />
 
                     <EditText
@@ -118,7 +116,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Email"
-                        android:textColor="@color/grey_500"
+                        android:textColor="@color/grey_400"
                         android:textSize="12sp" />
 
                     <EditText
@@ -148,7 +146,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Phone"
-                        android:textColor="@color/grey_500"
+                        android:textColor="@color/grey_400"
                         android:textSize="12sp" />
 
                     <EditText
@@ -165,6 +163,29 @@
 
                 </LinearLayout>
 
+                <!--Country control-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Choose country currency"
+                        android:textColor="@color/grey_500"
+                        android:textSize="13sp" />
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/countries_array" />
+
+                </LinearLayout>
+
                 <!--Gender control-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -178,7 +199,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Gender"
-                        android:textColor="@color/grey_500"
+                        android:textColor="@color/grey_400"
                         android:textSize="12sp" />
 
                     <RadioGroup
@@ -239,7 +260,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="System Settings"
-                    android:textColor="@color/app_color_1Dp"
+                    android:textColor="@color/grey_400"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -249,38 +270,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="10dp"
                     android:orientation="vertical"
                     android:paddingTop="10dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <Switch
+                        android:id="@+id/switch_noti"
+                        style="SCBSwitch"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Notifications"
-                        android:textColor="@color/grey_500"
-                        android:textSize="12sp" />
+                        android:text="Allow Notifications" />
 
-                    <RadioGroup
-                        android:id="@+id/radio_group_noti"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="0dp"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/radio_noti_on"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="true"
-                            android:text="Enable"
-                            android:textColor="@color/grey_500" />
-
-                        <RadioButton
-                            android:id="@+id/radio_noti_off"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Disable"
-                            android:textColor="@color/grey_500" />
-                    </RadioGroup>
 
                 </LinearLayout>
 
@@ -290,40 +290,77 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="10dp"
                     android:orientation="vertical"
                     android:paddingTop="10dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <Switch
+                        android:id="@+id/switch_sms"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Auto Synchronize SMS"
-                        android:textColor="@color/grey_500"
-                        android:textSize="12sp" />
-
-                    <RadioGroup
-                        android:id="@+id/radio_group_sms"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="0dp"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/radio_sms_on"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="true"
-                            android:text="Enable"
-                            android:textColor="@color/grey_500" />
-
-                        <RadioButton
-                            android:id="@+id/radio_sms_off"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Disable"
-                            android:textColor="@color/grey_500" />
-                    </RadioGroup>
+                        android:text="Allow SMS Sync." />
 
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="App Security"
+                    android:textColor="@color/grey_400"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <!--Notifications control-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
+
+                    <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Self Protection" />
+
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Sync. Backup"
+                    android:textColor="@color/grey_400"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <!--Notifications control-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
+
+                    <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Enable Cloud Backup" />
+
+                    <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Allow Cross Content" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -332,9 +369,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/btn_primary"
-                android:text="Save Settings"
-                android:textColor="@color/grey_500"
+                android:text="Update Profile"
+                android:textColor="@color/light_white"
                 android:textStyle="bold" />
 
         </LinearLayout>

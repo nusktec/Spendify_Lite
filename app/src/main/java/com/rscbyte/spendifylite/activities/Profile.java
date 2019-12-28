@@ -4,12 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.orm.SugarContext;
 import com.orm.SugarRecord;
 import com.rscbyte.spendifylite.R;
 import com.rscbyte.spendifylite.Utils.Tools;
@@ -58,16 +58,12 @@ public class Profile extends AppCompatActivity {
             //notifications
             if (mProfile.getNotifications() == 1) {
                 //male gender
-                bdx.radioNotiOn.setChecked(true);
-            } else {
-                bdx.radioNotiOff.setChecked(true);
+                bdx.switchNoti.setChecked(true);
             }
             //sms
             if (mProfile.getSms() == 1) {
                 //male gender
-                bdx.radioSmsOn.setChecked(true);
-            } else {
-                bdx.radioSmsOff.setChecked(true);
+                bdx.switchSms.setChecked(true);
             }
         }
     }
@@ -108,31 +104,27 @@ public class Profile extends AppCompatActivity {
             }
         });
         //notifications
-        bdx.radioGroupNoti.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        bdx.switchNoti.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (i == bdx.radioNotiOn.getId()) {
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
                     notifications = 1;
-                }
-                if (i == bdx.radioNotiOff.getId()) {
+                } else {
                     notifications = 0;
                 }
             }
-
         });
 
         //sms
-        bdx.radioGroupSms.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        bdx.switchSms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (i == bdx.radioSmsOn.getId()) {
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
                     sms = 1;
-                }
-                if (i == bdx.radioSmsOff.getId()) {
+                } else {
                     sms = 0;
                 }
             }
-
         });
     }
 

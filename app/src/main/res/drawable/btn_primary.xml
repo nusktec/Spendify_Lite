@@ -5,10 +5,10 @@
         <layer-list>
             <item android:bottom="4dp" android:left="4dp" android:right="4dp" android:top="4dp">
                 <shape android:shape="rectangle">
-                    <solid android:color="@color/app_color_press" />
+                    <solid android:color="@color/app_color_2_1" />
                     <padding android:bottom="0dp" android:left="0dp" android:right="0dp" android:top="0dp" />
                     <size android:width="200dp" android:height="40dp" />
-                    <corners android:radius="8dp"/>
+                    <corners android:radius="8dp" />
                 </shape>
             </item>
         </layer-list>
@@ -19,10 +19,10 @@
         <layer-list>
             <item android:bottom="4dp" android:left="4dp" android:right="4dp" android:top="4dp">
                 <shape android:shape="rectangle">
-                    <solid android:color="@color/app_color_press" />
+                    <solid android:color="@color/app_color_2_1" />
                     <padding android:bottom="0dp" android:left="0dp" android:right="0dp" android:top="0dp" />
                     <size android:width="200dp" android:height="40dp" />
-                    <corners android:radius="8dp"/>
+                    <corners android:radius="8dp" />
                 </shape>
             </item>
         </layer-list>
@@ -34,10 +34,10 @@
         <layer-list>
             <item android:bottom="4dp" android:left="4dp" android:right="4dp" android:top="4dp">
                 <shape android:shape="rectangle">
-                    <solid android:color="@color/app_color_focus" />
+                    <solid android:color="@color/app_color_2" />
                     <padding android:bottom="0dp" android:left="0dp" android:right="0dp" android:top="0dp" />
                     <size android:width="200dp" android:height="40dp" />
-                    <corners android:radius="8dp"/>
+                    <corners android:radius="8dp" />
                 </shape>
             </item>
         </layer-list>

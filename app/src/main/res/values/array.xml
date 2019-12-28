@@ -181,4 +181,14 @@
         <item>@drawable/img_social_youtube</item>
     </integer-array>
 
+    <string-array name="countries_array">
+        <item>Nigeria</item>
+        <item>Liberia</item>
+        <item>Congo Brazzaville</item>
+        <item>Mali</item>
+        <item>Congo DRC</item>
+        <item>Chad</item>
+        <item>Senegal</item>
+    </string-array>
+
 </resources>

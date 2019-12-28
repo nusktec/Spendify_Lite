@@ -12,8 +12,8 @@ public class MProfile extends SugarRecord {
     private String gender = "";
     private String quotes = "";
     private String passcode = "";
-    private int notifications = 0;
-    private int sms = 0;
+    private int notifications = 1;
+    private int sms = 1;
 
     //initialize
     public MProfile() {
