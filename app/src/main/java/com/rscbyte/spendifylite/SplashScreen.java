@@ -17,6 +17,7 @@ import com.orm.SugarContext;
 import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.activities.Dashboard;
+import com.rscbyte.spendifylite.activities.ScreenLock;
 import com.rscbyte.spendifylite.models.MProfile;
 import com.rscbyte.spendifylite.services.SMSService;
 
@@ -58,7 +59,7 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashScreen.this, Dashboard.class));
+                startActivity(new Intent(SplashScreen.this, ScreenLock.class));
                 finish();
             }
         }, 3000);
