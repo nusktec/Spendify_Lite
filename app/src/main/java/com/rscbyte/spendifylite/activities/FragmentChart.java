@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,6 +122,8 @@ public class FragmentChart extends Fragment {
 
     //prepare chart entries
     private void prepareChart() {
+        //monthly moving average
+        int _monthly_average = 1;
         //assign dictionary value holder
         Map<String, Float> tmpValue = new HashMap<>();
         //get 3 months way back
@@ -145,6 +148,7 @@ public class FragmentChart extends Fragment {
             if (month_changes != Integer.parseInt(t.getTrxMonth())) {
                 _spent_for_the_month = 0;
                 month_changes = 0;
+                _monthly_average++;
             }
             //check for debit data only
             if (t.getTrxType() == 2) {
@@ -170,25 +174,25 @@ public class FragmentChart extends Fragment {
 
 
         //solve for typical
-        float _typicalSolve = (_moving_average / 3);
+        float _typicalSolve = (_moving_average / _monthly_average);
         //solve for differences
         float _variesTypical = _spent_so_far - _typicalSolve;
         //determine over spent or less
         if (_spent_so_far > _typicalSolve) {
             //you above typical
-            bdx.getD().setTxtVariesTyical("Above Typical");
+            bdx.getD().setTxtVariesTyical("Above Usual");
             bdx.getD().setTxtColor(R.color.red_800);
             //remark statement
             bdx.getD().setTxtStatement("You are spending beyond usual");
         } else if (_spent_so_far < _typicalSolve) {
             //you are below typical
-            bdx.getD().setTxtVariesTyical("Below Typical");
+            bdx.getD().setTxtVariesTyical("Below Usual");
             bdx.getD().setTxtColor(R.color.green_700);
             bdx.getD().setTxtStatement("You are doing great with your expenses");
             if (((_typicalSolve / 2) + (_typicalSolve / 4)) < _spent_so_far) {
                 //change color to yellow
                 bdx.getD().setTxtColor(R.color.yellow_600);
-                bdx.getD().setTxtStatement("Careful spendify, you'r almost there...");
+                bdx.getD().setTxtStatement("You are close to usual, Easy with  your expense");
             }
         }
 
@@ -300,41 +304,43 @@ public class FragmentChart extends Fragment {
 
     //configure gauge
     private void configGauge(float value, float max) {
-        Range rangeGreen = new Range();
-        rangeGreen.setFrom(0);
-        rangeGreen.setTo((max / 2));
-        rangeGreen.setColor(getResources().getColor(R.color.green_500));
+        /** deprecated
+         Range rangeGreen = new Range();
+         rangeGreen.setFrom(0);
+         rangeGreen.setTo((max / 2));
+         rangeGreen.setColor(getResources().getColor(R.color.green_500));
 
-        Range rangeYellow = new Range();
-        rangeYellow.setFrom((max / 2));
-        rangeYellow.setTo((max - (max / 4)));
-        rangeYellow.setColor(getResources().getColor(R.color.yellow_500));
+         Range rangeYellow = new Range();
+         rangeYellow.setFrom((max / 2));
+         rangeYellow.setTo((max - (max / 4)));
+         rangeYellow.setColor(getResources().getColor(R.color.yellow_500));
 
-        Range rangeRed = new Range();
-        rangeRed.setFrom((max - (max / 4)));
-        rangeRed.setTo(max);
-        rangeRed.setColor(getResources().getColor(R.color.red_500));
+         Range rangeRed = new Range();
+         rangeRed.setFrom((max - (max / 4)));
+         rangeRed.setTo(max);
+         rangeRed.setColor(getResources().getColor(R.color.red_500));
 
-        bdx.gauge.addRange(rangeGreen);
-        bdx.gauge.addRange(rangeYellow);
-        bdx.gauge.addRange(rangeRed);
+         bdx.gauge.addRange(rangeGreen);
+         bdx.gauge.addRange(rangeYellow);
+         bdx.gauge.addRange(rangeRed);
 
-        bdx.gauge.setMinValue(0);
-        if (value > max) {
-            //bdx.gauge.setMaxValue((int) Float.parseFloat(Tools.doFloat(value))); //deprecated
-            bdx.gauge.setMaxValue(100); //measure in percentage
-            Range rangeERed = new Range();
-            rangeERed.setFrom((max));
-            rangeERed.setTo(value);
-            rangeERed.setColor(getResources().getColor(R.color.red_800));
-            bdx.gauge.addRange(rangeERed);
-        } else {
-            //bdx.gauge.setMaxValue((int) Float.parseFloat(Tools.doFloat(max))); deprecated
-            bdx.gauge.setMaxValue(100);
-        }
-        //bdx.gauge.setValue((int) Float.parseFloat(Tools.doFloat(value))); deprecated
-        bdx.gauge.setValue((Float.parseFloat(Tools.doFloat(value)) / (int) Float.parseFloat(Tools.doFloat(max))) * 100);  //measure in percentage
-        bdx.gauge.setNeedleColor(getResources().getColor(R.color.orange_600));
+         bdx.gauge.setMinValue(0);
+         if (value > max) {
+         bdx.gauge.setMaxValue((int) Float.parseFloat(Tools.doFloat(value)));
+         Range rangeERed = new Range();
+         rangeERed.setFrom((max));
+         rangeERed.setTo(value);
+         rangeERed.setColor(getResources().getColor(R.color.red_800));
+         bdx.gauge.addRange(rangeERed);
+         } else {
+         bdx.gauge.setMaxValue((int) Float.parseFloat(Tools.doFloat(max)));
+         }
+         bdx.gauge.setValue((int) Float.parseFloat(Tools.doFloat(value)));
+         bdx.gauge.setNeedleColor(getResources().getColor(R.color.orange_600));
+         */
+        //run percentage
+        float percentage = (value / max) * 100;
+        bdx.gauge.setSpeed(percentage);
     }
 
     //onResume for auto action

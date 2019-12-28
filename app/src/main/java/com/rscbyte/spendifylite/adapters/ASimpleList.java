@@ -55,7 +55,9 @@ public class ASimpleList extends RecyclerView.Adapter<ASimpleList.VH> {
                 }
             });
             if (oDataTemp.getmData().getTrxType() == 1) {
-                holder.listDataBinding.trxBgColor.setBackgroundColor(Color.parseColor("#FF232738"));
+                holder.listDataBinding.trxIcon1.setVisibility(View.GONE);
+            } else {
+                holder.listDataBinding.trxIcon2.setVisibility(View.GONE);
             }
         }
     }

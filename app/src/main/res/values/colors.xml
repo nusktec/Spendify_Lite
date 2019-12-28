@@ -5,7 +5,7 @@
     <color name="colorPrimaryLight">@color/app_color_1_1</color>
     <color name="colorAccent">#384c55</color>
     <color name="colorAccentDark">@color/app_color_1</color>
-    <color name="colorAccentLight">#F57F17</color>
+    <color name="colorAccentLight">@color/app_color_2</color>
 
     <color name="overlay_dark_10">#1A000000</color>
     <color name="overlay_dark_20">#33000000</color>
@@ -350,9 +350,10 @@
     <color name="app_color_1">#EBECEE</color>
     <color name="app_color_1_1">#F2F2F5</color>
     <color name="app_color_1_1_0">#BABBBD</color>
-    <color name="app_color_2">#FFB900</color>
-    <color name="app_color_2_1">#CE9603</color>
+    <color name="app_color_2">#665ffa</color>
+    <color name="app_color_2_1">#3498fa</color>
     <color name="app_color_3">#fbfcfe</color>
     <color name="app_color_focus">#F6F6FA</color>
     <color name="app_color_press">#F1F1F3</color>
+    <color name="app_color_list">#010129</color>
 </resources>

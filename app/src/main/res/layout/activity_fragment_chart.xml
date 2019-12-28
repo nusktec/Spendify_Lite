@@ -15,7 +15,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/app_color_1">
+        android:background="@color/light_white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,7 +51,7 @@
                     android:text="@string/spendify_mobile_lite"
                     android:textAllCaps="false"
                     android:textColor="@color/grey_500"
-                    android:textSize="15sp"
+                    android:textSize="25sp"
                     android:textStyle="bold" />
 
 
@@ -85,6 +85,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
                     <!--Time/date text-->
@@ -94,11 +95,12 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_gravity="center"
+                        android:layout_marginVertical="8dp"
                         android:padding="8dp"
                         android:text="Summary as of"
                         android:textAllCaps="false"
                         android:textColor="@color/grey_500"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
                     <!--control base-->
                     <HorizontalScrollView
                         android:layout_width="wrap_content"
@@ -119,9 +121,11 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="130dp"
                                 android:layout_height="50dp"
-                                app:cardBackgroundColor="@color/app_color_1_1"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="5dp"
+                                app:cardBackgroundColor="@color/light_white"
                                 app:cardCornerRadius="2dp"
-                                app:cardElevation="1dp">
+                                app:cardElevation="2dp">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -138,7 +142,7 @@
                                         android:text="@{d.txtTypical, default=`0.00`}"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
-                                        android:textSize="13sp"
+                                        android:textSize="14sp"
                                         android:textStyle="bold" />
 
                                     <TextView
@@ -148,7 +152,7 @@
                                         android:text="Usual"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
-                                        android:textSize="12sp" />
+                                        android:textSize="13sp" />
 
                                 </LinearLayout>
 
@@ -158,9 +162,9 @@
                                 android:layout_width="130dp"
                                 android:layout_height="50dp"
                                 android:clipChildren="true"
-                                app:cardBackgroundColor="@color/app_color_1_1"
+                                app:cardBackgroundColor="@color/light_white"
                                 app:cardCornerRadius="2dp"
-                                app:cardElevation="1dp">
+                                app:cardElevation="2dp">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -176,7 +180,7 @@
                                         android:layout_gravity="center"
                                         android:text="@{d.txtBelowTypical, default=`0.00`}"
                                         android:textAllCaps="false"
-                                        android:textSize="13sp"
+                                        android:textSize="14sp"
                                         android:textStyle="bold"
                                         app:color="@{d.txtColor, default=@color/grey_500}" />
 
@@ -186,7 +190,7 @@
                                         android:layout_gravity="center"
                                         android:text="@{d.txtVariesTyical, default=`Below Usual`}"
                                         android:textAllCaps="false"
-                                        android:textSize="12sp"
+                                        android:textSize="13sp"
                                         app:color="@{d.txtColor, default=@color/grey_500}" />
 
                                 </LinearLayout>
@@ -197,9 +201,9 @@
                                 android:layout_width="130dp"
                                 android:layout_height="50dp"
                                 android:clipChildren="true"
-                                app:cardBackgroundColor="@color/app_color_1_1"
+                                app:cardBackgroundColor="@color/light_white"
                                 app:cardCornerRadius="2dp"
-                                app:cardElevation="1dp">
+                                app:cardElevation="2dp">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -216,7 +220,7 @@
                                         android:text="@{d.txtSpentSoFar, default=`0.00`}"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
-                                        android:textSize="13sp"
+                                        android:textSize="14sp"
                                         android:textStyle="bold" />
 
                                     <TextView
@@ -226,7 +230,7 @@
                                         android:text="Spent So Far"
                                         android:textAllCaps="false"
                                         android:textColor="@color/grey_500"
-                                        android:textSize="12sp" />
+                                        android:textSize="13sp" />
 
                                 </LinearLayout>
 
@@ -244,10 +248,11 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
+                            android:layout_marginVertical="5dp"
                             android:layout_weight="1"
-                            app:cardBackgroundColor="@color/app_color_1_1"
+                            app:cardBackgroundColor="@color/light_white"
                             app:cardCornerRadius="2dp"
-                            app:cardElevation="1dp">
+                            app:cardElevation="0dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -260,7 +265,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:text="Moving Average"
+                                    android:text="Monthly Average"
                                     android:textAllCaps="false"
                                     android:textColor="@color/grey_500"
                                     android:textSize="18sp"
@@ -285,10 +290,11 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
+                            android:layout_marginVertical="5dp"
                             android:layout_weight="1"
-                            app:cardBackgroundColor="@color/app_color_1_1"
+                            app:cardBackgroundColor="@color/light_white"
                             app:cardCornerRadius="2dp"
-                            app:cardElevation="1dp">
+                            app:cardElevation="0dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -332,9 +338,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
-                        android:text="@{`Percentage income: `+d.txtIncomeThisM, default=`Income, This month: `}"
+                        android:text="@{`Percentage income spent: `+d.txtIncomeThisM, default=`Percentage income spent: `}"
                         android:textColor="@color/grey_600"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnSwap"
@@ -352,24 +359,37 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="260dp"
-                    android:layout_marginTop="-20dp"
+                    android:layout_height="280dp"
+                    android:layout_marginTop="15dp"
                     android:layout_weight="1">
                     <!--Chart base-->
 
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/pieChart"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_centerInParent="true"
-                        android:layout_margin="20dp"
+                        android:layout_margin="5dp"
                         android:visibility="gone" />
 
-                    <com.ekn.gruzer.gaugelibrary.HalfGauge
-                        android:id="@+id/gauge"
+                    <com.ekn.gruzer.gaugelibrary.ArcGauge
+                        android:id="@+id/gauge_old"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
+
+                    <in.unicodelabs.kdgaugeview.KdGaugeView
+                        android:id="@+id/gauge"
+                        android:layout_width="250dp"
+                        android:layout_height="250dp"
+                        android:layout_centerInParent="true"
+                        android:visibility="visible"
+                        app:animationTime="3000"
+                        app:maxSpeed="100"
+                        app:speedTextSize="50dp"
+                        app:speed_limit="75"
+                        app:unitOfMeasurement="Spendify Gauge"
+                        app:unitOfMeasurementTextSize="10dp" />
 
                 </RelativeLayout>
 
@@ -377,6 +397,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="15dp">
@@ -386,10 +407,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@{d.txtStatement, default=`Remarks statements...`}"
+                        android:text="@{d.txtStatement, default=`Expense Incator`}"
                         android:textAllCaps="false"
                         android:textColor="@color/grey_500"
-                        android:textSize="12sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatButton

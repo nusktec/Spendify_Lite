@@ -18,7 +18,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.orm.SugarRecord;
@@ -26,11 +25,9 @@ import com.orm.util.NamingHelper;
 import com.rscbyte.spendifylite.R;
 import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
-import com.rscbyte.spendifylite.adapters.ASimpleFeeds;
 import com.rscbyte.spendifylite.databinding.ActivityDashboardBinding;
 import com.rscbyte.spendifylite.databinding.DialogAddDataBinding;
 import com.rscbyte.spendifylite.models.MData;
-import com.rscbyte.spendifylite.objects.OAdverts;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -72,7 +69,7 @@ public class Dashboard extends AppCompatActivity {
 
     //set header and toolbar
     public void initToolBar() {
-        Tools.setSystemBarColor(ctx, R.color.app_color_1Dp);
+        Tools.setSystemBarColor(ctx, R.color.app_color_2);
     }
 
     //components initializer
@@ -99,58 +96,13 @@ public class Dashboard extends AppCompatActivity {
             }
         });
         //make control (misc)
-        getAdverts();
     }
 
     //global runner
     private Handler handler = new Handler();
-    private Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            if (isAdsAvailable) scrollerBanner(bdx.adsRecycler, 1);
-            handler.postDelayed(this, 3000);
-        }
-    };
     //pull adverts
-    int SCROLL_COUNT = 2;
     boolean isAdsAvailable = false;
 
-    private void getAdverts() {
-        runnable.run();
-        List<OAdverts> alists = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            OAdverts a = new OAdverts();
-            a.setImgUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSYInZ082VcxfKsSir7nhosHbF3Cio-c3hD3C0PQJDx0XnXWZWr");
-            a.setLinkUrl("http://google.com");
-            a.setTextBody("Hello, this is my body text, Hello, this is my body text");
-            alists.add(a);
-        }
-        //set ads available
-        if (alists.size() > 1) isAdsAvailable = true;
-        ASimpleFeeds feeds = new ASimpleFeeds(alists);
-        bdx.adsRecycler.setAdapter(feeds);
-
-        //set scroller repeat here
-        bdx.adsRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerView.canScrollHorizontally(1)) {
-                    SCROLL_COUNT = -2;
-                }
-            }
-        });
-    }
-
-    //scroll banners front and back
-    void scrollerBanner(final RecyclerView recyclerView, final int count) {
-        SCROLL_COUNT++;
-        try {
-            recyclerView.smoothScrollToPosition(SCROLL_COUNT);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     //Add transaction box
     private Dialog dialog = null;

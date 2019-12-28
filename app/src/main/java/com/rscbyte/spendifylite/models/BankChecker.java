@@ -136,6 +136,11 @@ public class BankChecker {
             }
             //it's a debit alert
             String[] body = sms.getMsg().split("[\\r?\\n]+");
+            if (body[0].contains("DR")) {
+                oAlerts.setMode(2);
+            } else {
+                oAlerts.setMode(1);
+            }
             for (String i : body) {
                 //do each line
                 try {
@@ -398,6 +403,72 @@ public class BankChecker {
         }
     }
 
+    //fidelity bank
+    public static void fidelityBank(OSms sms, MoneyBack moneyBack) {
+        //algorithms shuffler
+        OAlerts oAlerts = new OAlerts();
+        try {
+            if (sms.getMsg().toUpperCase().contains("DR:")) {
+                oAlerts.setMode(2);
+            } else if (sms.getMsg().toUpperCase().contains("CR:")) {
+                oAlerts.setMode(1);
+            } else {
+                return;
+            }
+            //it's a debit alert
+            String[] body = sms.getMsg().split("[\\r?\\n]+");
+            for (String i : body) {
+                //do each line
+                if (i.substring(0, 3).toUpperCase().equals("DR:") || i.substring(0, 3).toUpperCase().equals("CR:")) {
+                    oAlerts.setMoney(i.replaceAll("[^\\d.]", ""));
+                }
+                if (i.substring(0, 4).toUpperCase().equals("DESC")) {
+                    oAlerts.setDescr(i.split(":")[1]);
+                }
+                String tmpdate = Tools.timeStampStr(Long.parseLong(sms.getTime()));
+                oAlerts.setRawDate(tmpdate);
+            }
+            oAlerts.setMsgID(sms.getId());
+            oAlerts.setTimeStp(sms.getTime());
+            oAlerts.setBankName("Fidelity Bank");
+            moneyBack.isMoney(true, oAlerts);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    //eco bank
+    public static void ecoBank(OSms sms, MoneyBack moneyBack) {
+        //algorithms shuffler
+        OAlerts oAlerts = new OAlerts();
+        try {
+            if (sms.getMsg().toUpperCase().contains("DEBIT:")) {
+                oAlerts.setMode(2);
+            } else if (sms.getMsg().toUpperCase().contains("CREDIT:")) {
+                oAlerts.setMode(1);
+            } else {
+                return;
+            }
+            //it's a debit alert
+            String[] body = sms.getMsg().split("[\\r?\\n]+");
+            for (String i : body) {
+                //do each line
+                if (i.substring(0, 6).toUpperCase().equals("DEBIT:") || i.substring(0, 7).toUpperCase().equals("CREDIT:")) {
+                    oAlerts.setMoney(i.replaceAll("[^\\d.]", ""));
+                }
+                oAlerts.setDescr(sms.getMsg());
+                String tmpdate = Tools.timeStampStr(Long.parseLong(sms.getTime()));
+                oAlerts.setRawDate(tmpdate);
+            }
+            oAlerts.setMsgID(sms.getId());
+            oAlerts.setTimeStp(sms.getTime());
+            oAlerts.setBankName("Eco Bank");
+            moneyBack.isMoney(true, oAlerts);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     //first bank
     public static void firstBank(OSms sms, MoneyBack moneyBack) {
         //algorithms shuffler
@@ -406,21 +477,6 @@ public class BankChecker {
         moneyBack.isMoney(true, oAlerts);
     }
 
-    //fidelity bank
-    public static void fidelityBank(OSms sms, MoneyBack moneyBack) {
-        //algorithms shuffler
-        OAlerts oAlerts = new OAlerts();
-
-        moneyBack.isMoney(true, oAlerts);
-    }
-
-    //eco bank
-    public static void ecoBank(OSms sms, MoneyBack moneyBack) {
-        //algorithms shuffler
-        OAlerts oAlerts = new OAlerts();
-
-        moneyBack.isMoney(true, oAlerts);
-    }
 
     //heritage bank
     public static void heritageBank(OSms sms, MoneyBack moneyBack) {
@@ -461,9 +517,6 @@ public class BankChecker {
     //temporal bank
     public static void mobileMoney(OSms sms, MoneyBack moneyBack) {
         //algorithms shuffler
-        OAlerts oAlerts = new OAlerts();
-
-        moneyBack.isMoney(true, oAlerts);
     }
 
 

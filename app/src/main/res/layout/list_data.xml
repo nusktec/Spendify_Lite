@@ -19,8 +19,8 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
-        app:cardBackgroundColor="@color/app_color_1"
-        app:cardCornerRadius="0dp"
+        app:cardBackgroundColor="@color/light_white"
+        app:cardCornerRadius="5dp"
         app:cardElevation="1dp">
 
         <RelativeLayout
@@ -30,6 +30,33 @@
             android:paddingHorizontal="15dp">
 
             <!--Side left icon-->
+            <RelativeLayout
+                android:id="@+id/icon_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true">
+
+                <ImageView
+                    android:id="@+id/trx_icon1"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:rotation="180"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_arrow_downward"
+                    android:tint="@color/red_800" />
+
+                <ImageView
+                    android:id="@+id/trx_icon2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_arrow_downward"
+                    android:tint="@color/app_color_2" />
+            </RelativeLayout>
+
             <TextView
                 android:id="@+id/list_trx_day"
                 android:layout_width="40dp"
@@ -38,9 +65,10 @@
                 android:layout_centerInParent="true"
                 android:padding="5dp"
                 android:text="@{d.day, default=`00`}"
-                android:textColor="@color/grey_500"
+                android:textColor="@color/app_color_list"
                 android:textFontWeight="900"
                 android:textSize="20sp"
+                android:visibility="gone"
                 tools:ignore="HardcodedText" />
 
             <!--Diver-->
@@ -49,7 +77,7 @@
                 android:layout_width="1dp"
                 android:layout_height="20dp"
                 android:layout_centerInParent="true"
-                android:layout_toEndOf="@id/list_trx_day"
+                android:layout_toEndOf="@id/icon_container"
                 android:background="@color/app_color_focus" />
 
 
@@ -74,7 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{d.title, default=`Title here`}"
-                        android:textColor="@color/grey_500"
+                        android:textColor="@color/app_color_list"
                         android:textSize="12sp"
                         tools:ignore="HardcodedText" />
 
@@ -86,7 +114,7 @@
                         android:scrollHorizontally="true"
                         android:singleLine="true"
                         android:text="@{d.desc, default=`Description data`}"
-                        android:textColor="@color/grey_500"
+                        android:textColor="@color/app_color_list"
                         android:textSize="12sp"
                         tools:ignore="HardcodedText" />
 
@@ -102,7 +130,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Amount"
-                        android:textColor="@color/grey_500"
+                        android:textColor="@color/app_color_list"
                         android:textSize="12sp"
                         tools:ignore="HardcodedText" />
 
@@ -111,7 +139,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{d.value, default=`Values`}"
-                        android:textColor="@color/grey_500"
+                        android:textColor="@color/app_color_list"
                         android:textSize="12sp"
                         tools:ignore="HardcodedText" />
 
@@ -127,7 +155,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{d.month, default=`Months`}"
-                        android:textColor="@color/grey_500"
+                        android:textColor="@color/app_color_list"
                         android:textSize="12sp"
                         android:visibility="gone"
                         tools:ignore="HardcodedText" />
@@ -137,7 +165,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{d.date, default=`YYYY`}"
-                        android:textColor="@color/grey_500"
+                        android:textColor="@color/app_color_list"
                         android:textSize="12sp"
                         tools:ignore="HardcodedText" />
 

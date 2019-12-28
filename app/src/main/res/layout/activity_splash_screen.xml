@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradiant_solid"
+    android:background="@color/light_white"
     tools:context=".SplashScreen">
 
     <com.facebook.shimmer.ShimmerFrameLayout
@@ -49,7 +49,7 @@
         android:padding="5dp"
         android:text=""
         android:textColor="@color/grey_800"
-        android:textSize="10sp"
+        android:textSize="13sp"
         android:textStyle="bold" />
 
     <TextView
@@ -60,7 +60,7 @@
         android:padding="5dp"
         android:text="Spendify Technology"
         android:textColor="@color/grey_800"
-        android:textSize="10sp"
+        android:textSize="13sp"
         android:textStyle="bold" />
 
 </RelativeLayout>

@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/app_color_1"
+        android:background="@color/light_white"
         android:orientation="vertical"
         tools:context=".activities.Dashboard">
 
@@ -36,29 +36,28 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="@color/app_color_1_1_0"
-            android:elevation="1px" />
+            android:elevation="1px"
+            android:visibility="gone" />
         <!--footer view-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginBottom="5dp"
             android:layout_weight="1"
+            android:background="@drawable/bg_gradient_top_radius"
             android:clipChildren="false"
-            android:elevation="2dp"
             android:paddingHorizontal="15dp">
             <!--Footer content-->
 
             <ImageButton
                 android:id="@+id/btn_dash_home"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerInParent="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:cropToPadding="true"
                 android:src="@drawable/ic_timeline"
-                android:tint="@color/grey_500" />
+                android:tint="@color/light_white" />
 
             <ImageButton
                 android:id="@+id/btn_dash_add"
@@ -70,18 +69,18 @@
                 android:elevation="5dp"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_add"
-                android:tint="@color/app_color_1" />
+                android:tint="@color/app_color_2" />
 
             <ImageButton
                 android:id="@+id/btn_dash_list"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:cropToPadding="true"
                 android:src="@drawable/ic_format_list_bulleted"
-                android:tint="@color/grey_500" />
+                android:tint="@color/light_white" />
 
         </RelativeLayout>
     </LinearLayout>

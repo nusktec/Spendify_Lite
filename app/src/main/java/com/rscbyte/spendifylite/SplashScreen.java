@@ -28,7 +28,8 @@ public class SplashScreen extends AppCompatActivity {
         //initialize suger orm
         SugarContext.init(this);
         //set toolbar for mobile
-        Tools.setSystemBarColor(this, R.color.app_color_1Dp);
+        Tools.setSystemBarColor(this, R.color.light_white);
+        Tools.setSystemBarLight(this);
         //check for permission
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -39,7 +40,7 @@ public class SplashScreen extends AppCompatActivity {
         //load license copy text
         if (MProfile.count(MProfile.class) > 0) {
             String name = (MProfile.findById(MProfile.class, 1)).getNames();
-            ((TextView) findViewById(R.id.txt_license)).setText(String.valueOf("licensed to " + name.toLowerCase()));
+            ((TextView) findViewById(R.id.txt_license)).setText("licensed to " + name.toLowerCase());
         }
         //clear preference
         getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit()

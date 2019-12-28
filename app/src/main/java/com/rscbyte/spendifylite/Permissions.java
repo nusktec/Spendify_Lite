@@ -1,8 +1,6 @@
 package com.rscbyte.spendifylite;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
@@ -29,7 +27,7 @@ public class Permissions extends AppCompatActivity {
         this.ctx = this;
         this.bdx = DataBindingUtil.setContentView(ctx, R.layout.activity_permission);
         //apply associated layout
-        Tools.setSystemBarColor(ctx, R.color.app_color_1Dp);
+        Tools.setSystemBarColor(ctx, R.color.app_color_2);
         initControls();
     }
 

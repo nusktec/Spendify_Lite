@@ -21,7 +21,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/pink_500"
+                android:background="@color/app_color_2"
                 android:gravity="center"
                 android:minHeight="100dp"
                 android:orientation="vertical"
@@ -155,6 +155,7 @@
                 android:id="@+id/lyt_action"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clipChildren="true"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -162,24 +163,28 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@color/pink_500"
+                    android:background="@color/transparent"
+                    android:drawableEnd="@drawable/ic_close"
+                    android:drawableTint="@color/red_800"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:paddingLeft="@dimen/spacing_mlarge"
                     android:paddingRight="@dimen/spacing_mlarge"
                     android:text="Cancel"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/red_800" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_add"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@color/app_color_1Dp"
+                    android:background="@color/transparent"
+                    android:drawableEnd="@drawable/ic_check_circle"
+                    android:drawableTint="@color/app_color_2"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:paddingLeft="@dimen/spacing_mlarge"
                     android:paddingRight="@dimen/spacing_mlarge"
                     android:text="ADD"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/app_color_2"
                     android:textStyle="bold" />
 
             </LinearLayout>
