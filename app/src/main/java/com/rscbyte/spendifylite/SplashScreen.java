@@ -48,7 +48,6 @@ public class SplashScreen extends AppCompatActivity {
         //clear preference
         getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit()
                 .putInt(Constants.SHARED_ALERT_KEY, 0).apply();
-
     }
 
     //launcher

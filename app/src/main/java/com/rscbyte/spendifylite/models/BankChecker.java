@@ -21,7 +21,7 @@ public class BankChecker {
             } else if (sms.getMsg().toUpperCase().contains("CREDIT")) {
                 oAlerts.setMode(1);
             } else {
-                return;
+                moneyBack.isMoney(false, null);
             }
             //it's a debit alert
             String[] body = sms.getMsg().split("[\\r?\\n]+");
@@ -58,7 +58,7 @@ public class BankChecker {
             } else if (sms.getMsg().toUpperCase().contains("CREDIT")) {
                 oAlerts.setMode(1);
             } else {
-                return;
+                moneyBack.isMoney(false, null);
             }
             //it's a debit alert
             String[] body = sms.getMsg().split("[\\r?\\n]+");
@@ -95,7 +95,7 @@ public class BankChecker {
             } else if (sms.getMsg().toUpperCase().contains("CR ALERT")) {
                 oAlerts.setMode(1);
             } else {
-                return;
+                moneyBack.isMoney(false, null);
             }
             //it's a debit alert
             String[] body = sms.getMsg().split("[\\r?\\n]+");
@@ -132,7 +132,7 @@ public class BankChecker {
             } else if (sms.getMsg().toUpperCase().contains("CR")) {
                 oAlerts.setMode(1);
             } else {
-                return;
+                moneyBack.isMoney(false, null);
             }
             //it's a debit alert
             String[] body = sms.getMsg().split("[\\r?\\n]+");
@@ -197,7 +197,7 @@ public class BankChecker {
             } else if (sms.getMsg().toUpperCase().contains("CR ALERT")) {
                 oAlerts.setMode(1);
             } else {
-                return;
+                moneyBack.isMoney(false, null);
             }
             //it's a debit alert
             String[] body = sms.getMsg().split("[\\r?\\n]+");
@@ -233,7 +233,7 @@ public class BankChecker {
             } else if (sms.getMsg().toUpperCase().contains("CREDIT")) {
                 oAlerts.setMode(1);
             } else {
-                return;
+                moneyBack.isMoney(false, null);
             }
             //it's a debit alert
             String[] body = sms.getMsg().split("[\\r?\\n]+");
@@ -270,7 +270,7 @@ public class BankChecker {
             } else if (sms.getMsg().toUpperCase().contains("CREDIT")) {
                 oAlerts.setMode(1);
             } else {
-                return;
+                moneyBack.isMoney(false, null);
             }
             //it's a debit alert
             String[] body = sms.getMsg().split("[\\r?\\n]+");
@@ -306,7 +306,7 @@ public class BankChecker {
             } else if (sms.getMsg().toUpperCase().contains("CR AMT")) {
                 oAlerts.setMode(1);
             } else {
-                return;
+                moneyBack.isMoney(false, null);
             }
             //it's a debit alert
             String[] body = sms.getMsg().split("[\\r?\\n]+");
@@ -342,7 +342,7 @@ public class BankChecker {
             } else if (sms.getMsg().toUpperCase().contains("CREDIT ALERT")) {
                 oAlerts.setMode(1);
             } else {
-                return;
+                moneyBack.isMoney(false, null);
             }
             //it's a debit alert
             String[] body = sms.getMsg().split("[\\r?\\n]+");
@@ -379,7 +379,7 @@ public class BankChecker {
             } else if (sms.getMsg().toUpperCase().contains("WEMA CREDIT")) {
                 oAlerts.setMode(1);
             } else {
-                return;
+                moneyBack.isMoney(false, null);
             }
             //it's a debit alert
             String[] body = sms.getMsg().split("[\\r?\\n]+");
@@ -413,7 +413,7 @@ public class BankChecker {
             } else if (sms.getMsg().toUpperCase().contains("CR:")) {
                 oAlerts.setMode(1);
             } else {
-                return;
+                moneyBack.isMoney(false, null);
             }
             //it's a debit alert
             String[] body = sms.getMsg().split("[\\r?\\n]+");
@@ -447,7 +447,7 @@ public class BankChecker {
             } else if (sms.getMsg().toUpperCase().contains("CREDIT:")) {
                 oAlerts.setMode(1);
             } else {
-                return;
+                moneyBack.isMoney(false, null);
             }
             //it's a debit alert
             String[] body = sms.getMsg().split("[\\r?\\n]+");
@@ -474,12 +474,12 @@ public class BankChecker {
         //algorithms shuffler
         OAlerts oAlerts = new OAlerts();
         try {
-            if (sms.getMsg().toUpperCase().contains("SUNTRUST DEBIT")) {
+            if (sms.getMsg().toUpperCase().contains("DR")) {
                 oAlerts.setMode(2);
-            } else if (sms.getMsg().toUpperCase().contains("SUTRUST CREDIT")) {
+            } else if (sms.getMsg().toUpperCase().contains("CR")) {
                 oAlerts.setMode(1);
             } else {
-                return;
+                moneyBack.isMoney(false, null);
             }
             //it's a debit alert
             String[] body = sms.getMsg().split("[\\r?\\n]+");
@@ -511,43 +511,71 @@ public class BankChecker {
     //first bank
     public static void firstBank(OSms sms, MoneyBack moneyBack) {
         //algorithms shuffler
-        
+        OAlerts oAlerts = new OAlerts();
+        try {
+            if (sms.getMsg().toUpperCase().contains("DEBITED WITH")) {
+                oAlerts.setMode(2);
+            } else if (sms.getMsg().toUpperCase().contains("CREDITED WITH")) {
+                oAlerts.setMode(1);
+            } else {
+                moneyBack.isMoney(false, null);
+            }
+            String[] raw_body = sms.getMsg().toUpperCase().split("WITH");
+            String trxValue = raw_body[1].trim();
+
+            //do each line
+            if (trxValue.substring(0, 3).toUpperCase().equals("NGN")) {
+                oAlerts.setMoney(trxValue.split(" ")[0].replaceAll("[^\\d.]", ""));
+            }
+            oAlerts.setDescr(sms.getMsg());
+            String tmpdate = Tools.timeStampStr(Long.parseLong(sms.getTime()));
+            oAlerts.setRawDate(tmpdate);
+
+            oAlerts.setMsgID(sms.getId());
+            oAlerts.setTimeStp(sms.getTime());
+            oAlerts.setBankName("First Bank");
+            moneyBack.isMoney(true, oAlerts);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            moneyBack.isMoney(false, null);
+        }
     }
 
     //heritage bank
     public static void heritageBank(OSms sms, MoneyBack moneyBack) {
         //algorithms shuffler
+        //algorithms shuffler
         OAlerts oAlerts = new OAlerts();
         try {
-            if (sms.getMsg().toUpperCase().contains("WEMA DEBIT")) {
+            if (sms.getMsg().toUpperCase().contains("DEBIT ALERT")) {
                 oAlerts.setMode(2);
-            } else if (sms.getMsg().toUpperCase().contains("WEMA CREDIT")) {
+            } else if (sms.getMsg().toUpperCase().contains("CREDIT ALERT")) {
                 oAlerts.setMode(1);
             } else {
-                return;
+                moneyBack.isMoney(false, null);
             }
-            //it's a debit alert
-            String[] body = sms.getMsg().split("[\\r?\\n]+");
-            for (String i : body) {
-                //do each line
-                if (i.substring(0, 3).toUpperCase().equals("NGN")) {
-                    oAlerts.setMoney(i.replaceAll("[^\\d.]", ""));
-                }
-                if (i.substring(0, 4).toUpperCase().equals("DESC")) {
-                    oAlerts.setDescr(i.split(":")[1]);
-                }
-                String tmpdate = Tools.timeStampStr(Long.parseLong(sms.getTime()));
-                oAlerts.setRawDate(tmpdate);
+            String[] raw_body = sms.getMsg().toUpperCase().split("AMT:");
+            String trxValue = raw_body[1].trim();
+
+            //do each line
+            if (trxValue.substring(0, 3).toUpperCase().equals("NGN")) {
+                oAlerts.setMoney(trxValue.split(" ")[0].replaceAll("[^\\d.]", ""));
             }
+            oAlerts.setDescr(sms.getMsg());
+            String tmpdate = Tools.timeStampStr(Long.parseLong(sms.getTime()));
+            oAlerts.setRawDate(tmpdate);
+
             oAlerts.setMsgID(sms.getId());
             oAlerts.setTimeStp(sms.getTime());
-            oAlerts.setBankName("Wema Bank");
+            oAlerts.setBankName("Heritage Bank");
             moneyBack.isMoney(true, oAlerts);
+
         } catch (Exception ex) {
             ex.printStackTrace();
+            moneyBack.isMoney(false, null);
         }
     }
-
 
 
     /////////////////////INTERNATIONAL BANKS\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -555,6 +583,7 @@ public class BankChecker {
     //temporal bank
     public static void mobileMoney(OSms sms, MoneyBack moneyBack) {
         //algorithms shuffler
+        moneyBack.isMoney(false, null);
     }
 
     //temporal bank

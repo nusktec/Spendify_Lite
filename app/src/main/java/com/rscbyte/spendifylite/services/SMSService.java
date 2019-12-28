@@ -268,7 +268,15 @@ public class SMSService extends Service {
         }
         if (sms.getAddress().toUpperCase().contains(HERITAGE_BANK)) {
             //Heritage Algorithms
-
+            BankChecker.heritageBank(sms, new BankChecker.MoneyBack() {
+                @Override
+                public void isMoney(Boolean isOkay, OAlerts o) {
+                    //call inserting methods
+                    if (isOkay) {
+                        insertOnly(o);
+                    }
+                }
+            });
         }
         if (sms.getAddress().toUpperCase().contains(MOBILEMONEY)) {
             //Mobile money bank Algorithms
@@ -337,7 +345,7 @@ public class SMSService extends Service {
     }
 
 
-    //Completed {UBA, UNION, GTBank, Stanbic Bank, Access Ban˚k, Polaris, FCMB, Zenith, Keystone}
+    //Completed {UBA, UNION, GTBank, Stanbic Bank, Access Bank, Polaris, FCMB, Zenith, Keystone, Fidelity, Heritage, Wema, SunTrust, Eco Bank, FBN, Mobile Money}
 
 
     protected void tester() {
