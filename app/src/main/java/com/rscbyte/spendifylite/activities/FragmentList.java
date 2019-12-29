@@ -193,7 +193,8 @@ public class FragmentList extends Fragment {
                         mData.delete();
                         dialog.dismiss();
                         Tools.showToast(ctx, "Deleted !");
-                        Objects.requireNonNull(getActivity()).recreate();
+                        main();
+                        //Objects.requireNonNull(getActivity()).recreate();
                     }
                 }, "Delete", "Sure to delete this transaction ?");
             }
@@ -210,12 +211,11 @@ public class FragmentList extends Fragment {
                             mData.setTrxYear(String.valueOf(Tools.getYear()));
                             mData.setTrxMonth(String.valueOf(Tools.getMonth()));
                             mData.setTrxDay(String.valueOf(Tools.getDay()));
-                            mData.setId(null);
                             SugarRecord.save(mData);
                             Tools.showToast(ctx, "Transaction duplicated");
                             dialog.dismiss();
                             main();
-                            Objects.requireNonNull(getActivity()).recreate();
+                            //Objects.requireNonNull(getActivity()).recreate();
                         } else {
                             Tools.showToast(ctx, "Cannot duplicate alert");
                         }

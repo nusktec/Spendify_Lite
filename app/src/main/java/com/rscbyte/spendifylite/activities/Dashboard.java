@@ -148,7 +148,7 @@ public class Dashboard extends AppCompatActivity {
                 MData mData = new MData();
                 //check transaction type
                 if (dbuild.txtDesc.getText().toString().isEmpty() || dbuild.txtValue.getText().toString().isEmpty()) {
-                    Tools.showToast(ctx, "Transactions fields are empty...");
+                    Tools.showToast(ctx, "Transaction fields are empty...");
                     return;
                 }
                 mData.setTrxDay(String.valueOf(Tools.getDay()));

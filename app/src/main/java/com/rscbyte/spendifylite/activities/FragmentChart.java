@@ -212,7 +212,7 @@ public class FragmentChart extends Fragment {
 
         //solve for income this months as percentage
         float incom_percentage = (_spent_so_far < 1 ? 1 : _spent_so_far);
-        incom_percentage = _income_this_month / incom_percentage;
+        incom_percentage = (_income_this_month / incom_percentage) * 100;
         //start assignment
         bdx.getD().setTxtSpentSoFar(Constants.getCurrency() + Tools.doCuurency(_spent_so_far)); //display spent so far
         bdx.getD().setTxtTypical2(Constants.getCurrency() + Tools.doCuurency(_moving_average3 / _monthly_average_target)); //display typical 3 months

@@ -18,7 +18,6 @@ public class MData extends SugarRecord {
     private long trxDay;
     private long trxSTP;
     private String trxBankName;
-    @Unique
     private String trxMsgID;
 
     //initialize the main app
