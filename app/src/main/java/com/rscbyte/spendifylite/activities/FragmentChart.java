@@ -210,12 +210,16 @@ public class FragmentChart extends Fragment {
             }
         }
 
+        //solve for income this months as percentage
+        float incom_percentage = (_spent_so_far < 1 ? 1 : _spent_so_far);
+        incom_percentage = _income_this_month / incom_percentage;
         //start assignment
         bdx.getD().setTxtSpentSoFar(Constants.getCurrency() + Tools.doCuurency(_spent_so_far)); //display spent so far
         bdx.getD().setTxtTypical2(Constants.getCurrency() + Tools.doCuurency(_moving_average3 / _monthly_average_target)); //display typical 3 months
         bdx.getD().setTxtTypical(Constants.getCurrency() + Tools.doCuurency(_typicalSolve)); //display typical 3 months
         bdx.getD().setTxtBelowTypical(Constants.getCurrency() + Tools.doCuurency(Math.abs(_variesTypical))); //below typical
-        bdx.getD().setTxtIncomeThisM(Constants.getCurrency() + Tools.doCuurency(Math.abs(_income_this_month))); //this months
+        bdx.getD().setTxtIncomeThisM(String.format("%.1f", incom_percentage) + "%"); //this months
+        bdx.txtIncomeThis.setText("Total Income this month: " + Constants.getCurrency() + Tools.doCuurency(Math.abs(_income_this_month)));
         //prepare chart
         pieEntries = new ArrayList<>();
         Iterator iterator = tmpValue.entrySet().iterator();

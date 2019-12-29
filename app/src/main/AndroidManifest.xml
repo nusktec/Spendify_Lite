@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -59,7 +60,7 @@
 
         <meta-data
             android:name="DATABASE"
-            android:value="spendifydb_01.db" />
+            android:value="spendifydb_01x.db" />
         <meta-data
             android:name="VERSION"
             android:value="1" />

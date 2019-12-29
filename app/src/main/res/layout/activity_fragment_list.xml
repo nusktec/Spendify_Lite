@@ -9,7 +9,7 @@
     </data>
 
     <!--Main layout begin-->
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/light_white">
@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="Transaction Finder"
+                    android:text="Transactions"
                     android:textColor="@color/grey_500"
                     android:textSize="25sp" />
 
@@ -81,7 +81,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list_itemView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layoutAnimation="@anim/layout_animation"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
@@ -97,5 +97,5 @@
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 </layout>
