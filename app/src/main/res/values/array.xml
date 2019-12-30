@@ -181,7 +181,7 @@
         <item>@drawable/img_social_youtube</item>
     </integer-array>
 
-    <string-array name="countries_array">
+    <string-array name="countries_name_array">
         <item>Nigeria (NGN)</item>
         <item>Liberia (USD)</item>
         <item>Congo Brazzaville (CDF)</item>
@@ -191,7 +191,7 @@
         <item>Senegal (CFA)</item>
         <item>Sierra Leone (SLL)</item>
         <item>Gabon (XAF)</item>
-        <item>Cote DIvoire (CFA)</item>
+        <item>Cote D\'Ivoire (CFA)</item>
         <item>Uganda (UGX)</item>
         <item>Guinea Conakry (GNF)</item>
         <item>Ghana (GHS)</item>
@@ -206,8 +206,54 @@
         <item>Gambia (GBP)</item>
     </string-array>
 
-    <integer-array name="countries_flags">
-        <item>@drawable/ic_close</item>
+    <string-array name="countries_curr_array">
+        <item>NGN</item>
+        <item>USD</item>
+        <item>CDF</item>
+        <item>CFA</item>
+        <item>DRC</item>
+        <item>CFA</item>
+        <item>CFA</item>
+        <item>SLL</item>
+        <item>XAF</item>
+        <item>CFA</item>
+        <item>UGX</item>
+        <item>GNF</item>
+        <item>GHS</item>
+        <item>ZMW</item>
+        <item>MZN</item>
+        <item>CFA</item>
+        <item>XOF</item>
+        <item>KES</item>
+        <item>CFA</item>
+        <item>TZS</item>
+        <item>RWF</item>
+        <item>GBP</item>
+    </string-array>
+
+    <integer-array name="countries_flags_array">
+        <item>@drawable/nigeria</item>
+        <item>@drawable/liberian</item>
+        <item>@drawable/congo</item>
+        <item>@drawable/mali</item>
+        <item>@drawable/congor</item>
+        <item>@drawable/chad</item>
+        <item>@drawable/senigal</item>
+        <item>@drawable/sieralone</item>
+        <item>@drawable/gabon</item>
+        <item>@drawable/cotevoire</item>
+        <item>@drawable/uganda</item>
+        <item>@drawable/guinea</item>
+        <item>@drawable/ghana</item>
+        <item>@drawable/zambia</item>
+        <item>@drawable/mozambique</item>
+        <item>@drawable/benin</item>
+        <item>@drawable/burkina</item>
+        <item>@drawable/kenya</item>
+        <item>@drawable/cameroon</item>
+        <item>@drawable/tanzania</item>
+        <item>@drawable/rwanda</item>
+        <item>@drawable/gambia</item>
     </integer-array>
 
 </resources>

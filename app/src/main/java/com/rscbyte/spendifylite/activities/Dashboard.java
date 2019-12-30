@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.orm.SugarContext;
 import com.orm.SugarRecord;
 import com.orm.util.NamingHelper;
 import com.rscbyte.spendifylite.R;
@@ -51,6 +52,8 @@ public class Dashboard extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //re-initialize db
+        SugarContext.init(this);
         //assign context
         this.ctx = this;
         //inflate layout

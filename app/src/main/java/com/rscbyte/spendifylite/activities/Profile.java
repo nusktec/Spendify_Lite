@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil;
 import com.orm.SugarRecord;
 import com.rscbyte.spendifylite.R;
 import com.rscbyte.spendifylite.Utils.Tools;
+import com.rscbyte.spendifylite.adapters.CountryList;
 import com.rscbyte.spendifylite.databinding.ActivityProfileBinding;
 import com.rscbyte.spendifylite.models.MProfile;
 
@@ -38,6 +39,9 @@ public class Profile extends AppCompatActivity {
 
     //data loader
     public void dataLoader() {
+        //setup countries
+        CountryList countryList = new CountryList(ctx);
+        bdx.spinnerCountry.setAdapter(countryList);
         if (MProfile.count(MProfile.class) < 1) {
             Tools.showToast(ctx, "You have not setup user account");
             return;

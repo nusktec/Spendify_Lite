@@ -184,10 +184,11 @@
                         android:textSize="13sp" />
 
                     <Spinner
+                        android:id="@+id/spinner_country"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:entries="@array/countries_array"
-                        android:spinnerMode="dialog" />
+                        android:entries="@array/countries_name_array"
+                        android:spinnerMode="dropdown" />
 
                 </LinearLayout>
 

@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:padding="5dp"
-        android:src="@drawable/img_social_blogger" /><!--Make sure image is present in Drawable folder-->
+    <data>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="fill_parent"
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:text="Demo"
-        android:textColor="#000" />
-</LinearLayout>
+        android:gravity="center"
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/img_flag"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="country_flag"
+            android:padding="5dp"
+            android:src="@drawable/nigeria" /><!--Make sure image is present in Drawable folder-->
+
+        <TextView
+            android:id="@+id/txt_country"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:text="Nigeria (NGN)"
+            android:textColor="#000" />
+    </LinearLayout>
+</layout>

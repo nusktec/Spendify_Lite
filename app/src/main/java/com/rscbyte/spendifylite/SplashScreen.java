@@ -31,7 +31,6 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         //initialize suger orm
         SugarContext.init(this);
-        SugarConfig.clearCache();
         //set toolbar for mobile
         Tools.setSystemBarColor(this, R.color.light_white);
         Tools.setSystemBarLight(this);
