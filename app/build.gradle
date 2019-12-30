@@ -39,6 +39,9 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6' //Gson converter
     implementation 'com.ekn.gruzer.gaugelibrary:gaugelibrary:0.1.0' //Gauge meters
     implementation 'in.unicodelabs.sorbh:kdgaugeview:1.0.0' //sweet gauge
+    implementation 'com.github.vihtarb:tooltip:0.2.0' //tooltip
+    implementation 'com.github.hotchemi:android-rate:1.0.1' //app rate
+    implementation 'com.amitshekhar.android:android-networking:1.0.2' //network
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

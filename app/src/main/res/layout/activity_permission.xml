@@ -60,7 +60,7 @@
                 android:padding="10dp"
                 android:text="Spendify mobile app needs your permission to access your inbox (SMS) and your storage location for the system to work properly, remember we vowed not to share your data."
                 android:textAlignment="center"
-                android:textSize="12sp"
+                android:textSize="15sp"
                 android:textColor="@color/light_white"/>
 
             <androidx.appcompat.widget.AppCompatButton

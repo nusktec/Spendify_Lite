@@ -34,6 +34,9 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import hotchemi.android.rate.AppRate;
+import hotchemi.android.rate.OnClickButtonListener;
+
 public class Dashboard extends AppCompatActivity {
 
     //number format
@@ -65,6 +68,28 @@ public class Dashboard extends AppCompatActivity {
                 checkAfter3Open();
             }
         }, 3000);
+        //check and pop rate
+        AppRate.with(this)
+                .setInstallDays(0) // default 10, 0 means install day.
+                .setLaunchTimes(0) // default 10
+                .setRemindInterval(0) // default 1
+                .setShowLaterButton(true) // default true
+                .setDebug(true) // default false
+                .setOnClickButtonListener(new OnClickButtonListener() { // callback listener.
+                    @Override
+                    public void onClickButton(int which) {
+                        int keys = Math.abs(which);
+                        if (keys == 2) {
+                            //tell a friend
+
+                        }
+                    }
+                })
+                .monitor();
+
+        // Show a dialog if meets conditions
+        AppRate.showRateDialogIfMeetsConditions(this);
+        AppRate.with(this).clearAgreeShowDialog();
     }
 
     //set header and toolbar
@@ -252,7 +277,7 @@ public class Dashboard extends AppCompatActivity {
         }
 
         //add the fragment
-        public void addFragment(Fragment fragment) {
+        void addFragment(Fragment fragment) {
             fragments.add(fragment);
         }
     }

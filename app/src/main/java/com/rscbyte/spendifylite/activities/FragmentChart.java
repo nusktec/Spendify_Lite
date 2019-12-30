@@ -2,10 +2,15 @@ package com.rscbyte.spendifylite.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.FileUtils;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +21,11 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.UploadProgressListener;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -30,12 +40,21 @@ import com.rscbyte.spendifylite.databinding.ActivityFragmentChartBinding;
 import com.rscbyte.spendifylite.models.MData;
 import com.rscbyte.spendifylite.models.MProfile;
 import com.rscbyte.spendifylite.objects.OChartPage;
+import com.tooltip.Tooltip;
 
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.Executors;
+
+import static android.content.ContentValues.TAG;
 
 public class FragmentChart extends Fragment {
 
@@ -93,7 +112,7 @@ public class FragmentChart extends Fragment {
         prepareChart();
         pieDataSet = new PieDataSet(pieEntries, "");
         pieData = new PieData(pieDataSet);
-        pieChart.setCenterText("Your Monthly\nExpense");
+        pieChart.setCenterText("Monthly\nExpense");
         pieChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
         pieChart.setCenterTextColor(getResources().getColor(R.color.app_color_1Dp));
         pieChart.setVerticalFadingEdgeEnabled(true);
@@ -119,6 +138,27 @@ public class FragmentChart extends Fragment {
     }
 
     //prepare chart entries
+    Tooltip tooltip = null; //tooltip;
+
+    void showToolTips(final String msg, final int color) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tooltip = new Tooltip.Builder(bdx.trxComparison)
+                        .setText(msg)
+                        .setCancelable(true)
+                        .setDismissOnClick(true)
+                        .setTextSize(16.0f)
+                        .setCornerRadius(10.0f)
+                        .setPadding(10)
+                        .setTextColor(Color.WHITE)
+                        .setTypeface(Typeface.DEFAULT_BOLD)
+                        .setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(color))
+                        .show();
+            }
+        }, 2000);
+    }
+
     private void prepareChart() {
         //monthly moving average
         int _monthly_average_target = 1;
@@ -136,7 +176,7 @@ public class FragmentChart extends Fragment {
         for (MData t : mData) {
             //check date and break if passed today
             if (Integer.parseInt(t.getTrxDay()) > Tools.getDay()) {
-                break;
+                //return;
             }
             //check for data different
             if (month_changes == 0) {
@@ -181,19 +221,23 @@ public class FragmentChart extends Fragment {
         //determine over spent or less
         if (_spent_so_far > _typicalSolve) {
             //you above typical
-            bdx.getD().setTxtVariesTyical("Above Typical");
+            bdx.getD().setTxtVariesTyical("Above Usual");
             bdx.getD().setTxtColor(R.color.red_800);
             //remark statement
             bdx.getD().setTxtStatement("You are in the red zone.\nReview your past spending to stay on track");
+            //show tooltip
+            showToolTips("You are in the red zone.\nReview your past spending to stay on track", R.color.red_800);
         } else if (_spent_so_far < _typicalSolve) {
             //you are below typical
-            bdx.getD().setTxtVariesTyical("Below Typical");
+            bdx.getD().setTxtVariesTyical("Below Usual");
             bdx.getD().setTxtColor(R.color.green_700);
             bdx.getD().setTxtStatement("You are in the green zone. fantastic!!!\nContinue to keep your spending in check");
+            showToolTips("You are in the green zone. fantastic!!!\nContinue to keep your spending in check", R.color.green_700);
             if (((_typicalSolve / 2) + (_typicalSolve / 4)) < _spent_so_far) {
                 //change color to yellow
                 bdx.getD().setTxtColor(R.color.orange_800);
                 bdx.getD().setTxtStatement("You are close to typical, Easy with  your expenses");
+                showToolTips("You are close to typical, Easy with  your expenses", R.color.orange_800);
             }
         }
 
@@ -305,6 +349,46 @@ public class FragmentChart extends Fragment {
                 Tools.showToast(ctx, "Sync completed.");
             }
         }, 3000);
+        //backup system
+        try {
+            ApplicationInfo ai = ctx.getPackageManager().getApplicationInfo(ctx.getPackageName(), PackageManager.GET_META_DATA);
+            Bundle bundle = ai.metaData;
+            String mydb = bundle.getString("DATABASE");
+            //form the local url
+            File dbFile = ctx.getDatabasePath(mydb);
+            //start uploads
+            AndroidNetworking.upload(Constants.API_DOMAIN_URL + "/backup")
+                    .addMultipartFile("backupdb", dbFile)
+                    .addMultipartParameter("userinfo", "valueshidbfibnsiu")
+                    .setTag("uploadDb")
+                    .setPriority(Priority.HIGH)
+                    .build()
+                    .setUploadProgressListener(new UploadProgressListener() {
+                        @Override
+                        public void onProgress(long bytesUploaded, long totalBytes) {
+                            // do anything with progress
+                            Tools.showToast(ctx, String.valueOf(totalBytes));
+                        }
+                    })
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // below code will be executed in the executor provided
+                            // do anything with response
+                            Log.e("Hiyetyjwkerror", response.toString());
+                        }
+
+                        @Override
+                        public void onError(ANError error) {
+                            // handle error
+                            error.printStackTrace();
+                        }
+                    });
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "Failed to load meta-data, NameNotFound: " + e.getMessage());
+        } catch (NullPointerException e) {
+            Log.e(TAG, "Failed to load meta-data, NullPointer: " + e.getMessage());
+        }
     }
 
     //configure gauge

@@ -182,13 +182,32 @@
     </integer-array>
 
     <string-array name="countries_array">
-        <item>Nigeria</item>
-        <item>Liberia</item>
-        <item>Congo Brazzaville</item>
-        <item>Mali</item>
-        <item>Congo DRC</item>
-        <item>Chad</item>
-        <item>Senegal</item>
+        <item>Nigeria (NGN)</item>
+        <item>Liberia (USD)</item>
+        <item>Congo Brazzaville (CDF)</item>
+        <item>Mali (CFA)</item>
+        <item>Congo (DRC)</item>
+        <item>Chad (CFA)</item>
+        <item>Senegal (CFA)</item>
+        <item>Sierra Leone (SLL)</item>
+        <item>Gabon (XAF)</item>
+        <item>Cote DIvoire (CFA)</item>
+        <item>Uganda (UGX)</item>
+        <item>Guinea Conakry (GNF)</item>
+        <item>Ghana (GHS)</item>
+        <item>Zambia (ZMW)</item>
+        <item>Mozambique (MZN)</item>
+        <item>Benin Republic (CFA)</item>
+        <item>Burkina Faso (XOF)</item>
+        <item>Kenya (KES)</item>
+        <item>Cameroon (CFA)</item>
+        <item>Tanzania (TZS)</item>
+        <item>Rwanda (RWF)</item>
+        <item>Gambia (GBP)</item>
     </string-array>
+
+    <integer-array name="countries_flags">
+        <item>@drawable/ic_close</item>
+    </integer-array>
 
 </resources>

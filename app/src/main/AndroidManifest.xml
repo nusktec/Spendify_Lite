@@ -19,6 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:replace="android:icon">
         <!-- Services for all -->
         <service
@@ -61,7 +62,7 @@
 
         <meta-data
             android:name="DATABASE"
-            android:value="spendifydb_02x.db" />
+            android:value="spendify_02x.db" />
         <meta-data
             android:name="VERSION"
             android:value="1" />

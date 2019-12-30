@@ -40,7 +40,6 @@ public class SMSService extends Service {
     private static final String MOBILEMONEY = "MOBILEMONEY";
     private static final String SUN_TRUST_BANK = "SUNTRUST";
 
-
     private Context act;
     private MProfile mProfile;
 
@@ -98,6 +97,9 @@ public class SMSService extends Service {
 
     //void do banking format and insert
     void checkBankAndInsert(OSms sms) {
+        if (sms.getAddress() == null) {
+            return;
+        }
         if (sms.getAddress().toUpperCase().contains(UBA_BANK)) {
             //Uba Algorithms
             BankChecker.ubaBank(sms, new BankChecker.MoneyBack() {
@@ -310,7 +312,7 @@ public class SMSService extends Service {
         String msgID = o.getMsgID();
         long chk = MData.count(MData.class, dbName("trxMsgID") + "=?", new String[]{msgID});
         if (chk > 0) {
-            Log.e("Service Db", "Already inserted " + o.getMsgID());
+            //Log.e("Service Db", "Already inserted " + o.getMsgID());
             return;
         }
         //insert in db
@@ -336,7 +338,7 @@ public class SMSService extends Service {
         Log.e("Alert Saved", "Inserted " + o.getMsgID() + " : " + o.getBankName());
         //Fire notifications
         if (mProfile == null || mProfile.getNotifications() == 1) {
-            Tools.Notification(act, "New Bank Alert", "SMS Synchronized", _counter + " Alert(s) were synchronized just now, tap to view", 1, Dashboard.class, "No Data");
+            Tools.Notification(act, "New Bank Alert", "SMS Synchronized", _counter + " Alert(s) was synchronized seconds ago, tap to view", 1, Dashboard.class, "No Data");
         }
     }
 

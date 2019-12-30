@@ -1,23 +1,23 @@
 package com.rscbyte.spendifylite;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
+import com.orm.SugarApp;
 import com.orm.SugarContext;
+import com.orm.SugarDb;
+import com.orm.util.SugarConfig;
 import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.activities.Dashboard;
-import com.rscbyte.spendifylite.activities.ScreenLock;
 import com.rscbyte.spendifylite.models.MProfile;
 import com.rscbyte.spendifylite.services.SMSService;
 
@@ -31,6 +31,7 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         //initialize suger orm
         SugarContext.init(this);
+        SugarConfig.clearCache();
         //set toolbar for mobile
         Tools.setSystemBarColor(this, R.color.light_white);
         Tools.setSystemBarLight(this);
