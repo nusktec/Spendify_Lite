@@ -217,9 +217,9 @@ public class FragmentChart extends Fragment {
                 bdx.getD().setTxtVariesTyical("Difference");
                 bdx.getD().setTxtColor(R.color.orange_800);
                 //remark statement
-                bdx.getD().setTxtStatement("No previous transaction to determine usual expense.");
+                bdx.getD().setTxtStatement("No previous transaction to determine usual expense");
                 //show tooltip
-                showToolTips("No previous transaction to determine usual expense.", R.color.orange_800);
+                showToolTips("No previous transaction to determine usual expense", R.color.orange_800);
             }
         } else if (_spent_so_far < _typicalSolve) {
             //you are below typical

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.0"
     defaultConfig {
         applicationId "com.rscbyte.spendifylite"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -42,6 +42,7 @@ dependencies {
     implementation 'com.github.vihtarb:tooltip:0.2.0' //tooltip
     implementation 'com.github.hotchemi:android-rate:1.0.1' //app rate
     implementation 'com.amitshekhar.android:android-networking:1.0.2' //network
+    implementation 'me.aflak.libraries:fingerprint:2.5.3' //fingerprint
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

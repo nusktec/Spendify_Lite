@@ -332,8 +332,7 @@
                     <Switch
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Self Protection" />
-
+                        android:text="App Protection" />
 
                 </LinearLayout>
 

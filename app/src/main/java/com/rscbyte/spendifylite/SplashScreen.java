@@ -15,6 +15,7 @@ import com.orm.SugarContext;
 import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.activities.Dashboard;
+import com.rscbyte.spendifylite.activities.ScreenLock;
 import com.rscbyte.spendifylite.models.MProfile;
 import com.rscbyte.spendifylite.services.SMSService;
 
