@@ -388,7 +388,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerInParent="true"
                         android:layout_margin="5dp"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
                     <com.ekn.gruzer.gaugelibrary.ArcGauge
                         android:id="@+id/gauge_old"
@@ -401,7 +401,7 @@
                         android:layout_width="280dp"
                         android:layout_height="280dp"
                         android:layout_centerInParent="true"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:animationTime="3000"
                         app:maxSpeed="100"
                         app:speedTextSize="50dp"

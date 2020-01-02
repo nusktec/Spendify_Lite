@@ -75,18 +75,18 @@ public class Tools {
         }
     }
 
-    public static void setSystemBarColor(Activity act, @ColorRes int color) {
+    public static void setSystemBarColorDialog(Context act, Dialog dialog, @ColorRes int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = act.getWindow();
+            Window window = dialog.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(act.getResources().getColor(color));
         }
     }
 
-    public static void setSystemBarColorDialog(Context act, Dialog dialog, @ColorRes int color) {
+    public static void setSystemBarColor(Activity act, @ColorRes int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = dialog.getWindow();
+            Window window = act.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(act.getResources().getColor(color));
@@ -140,7 +140,7 @@ public class Tools {
         Calendar now = Calendar.getInstance();
         now.setTimeZone(TimeZone.getTimeZone("GMT+01:00"));
         now.add(Calendar.MONTH, difference);
-        String str_date = now.get(Calendar.DATE) + "-" + (now.get(Calendar.MONTH) + 1) + "-" + now.get(Calendar.YEAR) + " " + 00 + ":" + 00 + ":" + 00;
+        String str_date = 1 + "-" + (now.get(Calendar.MONTH) + 1) + "-" + now.get(Calendar.YEAR) + " " + 00 + ":" + 00 + ":" + 00;
         DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         Date date = null;
         try {
@@ -150,6 +150,13 @@ public class Tools {
         }
         assert date != null;
         return date.getTime() + "";
+    }
+
+    //compare date for instance equality
+    public static int timepstamp2Month(Long tmpstmp) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(tmpstmp);
+        return cal.get(Calendar.MONTH) + 1;
     }
 
     //get time stamp

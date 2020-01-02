@@ -47,6 +47,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -160,6 +161,8 @@ public class FragmentChart extends Fragment {
     }
 
     private void prepareChart() {
+        //fetch strictly on moving date
+        float _moving_average3 = 0;
         //monthly moving average
         int _monthly_average_target = 1;
         //assign dictionary value holder
@@ -171,36 +174,36 @@ public class FragmentChart extends Fragment {
         String _month_name = "";
         int month_changes = 0;
         float _moving_average = 0;
-        Select select = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(passedMonth)).and(Condition.prop("TRX_MONTH").notEq(Tools.getMonth()));
+        Select select = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(passedMonth)).and(Condition.prop("TRX_MONTH").notEq(Tools.getMonth())).and(Condition.prop("TRX_TYPE").eq(2));
         List<MData> mData = select.list();
         for (MData t : mData) {
             //check date and break if passed today
-            if (Integer.parseInt(t.getTrxDay()) > Tools.getDay()) {
-                //return;
-            }
-            //check for data different
-            if (month_changes == 0) {
-                month_changes = Integer.parseInt(t.getTrxMonth());
-            }
-            //reset as data changed
-            if (month_changes != Integer.parseInt(t.getTrxMonth())) {
-                _spent_for_the_month = 0;
-                month_changes = 0;
-                _monthly_average_target++;
-            }
-            //check for debit data only
-            if (t.getTrxType() == 2) {
-                //add to map
-                _spent_for_the_month += Float.parseFloat(t.getTrxValue());
-                _month_name = Tools.getMonthAscNum(Integer.parseInt(t.getTrxMonth()));
-                tmpValue.put(_month_name, _spent_for_the_month);
-            }
-            //check for the last month
-            if (t.getTrxMonth().equals(String.valueOf(Tools.getMonth() - 1))) {
-                _moving_average += Float.parseFloat(t.getTrxValue());
+            if (Integer.parseInt(t.getTrxDay()) <= Tools.getDay()) {
+                //check for data different
+                if (month_changes == 0) {
+                    month_changes = Integer.parseInt(t.getTrxMonth());
+                }
+                //reset as data changed
+                if (month_changes != Integer.parseInt(t.getTrxMonth())) {
+                    _spent_for_the_month = 0;
+                    month_changes = 0;
+                    _monthly_average_target++;
+                }
+                //check for debit data only
+                if (t.getTrxType() == 2) {
+                    //add to map
+                    _spent_for_the_month += Float.parseFloat(t.getTrxValue());
+                    _month_name = Tools.getMonthAscNum(Integer.parseInt(t.getTrxMonth()));
+                    tmpValue.put(_month_name, _spent_for_the_month);
+                    //check for the last month
+                    if (Integer.parseInt(t.getTrxMonth()) == Tools.timepstamp2Month(Long.parseLong(Tools.getVariesTimeStamp(-1)))) {
+                        _moving_average += Float.parseFloat(t.getTrxValue());
+                    }
+                }
             }
         }
-
+        //get how many months in total
+        _monthly_average_target = tmpValue.size();
         float _spent_so_far = 0;
         float _income_this_month = 0;
         //get this month account total expense
@@ -241,9 +244,7 @@ public class FragmentChart extends Fragment {
             }
         }
 
-
-        //fetch strictly on moving date
-        float _moving_average3 = 0;
+       /*
         Select select3 = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(passedMonth)).and(Condition.prop("TRX_MONTH").notEq(Tools.getMonth()));
         List<MData> mData3 = select3.list();
         for (MData t : mData3) {
@@ -253,17 +254,8 @@ public class FragmentChart extends Fragment {
                 _moving_average3 += Float.parseFloat(t.getTrxValue());
             }
         }
+        */
 
-        //solve for income this months as percentage
-        float incom_percentage = (_spent_so_far < 1 ? 1 : _spent_so_far);
-        incom_percentage = (_income_this_month / incom_percentage) * 100;
-        //start assignment
-        bdx.getD().setTxtSpentSoFar(Constants.getCurrency() + Tools.doCuurency(_spent_so_far)); //display spent so far
-        bdx.getD().setTxtTypical2(Constants.getCurrency() + Tools.doCuurency(_moving_average3 / _monthly_average_target)); //display typical 3 months
-        bdx.getD().setTxtTypical(Constants.getCurrency() + Tools.doCuurency(_typicalSolve)); //display typical 3 months
-        bdx.getD().setTxtBelowTypical(Constants.getCurrency() + Tools.doCuurency(Math.abs(_variesTypical))); //below typical
-        bdx.getD().setTxtIncomeThisM(String.format("%.1f", incom_percentage) + "%"); //this months
-        bdx.txtIncomeThis.setText("Total Income this month: " + Constants.getCurrency() + Tools.doCuurency(Math.abs(_income_this_month)));
         //prepare chart
         pieEntries = new ArrayList<>();
         Iterator iterator = tmpValue.entrySet().iterator();
@@ -271,13 +263,24 @@ public class FragmentChart extends Fragment {
             Map.Entry entry = (Map.Entry) iterator.next();
             //put to chart
             pieEntries.add(new PieEntry(Float.parseFloat(entry.getValue().toString()), String.valueOf(entry.getKey())));
+            _moving_average3 += Float.parseFloat(entry.getValue().toString());
             iterator.remove();
         }
+
+        //solve for income this months as percentage
+        float incom_percentage = (_spent_so_far < 1 ? 1 : _spent_so_far);
+        incom_percentage = (_income_this_month / incom_percentage) * 100;
+        //start assignment
+        bdx.getD().setTxtSpentSoFar(Constants.getCurrency() + Tools.doCuurency(_spent_so_far)); //display spent so far
+        bdx.getD().setTxtTypical2(Constants.getCurrency() + Tools.doCuurency(_moving_average3 / (_monthly_average_target > 4 ? 4 : _monthly_average_target))); //display typical 3 months
+        bdx.getD().setTxtTypical(Constants.getCurrency() + Tools.doCuurency(_typicalSolve)); //display typical 3 months
+        bdx.getD().setTxtBelowTypical(Constants.getCurrency() + Tools.doCuurency(Math.abs(_variesTypical))); //below typical
+        bdx.getD().setTxtIncomeThisM(String.format("%.1f", incom_percentage) + "%"); //this months
+        bdx.txtIncomeThis.setText("Total Income this month: " + Constants.getCurrency() + Tools.doCuurency(Math.abs(_income_this_month)));
         //add spent so far
         pieEntries.add(new PieEntry(_spent_so_far, Tools.getMonthAscNum(Tools.getMonth())));
         //gauge meter
         configGauge(_spent_so_far, Float.parseFloat(Tools.doFloat(_typicalSolve)));
-
     }
 
     //initialize components
@@ -295,18 +298,18 @@ public class FragmentChart extends Fragment {
             @Override
             public void onClick(View view) {
                 if (switcher) {
-                    bdx.gauge.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_out));
-                    bdx.pieChart.setVisibility(View.VISIBLE);
-                    bdx.pieChart.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_in));
-                    bdx.gauge.setVisibility(View.GONE);
-                    bdx.gauge.clearAnimation();
-                    switcher = false;
-                } else {
                     bdx.gauge.setVisibility(View.VISIBLE);
                     bdx.gauge.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_in));
                     bdx.pieChart.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_out));
                     bdx.pieChart.setVisibility(View.GONE);
                     bdx.pieChart.clearAnimation();
+                    switcher = false;
+                } else {
+                    bdx.gauge.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_out));
+                    bdx.pieChart.setVisibility(View.VISIBLE);
+                    bdx.pieChart.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.zoom_in));
+                    bdx.gauge.setVisibility(View.GONE);
+                    bdx.gauge.clearAnimation();
                     switcher = true;
                 }
             }
@@ -350,50 +353,12 @@ public class FragmentChart extends Fragment {
             }
         }, 3000);
         //backup system
-        try {
-            ApplicationInfo ai = ctx.getPackageManager().getApplicationInfo(ctx.getPackageName(), PackageManager.GET_META_DATA);
-            Bundle bundle = ai.metaData;
-            String mydb = bundle.getString("DATABASE");
-            //form the local url
-            File dbFile = ctx.getDatabasePath(mydb);
-            //start uploads
-            AndroidNetworking.upload(Constants.API_DOMAIN_URL + "/backup")
-                    .addMultipartFile("backupdb", dbFile)
-                    .addMultipartParameter("userinfo", "valueshidbfibnsiu")
-                    .setTag("uploadDb")
-                    .setPriority(Priority.HIGH)
-                    .build()
-                    .setUploadProgressListener(new UploadProgressListener() {
-                        @Override
-                        public void onProgress(long bytesUploaded, long totalBytes) {
-                            // do anything with progress
-                            Tools.showToast(ctx, String.valueOf(totalBytes));
-                        }
-                    })
-                    .getAsJSONObject(new JSONObjectRequestListener() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // below code will be executed in the executor provided
-                            // do anything with response
-                            Log.e("Hiyetyjwkerror", response.toString());
-                        }
 
-                        @Override
-                        public void onError(ANError error) {
-                            // handle error
-                            error.printStackTrace();
-                        }
-                    });
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Failed to load meta-data, NameNotFound: " + e.getMessage());
-        } catch (NullPointerException e) {
-            Log.e(TAG, "Failed to load meta-data, NullPointer: " + e.getMessage());
-        }
     }
 
     //configure gauge
     private void configGauge(float value, float max) {
-        /** deprecated
+        /* deprecated
          Range rangeGreen = new Range();
          rangeGreen.setFrom(0);
          rangeGreen.setTo((max / 2));

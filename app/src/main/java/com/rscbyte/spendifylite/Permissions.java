@@ -14,6 +14,8 @@ import androidx.databinding.DataBindingUtil;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.databinding.ActivityPermissionBinding;
 
+import java.util.Objects;
+
 public class Permissions extends AppCompatActivity {
 
     //Bind and use global data
@@ -43,8 +45,8 @@ public class Permissions extends AppCompatActivity {
 
     //check for permissions
     public void askForPermissions() {
-        String permission = getIntent().getStringExtra("permission");
-        ActivityCompat.requestPermissions(this, new String[]{permission}, 200);
+        String[] permission = Objects.requireNonNull(getIntent().getStringExtra("permission")).split("~");
+        ActivityCompat.requestPermissions(this, new String[]{permission[0], permission[1]}, 200);
     }
 
     //Permission listener

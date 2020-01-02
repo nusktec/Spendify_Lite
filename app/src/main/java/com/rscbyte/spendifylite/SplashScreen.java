@@ -11,10 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.orm.SugarApp;
 import com.orm.SugarContext;
-import com.orm.SugarDb;
-import com.orm.util.SugarConfig;
 import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.activities.Dashboard;
@@ -23,13 +20,14 @@ import com.rscbyte.spendifylite.services.SMSService;
 
 public class SplashScreen extends AppCompatActivity {
     boolean firstCheck = false;
+    public static int DELAY_TIME_SEC = 200;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        //initialize suger orm
+        //initialize sugar orm
         SugarContext.init(this);
         //set toolbar for mobile
         Tools.setSystemBarColor(this, R.color.light_white);
@@ -38,9 +36,9 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                checkPermission(Manifest.permission.READ_SMS);
+                checkPermission(Manifest.permission.READ_SMS, Manifest.permission.READ_EXTERNAL_STORAGE);
             }
-        }, 3000);
+        }, DELAY_TIME_SEC);
         //load license copy text
         if (MProfile.count(MProfile.class) > 0) {
             String name = (MProfile.findById(MProfile.class, 1)).getNames();
@@ -62,16 +60,16 @@ public class SplashScreen extends AppCompatActivity {
                 startActivity(new Intent(SplashScreen.this, Dashboard.class));
                 finish();
             }
-        }, 3000);
+        }, DELAY_TIME_SEC);
     }
 
     //Simple permission to check
-    public void checkPermission(String permission) {
+    public void checkPermission(String... permission) {
         // Checking if permission is not granted
-        if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_DENIED) {
+        if (ContextCompat.checkSelfPermission(this, permission[0]) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(this, permission[1]) == PackageManager.PERMISSION_DENIED) {
             //Open permission screen
             firstCheck = true;
-            startActivity(new Intent(SplashScreen.this, Permissions.class).putExtra("permission", Manifest.permission.READ_SMS));
+            startActivity(new Intent(SplashScreen.this, Permissions.class).putExtra("permission", Manifest.permission.READ_SMS + "~" + Manifest.permission.READ_EXTERNAL_STORAGE));
         } else {
             startMain();
         }
@@ -82,6 +80,6 @@ public class SplashScreen extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (firstCheck)
-            checkPermission(Manifest.permission.READ_SMS);
+            checkPermission(Manifest.permission.READ_SMS, Manifest.permission.READ_EXTERNAL_STORAGE);
     }
 }
