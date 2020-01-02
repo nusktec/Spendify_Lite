@@ -577,6 +577,41 @@ public class BankChecker {
         }
     }
 
+    //unity bank
+    public static void unityBank(OSms sms, MoneyBack moneyBack) {
+        //algorithms shuffler
+        //algorithms shuffler
+        OAlerts oAlerts = new OAlerts();
+        try {
+            if (sms.getMsg().toUpperCase().contains("DR ALERT")) {
+                oAlerts.setMode(2);
+            } else if (sms.getMsg().toUpperCase().contains("CR ALERT")) {
+                oAlerts.setMode(1);
+            } else {
+                moneyBack.isMoney(false, null);
+            }
+            String[] body = sms.getMsg().split("[\\r?\\n]+");
+            for (String i : body) {
+                //do each line
+                if (i.substring(0, 3).toUpperCase().equals("AMT")) {
+                    oAlerts.setMoney(i.replaceAll("[^\\d.]", ""));
+                }
+                if (i.substring(0, 4).toUpperCase().equals("DESC")) {
+                    oAlerts.setDescr(i.split(":")[1]);
+                }
+                String tmpdate = Tools.timeStampStr(Long.parseLong(sms.getTime()));
+                oAlerts.setRawDate(tmpdate);
+            }
+            oAlerts.setMsgID(sms.getId());
+            oAlerts.setTimeStp(sms.getTime());
+            oAlerts.setBankName("Unity Bank");
+            moneyBack.isMoney(true, oAlerts);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            moneyBack.isMoney(false, null);
+        }
+    }
+
 
     /////////////////////INTERNATIONAL BANKS\\\\\\\\\\\\\\\\\\\\\\\\\\
 

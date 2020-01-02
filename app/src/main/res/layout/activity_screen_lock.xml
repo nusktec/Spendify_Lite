@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Spendify Locked"
+                android:text="@string/spendify_locked"
                 android:textAllCaps="false"
                 android:textColor="@color/grey_500"
                 android:textSize="25sp"
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/bg_simple_edittext"
-                android:hint="Pin Code"
+                android:hint="@string/pin_code"
                 android:imeOptions="actionGo"
                 android:inputType="textPassword|number"
                 android:maxLength="8"
@@ -71,15 +71,16 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/btn_primary"
-                android:text="Unlock"
+                android:text="@string/unlock"
                 android:textColor="@color/light_white"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Forgot Pin Code"
+                android:padding="5dp"
+                android:text="@string/forgot_pin_code"
                 android:textAlignment="center"
                 android:textColor="@color/red_800" />
 
@@ -90,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_margin="10dp"
-            android:text="R01 Encrypt"
+            android:text="@string/r01_encrypt"
             android:textAlignment="center" />
 
     </RelativeLayout>

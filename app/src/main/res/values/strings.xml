@@ -16,4 +16,9 @@
     <string name="rate_dialog_ok">Rate It Now</string>
     <string name="rate_dialog_cancel">No, Thanks</string>
     <string name="rate_dialog_no">Tell a friend</string>
+    <string name="unlock">Unlock</string>
+    <string name="forgot_pin_code">Forgot Pin Code</string>
+    <string name="r01_encrypt">R01 Encrypt</string>
+    <string name="pin_code">Pin Code</string>
+    <string name="spendify_locked">Spendify Locked</string>
 </resources>

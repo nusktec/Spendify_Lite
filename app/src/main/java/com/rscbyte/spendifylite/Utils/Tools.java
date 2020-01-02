@@ -528,12 +528,9 @@ public class Tools {
 
     /**
      * Format current
-     *
-     * @param amount
-     * @return
      */
     public static String doCuurency(double amount) {
-        return String.format("%,.01f", (double) amount);
+        return amount > 0 ? String.format("%,.01f", (double) amount) : "0";
     }
 
     public static String doFloat(double amount) {
