@@ -67,7 +67,7 @@
 
         <meta-data
             android:name="DATABASE"
-            android:value="spendify_02x.db" />
+            android:value="spendify_03.db" />
         <meta-data
             android:name="VERSION"
             android:value="1" />

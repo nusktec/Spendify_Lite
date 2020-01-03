@@ -5,6 +5,9 @@
     <!--Data started-->
     <data>
 
+        <variable
+            name="sms_state"
+            type="boolean" />
     </data>
 
     <!--Main layout begin-->
@@ -177,6 +180,7 @@
                     android:paddingTop="10dp">
 
                     <TextView
+                        android:id="@+id/txt_default_country"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Choose country currency"
@@ -187,9 +191,7 @@
                         android:id="@+id/spinner_country"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:entries="@array/countries_name_array"
                         android:spinnerMode="dropdown" />
-
                 </LinearLayout>
 
                 <!--Gender control-->
@@ -287,6 +289,7 @@
                         style="SCBSwitch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:checked="true"
                         android:text="Allow Notifications" />
 
 
@@ -302,10 +305,20 @@
                     android:orientation="vertical"
                     android:paddingTop="10dp">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@{sms_state?`Recommended`:`Not recommended`, default=`Thinking`}"
+                        android:textColor="@color/red_500"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
                     <Switch
                         android:id="@+id/switch_sms"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:checked="true"
                         android:text="Allow SMS Sync." />
 
                 </LinearLayout>
@@ -330,9 +343,11 @@
                     android:paddingTop="10dp">
 
                     <Switch
+                        android:id="@+id/switch_protect"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="App Protection" />
+                        android:checked="true"
+                        android:text="Spendify Protecs" />
 
                 </LinearLayout>
 

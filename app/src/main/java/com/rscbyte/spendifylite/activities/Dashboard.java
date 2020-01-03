@@ -77,14 +77,14 @@ public class Dashboard extends AppCompatActivity {
                 .setLaunchTimes(0) // default 10
                 .setRemindInterval(0) // default 1
                 .setShowLaterButton(true) // default true
-                .setDebug(true) // default false
+                .setDebug(false) // default false
                 .setOnClickButtonListener(new OnClickButtonListener() { // callback listener.
                     @Override
                     public void onClickButton(int which) {
                         int keys = Math.abs(which);
                         if (keys == 2) {
                             //tell a friend
-
+                            Tools.shareText(ctx, "Invite A Friend", "I can't imagine i could spend such a huge amount of money !\nWith #Spendify i have all my expense detailed. Download and enjoy\n" + Tools.getMarketLink(ctx));
                         }
                     }
                 })

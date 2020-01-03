@@ -58,7 +58,7 @@ public class ScreenLock extends AppCompatActivity {
 
                 assert km != null;
                 if (km.isKeyguardSecure()) {
-                    Intent authIntent = km.createConfirmDeviceCredentialIntent("Spendify Protect", "Enter your device PIN to unlock");
+                    Intent authIntent = km.createConfirmDeviceCredentialIntent("Spendify Protects", "Enter your device PIN to unlock");
                     startActivityForResult(authIntent, INTENT_AUTHENTICATE);
                 }
             }
@@ -68,7 +68,7 @@ public class ScreenLock extends AppCompatActivity {
     private void displayBiometricPrompt() {
         if (FingerprintDialog.isAvailable(this)) {
             FingerprintDialog.initialize(this)
-                    .title("Spendify Protection")
+                    .title("Spendify Protects")
                     .message("Unlock with your finder to begin transaction")
                     .callback(new FingerprintDialogCallback() {
                         @Override

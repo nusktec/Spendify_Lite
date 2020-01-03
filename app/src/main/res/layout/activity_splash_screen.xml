@@ -3,52 +3,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_white"
+    android:background="@drawable/bg_gradiant_0c"
     tools:context=".SplashScreen">
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/main_frame"
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"
+        android:src="@drawable/ic_spendify"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <LinearLayout
+        <TextView
+            style="@style/TextAppearance.AppCompat.Headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:text="Spendify Mobile"
+            android:textColor="#fff"
+            android:textSize="@dimen/spacing_xlarge"
+            android:textStyle="bold" />
 
-            <TextView
-                style="@style/TextAppearance.AppCompat.Headline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Spendify Mobile"
-                android:textColor="@color/app_color_1Dp"
-                android:textSize="@dimen/spacing_xlarge"
-                android:textStyle="bold" />
-
-            <TextView
-                style="@style/TextAppearance.AppCompat.Headline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="It\'s your money..."
-                android:textAlignment="textEnd"
-                android:textColor="@color/app_color_1Dp"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </com.facebook.shimmer.ShimmerFrameLayout>
+        <TextView
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="It\'s your money..."
+            android:textAlignment="textEnd"
+            android:textColor="#fff"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/txt_license"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/main_frame"
+        android:layout_below="@id/logo"
         android:layout_centerInParent="true"
         android:layout_marginTop="50dp"
         android:padding="5dp"
         android:text=""
-        android:textColor="@color/grey_800"
+        android:textColor="@color/light_white"
         android:textSize="13sp"
         android:textStyle="bold" />
 
@@ -59,7 +62,7 @@
         android:layout_centerInParent="true"
         android:padding="5dp"
         android:text="Spendify Technologies"
-        android:textColor="@color/grey_800"
+        android:textColor="@color/light_white"
         android:textSize="13sp"
         android:textStyle="bold" />
 

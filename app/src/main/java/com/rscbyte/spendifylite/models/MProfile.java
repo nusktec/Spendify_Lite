@@ -11,7 +11,10 @@ public class MProfile extends SugarRecord {
     private String phone = "";
     private String gender = "";
     private String quotes = "";
-    private String passcode = "";
+    private int currency = 0;
+    private String country = "Nigeria (NGN)";
+    private String symbol = "NGN";
+    private int protects = 1;
     private int notifications = 1;
     private int sms = 1;
 
@@ -78,11 +81,35 @@ public class MProfile extends SugarRecord {
         this.sms = sms;
     }
 
-    public String getPasscode() {
-        return passcode;
+    public int getProtects() {
+        return protects;
     }
 
-    public void setPasscode(String passcode) {
-        this.passcode = passcode;
+    public void setProtects(int protects) {
+        this.protects = protects;
+    }
+
+    public int getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(int currency) {
+        this.currency = currency;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 }

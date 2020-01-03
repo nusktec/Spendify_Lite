@@ -20,9 +20,11 @@ public class CountryList extends BaseAdapter {
     private TypedArray countries_flags;
     private CustomSpinnerListBinding binding;
     private LayoutInflater inflater;
+    private CallBacks callBacks;
 
     public CountryList(Context ctx) {
         this.context = ctx;
+        this.callBacks = callBacks;
         //assign others
         this.countries_name = context.getResources().getStringArray(R.array.countries_name_array);
         this.countries_curr = context.getResources().getStringArray(R.array.countries_curr_array);
@@ -37,19 +39,24 @@ public class CountryList extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return i;
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         CustomSpinnerListBinding bn = DataBindingUtil.inflate(inflater, R.layout.custom_spinner_list, null, false);
         bn.imgFlag.setImageDrawable(countries_flags.getDrawable(i));
         bn.txtCountry.setText(countries_name[i]);
         return bn.getRoot();
+    }
+
+    //onclick listener
+    public interface CallBacks {
+        void onChoosen(String symbol, String country, int country_num);
     }
 }

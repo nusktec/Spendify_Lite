@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 
@@ -22,6 +23,14 @@ public class Profile extends AppCompatActivity {
     //Main layout inflater holder
     ActivityProfileBinding bdx = null;
     Activity ctx;
+    //submit data
+    public String gender = "M";
+    public int notifications = 1;
+    public int sms = 1;
+    public int protects = 1;
+    public int currency = 0;
+    public String country = "Nigeria (NGN)";
+    public String symbol = "NGN";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +49,11 @@ public class Profile extends AppCompatActivity {
     //data loader
     public void dataLoader() {
         //setup countries
-        CountryList countryList = new CountryList(ctx);
+        final CountryList countryList = new CountryList(ctx);
         bdx.spinnerCountry.setAdapter(countryList);
+        bdx.setSmsState(true);
         if (MProfile.count(MProfile.class) < 1) {
-            Tools.showToast(ctx, "You have not setup user account");
+            Tools.showToast(ctx, "You have not setup user profile");
             return;
         }
         MProfile mProfile = MProfile.findById(MProfile.class, 1);
@@ -60,15 +70,14 @@ public class Profile extends AppCompatActivity {
                 bdx.radioFemale.setChecked(true);
             }
             //notifications
-            if (mProfile.getNotifications() == 1) {
-                //male gender
-                bdx.switchNoti.setChecked(true);
-            }
-            //sms
-            if (mProfile.getSms() == 1) {
-                //male gender
-                bdx.switchSms.setChecked(true);
-            }
+            bdx.switchNoti.setChecked(mProfile.getNotifications() == 1);
+            //sms sync
+            bdx.switchSms.setChecked(mProfile.getSms() == 1);
+            //male gender
+            bdx.switchProtect.setChecked(mProfile.getProtects() == 1);
+            //country selection
+            bdx.spinnerCountry.setSelection(mProfile.getCurrency());
+            bdx.setSmsState(bdx.switchSms.isChecked());
         }
     }
 
@@ -76,7 +85,7 @@ public class Profile extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void initToolBar() {
         Tools.setHeaderColor(this);
-        bdx.toolbarTitle.setText("Account Settings");
+        bdx.toolbarTitle.setText("Profile Settings");
         //left btn initializer
         bdx.toolbarLeftBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,20 +137,27 @@ public class Profile extends AppCompatActivity {
                 } else {
                     sms = 0;
                 }
+                bdx.setSmsState(b);
+            }
+        });
+        //sms
+        bdx.switchProtect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    protects = 1;
+                } else {
+                    protects = 0;
+                }
             }
         });
     }
-
-    //submit data
-    public String gender = "M";
-    public int notifications = 1;
-    public int sms = 1;
 
     public void saveSettings() {
         //iterate for all view data
         if (bdx.txtName.getText().length() < 1 || bdx.txtEmail.getText().length() < 1 || bdx.txtPhone.getText().length() < 1 || bdx.txtQuote.getText().length() < 1) {
             //Empty fields
-            Tools.showToast(ctx, "Settings not saved");
+            Tools.showToast(ctx, "Complete user profile");
             return;
         }
         //format data
@@ -153,17 +169,20 @@ public class Profile extends AppCompatActivity {
         profile.setQuotes(bdx.txtQuote.getText().toString());
         profile.setNotifications(notifications);
         profile.setSms(sms);
+        profile.setProtects(protects);
+        profile.setCurrency(currency);
+        profile.setCountry(country);
+        profile.setSymbol(symbol);
         //begin processing
         if (MProfile.count(MProfile.class) > 1) {
             //update
             SugarRecord.update(profile);
-            dataLoader();
         } else {
             //insert new
             SugarRecord.save(profile);
             //reload data
-            dataLoader();
         }
-        Tools.showToast(ctx, "Settings saved !");
+        Tools.showToast(ctx, "Profile saved !");
+        finish();
     }
 }
