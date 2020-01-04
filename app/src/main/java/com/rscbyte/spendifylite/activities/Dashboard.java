@@ -135,8 +135,6 @@ public class Dashboard extends AppCompatActivity {
 
     //global runner
     private Handler handler = new Handler();
-    //pull adverts
-    boolean isAdsAvailable = false;
 
     //Add transaction box
     private Dialog dialog = null;
