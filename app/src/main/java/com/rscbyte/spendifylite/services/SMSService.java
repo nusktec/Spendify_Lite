@@ -310,48 +310,53 @@ public class SMSService extends Service {
     private int _counter = 0;
 
     //filter specifically
-    void insertOnly(OAlerts o) {
-        //Check inbound for null
-        if (o.getBankName().equals("") ||
-                o.getMoney().equals("") ||
-                o.getDescr().equals("") ||
-                o.getMsgID().equals("") ||
-                o.getTimeStp().equals("") ||
-                o.getRawDate().equals("")) {
-            //not a valid alert
-            return;
-        }
-        //proceed to data computations
-        String msgID = o.getMsgID();
-        long chk = MData.count(MData.class, dbName("trxMsgID") + "=?", new String[]{msgID});
-        if (chk > 0) {
-            //Log.e("Service Db", "Already inserted " + o.getMsgID());
-            return;
-        }
-        //insert in db
-        MData data = new MData();
-        data.setTrxSTP(Long.parseLong(o.getTimeStp()));
-        data.setTrxDate(o.getRawDate());
-        data.setTrxValue(o.getMoney());
-        data.setTrxDesc(o.getDescr());
-        data.setTrxMsgID(o.getMsgID());
-        data.setTrxType(o.getMode());
-        data.setTrxSrc(2); //for sms
-        data.setTrxBankName(o.getBankName());
-        //set date
-        Calendar c = Tools.timeStamp(Long.parseLong(o.getTimeStp()));
-        data.setTrxDay(c.get(Calendar.DATE) + "");
-        data.setTrxMonth(c.get(Calendar.MONTH) + 1 + "");
-        data.setTrxYear(c.get(Calendar.YEAR) + "");
-        //insert into db
-        SugarRecord.save(data);
-        _counter++;
-        getBaseContext().getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit()
-                .putInt(Constants.SHARED_ALERT_KEY, _counter).apply();
-        Log.e("Alert Saved", "Inserted " + o.getMsgID() + " : " + o.getBankName());
-        //Fire notifications
-        if (mProfile == null || mProfile.getNotifications() == 1) {
-            Tools.Notification(act, "New Bank Alert", "SMS Synchronized", _counter + " Alert(s) was synchronized seconds ago, tap to view", 1, Dashboard.class, "No Data");
+    private void insertOnly(OAlerts o) {
+        try {
+            //Check inbound for null
+            if (o.getBankName().equals("") ||
+                    o.getMoney().equals("") ||
+                    o.getDescr().equals("") ||
+                    o.getMsgID().equals("") ||
+                    o.getTimeStp().equals("") ||
+                    o.getRawDate().equals("")) {
+                //not a valid alert
+                return;
+            }
+            //proceed to data computations
+            String msgID = o.getMsgID();
+            long chk = MData.count(MData.class, dbName("trxMsgID") + "=?", new String[]{msgID});
+            if (chk > 0) {
+                //Log.e("Service Db", "Already inserted " + o.getMsgID());
+                return;
+            }
+            //insert in db
+            MData data = new MData();
+            data.setTrxSTP(Long.parseLong(o.getTimeStp()));
+            data.setTrxDate(o.getRawDate());
+            data.setTrxValue(o.getMoney());
+            data.setTrxDesc(o.getDescr());
+            data.setTrxMsgID(o.getMsgID());
+            data.setTrxType(o.getMode());
+            data.setTrxSrc(2); //for sms
+            data.setTrxBankName(o.getBankName());
+            //set date
+            Calendar c = Tools.timeStamp(Long.parseLong(o.getTimeStp()));
+            data.setTrxDay(c.get(Calendar.DATE) + "");
+            data.setTrxMonth(c.get(Calendar.MONTH) + 1 + "");
+            data.setTrxYear(c.get(Calendar.YEAR) + "");
+            //insert into db
+            SugarRecord.save(data);
+            _counter++;
+            getBaseContext().getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit()
+                    .putInt(Constants.SHARED_ALERT_KEY, _counter).apply();
+            Log.e("Alert Saved", "Inserted " + o.getMsgID() + " : " + o.getBankName());
+            //Fire notifications
+            if (mProfile == null || mProfile.getNotifications() == 1) {
+                Tools.Notification(act, "New Bank Alert", "SMS Synchronized", _counter + " Alert(s) was synchronized seconds ago, tap to view", 1, Dashboard.class, "No Data");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Tools.Notification(act, "Error Bank Alert", "SMS Synchronized", "Error encounter with bad sms alert integrity", 2, Dashboard.class, "No Data");
         }
     }
 

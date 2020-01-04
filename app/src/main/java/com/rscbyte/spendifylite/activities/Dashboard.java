@@ -22,13 +22,13 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.orm.SugarContext;
 import com.orm.SugarRecord;
-import com.orm.util.NamingHelper;
 import com.rscbyte.spendifylite.R;
 import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.databinding.ActivityDashboardBinding;
 import com.rscbyte.spendifylite.databinding.DialogAddDataBinding;
 import com.rscbyte.spendifylite.models.MData;
+import com.rscbyte.spendifylite.models.MProfile;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -43,11 +43,12 @@ public class Dashboard extends AppCompatActivity {
     //number format
     private NumberFormat nf = new DecimalFormat("#,###.00");
     private List<MData> mData = null;
-
+    private MProfile profile;
     //Main layout inflater holder
-    ActivityDashboardBinding bdx = null;
-    Activity ctx;
+    private ActivityDashboardBinding bdx = null;
+    private Activity ctx;
     private int _scrolled_nun = 0;
+    private boolean isLogged = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class Dashboard extends AppCompatActivity {
         //initialize components
         componentsInit();
         //initialize main methods
-        main(_scrolled_nun);
+        main();
         //wait and run
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -72,23 +73,28 @@ public class Dashboard extends AppCompatActivity {
             }
         }, 3000);
         //check and pop rate
-        AppRate.with(this)
-                .setInstallDays(0) // default 10, 0 means install day.
-                .setLaunchTimes(0) // default 10
-                .setRemindInterval(0) // default 1
-                .setShowLaterButton(true) // default true
-                .setDebug(false) // default false
-                .setOnClickButtonListener(new OnClickButtonListener() { // callback listener.
-                    @Override
-                    public void onClickButton(int which) {
-                        int keys = Math.abs(which);
-                        if (keys == 2) {
-                            //tell a friend
-                            Tools.shareText(ctx, "Invite A Friend", "I can't imagine i could spend such a huge amount of money !\nWith #Spendify i have all my expense detailed. Download and enjoy\n" + Tools.getMarketLink(ctx));
+        try {
+            AppRate.with(this)
+                    .setInstallDays(0) // default 10, 0 means install day.
+                    .setLaunchTimes(1) // default 10
+                    .setRemindInterval(0) // default 1
+                    .setShowLaterButton(true) // default true
+                    .setDebug(false) // default false
+                    .setTitle(this.isLogged ? "Hey, " + this.profile.getNames().split(" ")[0] + " !" : "Spendify Token")
+                    .setOnClickButtonListener(new OnClickButtonListener() { // callback listener.
+                        @Override
+                        public void onClickButton(int which) {
+                            int keys = Math.abs(which);
+                            if (keys == 2) {
+                                //tell a friend
+                                Tools.shareText(ctx, "Invite A Friend", getResources().getString(R.string.share_caption) + Tools.getMarketLink(ctx));
+                            }
                         }
-                    }
-                })
-                .monitor();
+                    })
+                    .monitor();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         // Show a dialog if meets conditions
         AppRate.showRateDialogIfMeetsConditions(this);
@@ -130,7 +136,6 @@ public class Dashboard extends AppCompatActivity {
     private Handler handler = new Handler();
     //pull adverts
     boolean isAdsAvailable = false;
-
 
     //Add transaction box
     private Dialog dialog = null;
@@ -194,7 +199,7 @@ public class Dashboard extends AppCompatActivity {
                 dbuild.txtValue.getText().clear();
                 dbuild.txtDesc.getText().clear();
                 Tools.showToast(ctx, "Transaction Added " + Tools.getFormattedDateSimple());
-                main(_scrolled_nun);
+                main();
                 dialog.dismiss();
             }
         });
@@ -205,7 +210,12 @@ public class Dashboard extends AppCompatActivity {
 
 
     //main control
-    public void main(int num) {
+    public void main() {
+        //run check profile
+        if (MProfile.count(MProfile.class) > 0) {
+            this.profile = MProfile.findById(MProfile.class, 1);
+            this.isLogged = true;
+        }
         //prepare view pager
         final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), 1);
         adapter.addFragment(new FragmentChart());
@@ -285,13 +295,29 @@ public class Dashboard extends AppCompatActivity {
         }
     }
 
-    //special db name caller
-    protected String dbName(String s) {
-        return NamingHelper.toSQLNameDefault(s);
-    }
-
     //check if logged
     private void checkAfter3Open() {
 
+    }
+
+    //override onBack press
+    boolean freeExit = false;
+
+    @Override
+    public void onBackPressed() {
+        if (bdx.mainViewPager.getCurrentItem() == 0) {
+            if (freeExit)
+                finish();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    freeExit = false;
+                }
+            }, 3000);
+            freeExit = true;
+            Tools.showToast(ctx, "Press again to exit");
+        } else {
+            bdx.mainViewPager.setCurrentItem(0);
+        }
     }
 }

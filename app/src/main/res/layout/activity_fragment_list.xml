@@ -9,14 +9,14 @@
     </data>
 
     <!--Main layout begin-->
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/light_white">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/light_white"
             android:orientation="vertical"
             tools:context=".activities.Dashboard">
@@ -64,6 +64,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="TODO"
                     android:cropToPadding="true"
                     android:src="@drawable/ic_search"
                     android:tint="@color/grey_500" />
@@ -81,7 +82,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list_itemView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layoutAnimation="@anim/layout_animation"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
@@ -89,13 +90,23 @@
                 android:id="@+id/txt_nodata"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="50dp"
+                android:padding="20dp"
                 android:text="No Data"
                 android:textAlignment="center"
                 android:textColor="@color/grey_600"
                 android:textSize="20sp" />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_reload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_primary"
+                android:text="Reload Data"
+                android:textAllCaps="false"
+                android:textColor="@color/light_white" />
+
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

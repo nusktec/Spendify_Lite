@@ -11,7 +11,7 @@ public class MData extends SugarRecord {
     private String trxDate;
     private int trxType;
     private int trxSrc;
-    private String trxValue;
+    private String trxValue = "00";
     //split year
     private String trxYear;
     private String trxMonth;

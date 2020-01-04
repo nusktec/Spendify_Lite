@@ -486,7 +486,7 @@ public class Tools {
         return 1;
     }
 
-    public static String getMonthAscNum(int sdate) {
+    public static String getMonthAscAlpha(int sdate) {
         if (sdate == 1) {
             return "Jan";
         }
@@ -793,20 +793,17 @@ public class Tools {
                     @Override
                     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar calendar = Calendar.getInstance();
-                        calendar.add(Calendar.MONTH, dayOfMonth + 1);
-                        calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, monthOfYear);
+                        calendar.add(Calendar.MONTH, monthOfYear + 1);
                         long date_ship_millis = calendar.getTimeInMillis();
                         //((TextView) findViewById(R.id.result)).setText(Tools.getFormattedDateSimple(date_ship_millis));
                         //int m = monthOfYear + 1;
                         ItemsClick.getString(Tools.getFormattedDateSimple());
-                        //ItemsClick.getDate(year, (m > 12) ? 12 : m, dayOfMonth);
-                        Tools.showToast(activity, monthOfYear + "");
+                        ItemsClick.getDate(year, monthOfYear + 1, dayOfMonth);
                     }
                 },
                 cur_calender.get(Calendar.YEAR),
                 cur_calender.get(Calendar.MONTH),
-                cur_calender.get(Calendar.MONTH + 1)
+                cur_calender.get(Calendar.DATE)
         );
 
         //set dark light
@@ -817,7 +814,8 @@ public class Tools {
             }
         });
         datePicker.setThemeDark(false);
-        datePicker.setAccentColor(activity.getResources().getColor(R.color.colorPrimary));
+        datePicker.setAccentColor(activity.getResources().getColor(R.color.app_color_2));
+        datePicker.setOkText("Search");
         //datePicker.setMinDate(cur_calender);
         datePicker.show(activity.getFragmentManager(), "Datepickerdialog");
     }

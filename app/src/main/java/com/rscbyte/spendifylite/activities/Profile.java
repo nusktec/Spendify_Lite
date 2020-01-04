@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 
@@ -158,6 +157,11 @@ public class Profile extends AppCompatActivity {
         if (bdx.txtName.getText().length() < 1 || bdx.txtEmail.getText().length() < 1 || bdx.txtPhone.getText().length() < 1 || bdx.txtQuote.getText().length() < 1) {
             //Empty fields
             Tools.showToast(ctx, "Complete user profile");
+            return;
+        }
+        //name must contain spaces
+        if (!bdx.txtName.getText().toString().contains(" ")) {
+            Tools.showToast(ctx, "Invalid names format, make sure it's your full name");
             return;
         }
         //format data

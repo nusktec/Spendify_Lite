@@ -104,6 +104,7 @@ public class FragmentChart extends Fragment {
         pieChart.setEntryLabelTypeface(Typeface.DEFAULT_BOLD);
         pieChart.setDrawSlicesUnderHole(true);
         pieChart.animateX(500);
+        pieChart.getDescription().setText("Spendify Data Chart");
         //apply colors
         pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         pieDataSet.setSliceSpace(2f);
@@ -175,7 +176,7 @@ public class FragmentChart extends Fragment {
                 if (t.getTrxType() == 2) {
                     //add to map
                     _spent_for_the_month += Float.parseFloat(t.getTrxValue());
-                    _month_name = Tools.getMonthAscNum(Integer.parseInt(t.getTrxMonth()));
+                    _month_name = Tools.getMonthAscAlpha(Integer.parseInt(t.getTrxMonth()));
                     tmpValue.put(_month_name, _spent_for_the_month);
                     //check for the last month
                     if (Integer.parseInt(t.getTrxMonth()) == Tools.timepstamp2Month(Long.parseLong(Tools.getVariesTimeStamp(-1)))) {
@@ -197,7 +198,6 @@ public class FragmentChart extends Fragment {
             if (t2.getTrxType() == 2) _spent_so_far += Float.parseFloat(t2.getTrxValue());
             else _income_this_month += Float.parseFloat(t2.getTrxValue());
         }
-
 
         //solve for typical
         float _typicalSolve = (_moving_average / 1);
@@ -268,7 +268,7 @@ public class FragmentChart extends Fragment {
         bdx.getD().setTxtIncomeThisM(String.format("%.1f", incom_percentage) + "%"); //this months
         bdx.txtIncomeThis.setText("Total Income this month: " + Constants.getCurrency() + Tools.doCuurency(Math.abs(_income_this_month)));
         //add spent so far
-        pieEntries.add(new PieEntry(_spent_so_far, Tools.getMonthAscNum(Tools.getMonth())));
+        pieEntries.add(new PieEntry(_spent_so_far, Tools.getMonthAscAlpha(Tools.getMonth())));
         //gauge meter
         configGauge(_spent_so_far, Float.parseFloat(Tools.doFloat(_typicalSolve)));
     }

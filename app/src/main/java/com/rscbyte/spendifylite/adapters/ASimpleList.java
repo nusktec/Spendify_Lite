@@ -14,11 +14,12 @@ import com.rscbyte.spendifylite.databinding.ListDataBinding;
 import com.rscbyte.spendifylite.objects.OData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ASimpleList extends RecyclerView.Adapter<ASimpleList.VH> {
 
     //public variables
-    private ArrayList<OData> oDataArrayList;
+    private List<OData> oDataArrayList;
     private dataClicked dataClicked;
 
     //initialize single mode
@@ -28,7 +29,7 @@ public class ASimpleList extends RecyclerView.Adapter<ASimpleList.VH> {
     }
 
     //initialize single mode
-    public ASimpleList(ArrayList<OData> oData, dataClicked clicked) {
+    public ASimpleList(List<OData> oData, dataClicked clicked) {
         this.oDataArrayList = oData;
         this.dataClicked = clicked;
         notifyDataSetChanged();

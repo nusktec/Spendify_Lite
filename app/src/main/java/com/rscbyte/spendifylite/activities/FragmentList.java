@@ -25,9 +25,12 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.orm.SugarContext;
+import com.orm.SugarDb;
 import com.orm.SugarRecord;
 import com.orm.query.Condition;
 import com.orm.query.Select;
+import com.orm.util.SugarConfig;
 import com.rscbyte.spendifylite.Interfaces.CallBacks;
 import com.rscbyte.spendifylite.R;
 import com.rscbyte.spendifylite.Utils.Constants;
@@ -40,6 +43,8 @@ import com.rscbyte.spendifylite.models.MData;
 import com.rscbyte.spendifylite.objects.OData;
 import com.rscbyte.spendifylite.objects.OTrxInfo;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -62,92 +67,109 @@ public class FragmentList extends Fragment {
         bdx = DataBindingUtil.inflate(inflater, R.layout.activity_fragment_list, container, false);
         //establish main data
         main();
+        //reload btn
+        bdx.btnReload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                main();
+            }
+        });
         return bdx.getRoot();
     }
 
     //number format
     private NumberFormat nf = new DecimalFormat("#,###.00");
-    private List<MData> mData = null;
     //set recycler view
-    ASimpleList aSimpleList = null;
+    private ASimpleList aSimpleList = null;
+
+    //simple main
+    private void main() {
+        //make list item
+        List<OData> oData = new ArrayList<>();
+        //read from db, stored data
+        List<MData> mData = MData.listAll(MData.class);
+        main(mData);
+    }
 
     //main methods
-    public void main() {
-        //make list item
-        ArrayList<OData> oData = new ArrayList<>();
-        //read from db, stored data
-        mData = MData.listAll(MData.class);
-        Collections.reverse(mData);
-        bdx.txtNodata.setVisibility(mData.size() > 0 ? View.INVISIBLE : View.VISIBLE); //hide no data text
-        for (MData md : mData) {
-            OData oData1 = new OData();
-            oData1.setTitle(md.getTrxType() == 1 ? "Credit" : "Debit");
-            oData1.setDay(md.getTrxDay());
-            oData1.setDesc(md.getTrxDesc());
-            oData1.setValue(Constants.getCurrency() + nf.format(Double.valueOf(md.getTrxValue())));
-            oData1.setYear(md.getTrxYear());
-            oData1.setMonth(md.getTrxMonth());
-            oData1.setDate(md.getTrxDate());
-            oData1.setmData(md);
-            oData.add(oData1);
-        }
-        //set recycler view
-        aSimpleList = new ASimpleList(oData, dataClicked);
-        bdx.listItemView.setAdapter(aSimpleList);
-        //top text search
-        bdx.toolbarRightBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //start searching
-                Tools.showPickerLight(ctx, new Tools.getDateItemsClick() {
-                    @Override
-                    public void getDate(int y, int m, int d) {
-
-                    }
-
-                    @Override
-                    public void getString(String dateString) {
-                        searchDataBase(dateString);
-                    }
-
-                    @Override
-                    public void onCancel() {
-
-                    }
-                });
+    public void main(List<MData> mData) {
+        try {
+            Collections.reverse(mData);
+            List<OData> oData = new ArrayList<>();
+            bdx.txtNodata.setVisibility(mData.size() > 0 ? View.INVISIBLE : View.VISIBLE); //hide no data text
+            for (MData md : mData) {
+                OData oData1 = new OData();
+                oData1.setTitle(md.getTrxType() == 1 ? "Credit" : "Debit");
+                oData1.setDay(md.getTrxDay());
+                oData1.setDesc(md.getTrxDesc());
+                oData1.setValue(Constants.getCurrency() + nf.format(Double.valueOf(md.getTrxValue())));
+                oData1.setYear(md.getTrxYear());
+                oData1.setMonth(md.getTrxMonth());
+                oData1.setDate(md.getTrxDate());
+                oData1.setmData(md);
+                oData.add(oData1);
             }
-        });
-        bdx.txtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            //set recycler view
+            aSimpleList = new ASimpleList(oData, dataClicked);
+            bdx.listItemView.setAdapter(aSimpleList);
+            //top text search
+            bdx.toolbarRightBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
                     //start searching
-                    if (mData.size() > 0) {
-                        if (bdx.txtSearch.getText().toString().length() > 5) {
-                            searchDataBase(bdx.txtSearch.getText().toString());
-                        } else {
-                            Tools.showToast(ctx, "Keywords too short");
+                    Tools.showPickerLight(ctx, new Tools.getDateItemsClick() {
+                        @Override
+                        public void getDate(int y, int m, int d) {
+                            searchDataBase(String.valueOf(y), String.valueOf(m));
                         }
-                    }
-                    return true;
+
+                        @Override
+                        public void getString(String dateString) {
+
+                        }
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+                    });
                 }
-                return false;
-            }
-        });
-        bdx.txtSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Tools.showToast(ctx, "Clicked !");
-            }
-        });
+            });
+//        bdx.txtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                    //start searching
+//                    if (mData.size() > 0) {
+//                        if (bdx.txtSearch.getText().toString().length() > 5) {
+//                            searchDataBase(bdx.txtSearch.getText().toString());
+//                        } else {
+//                            Tools.showToast(ctx, "Keywords too short");
+//                        }
+//                    }
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//        bdx.txtSearch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Tools.showToast(ctx, "Clicked !");
+//            }
+//        });
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Tools.showToast(ctx, "Error with data integrity");
+        }
     }
 
     //start searching in database
-    void searchDataBase(String keyWords) {
-        List<MData> md = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(keyWords)).or(Condition.prop("TRX_STP").eq(keyWords)).list();
-        mData = md;
-        aSimpleList.notifyDataSetChanged();
-        Tools.showToast(ctx, "Searching month range...");
+    private void searchDataBase(String... args) {
+        List<MData> md = Select.from(MData.class).where(Condition.prop("TRX_YEAR").eq(args[0])).and(Condition.prop("TRX_MONTH").eq(args[1])).list();
+        //make list item
+        main(md);
+        Tools.showToast(ctx, Tools.getMonthAscAlpha(Integer.parseInt(args[1])) + " data queried...");
     }
 
     //surface clicked
@@ -164,7 +186,6 @@ public class FragmentList extends Fragment {
     void previewData(final OData data) {
         dialog = new Dialog(ctx);
         final DialogPreviewDataBinding dbuild = DataBindingUtil.inflate(LayoutInflater.from(ctx), R.layout.dialog_preview_data, null, false);
-
         dbuild.setD(new OTrxInfo());
         dbuild.getD().setDesc(data.getDesc());
         dbuild.getD().setDate(data.getDate());
@@ -205,19 +226,25 @@ public class FragmentList extends Fragment {
                 msgBox(new CallBacks() {
                     @Override
                     public void onOkay() {
-                        MData mData = data.getmData();
-                        if (mData.getTrxSrc() == 1) {
-                            mData.setTrxDate(Tools.getFormattedDateSimple());
-                            mData.setTrxYear(String.valueOf(Tools.getYear()));
-                            mData.setTrxMonth(String.valueOf(Tools.getMonth()));
-                            mData.setTrxDay(String.valueOf(Tools.getDay()));
-                            SugarRecord.save(mData);
+                        MData m = data.getmData();
+                        MData m2 = new MData();
+                        if (m.getTrxSrc() == 1) {
+                            m2.setTrxDate(Tools.getFormattedDateSimple());
+                            m2.setTrxYear(String.valueOf(Tools.getYear()));
+                            m2.setTrxMonth(String.valueOf(Tools.getMonth()));
+                            m2.setTrxDay(String.valueOf(Tools.getDay()));
+                            m2.setTrxSTP(Long.parseLong(Tools.getDateTimeStamp()));
+                            m2.setTrxDesc(m.getTrxDesc());
+                            m2.setTrxSrc(1);
+                            m2.setTrxType(m.getTrxType());
+                            m2.setTrxValue(m2.getTrxValue());
+                            SugarRecord.save(m2);
                             Tools.showToast(ctx, "Transaction duplicated");
                             dialog.dismiss();
                             main();
                             //Objects.requireNonNull(getActivity()).recreate();
                         } else {
-                            Tools.showToast(ctx, "Cannot duplicate alert");
+                            Tools.showToast(ctx, "Unable to duplicate bank alert");
                         }
                     }
                 }, "Duplicate", "Want to duplicate this transaction ?. Today's date will be used in place");
@@ -240,7 +267,7 @@ public class FragmentList extends Fragment {
     }
 
     //Public msgBox
-    public void msgBox(final CallBacks callBacks, String... args) {
+    private void msgBox(final CallBacks callBacks, String... args) {
         AlertDialog.Builder d = new AlertDialog.Builder(ctx);
         d.setTitle(args[0]);
         d.setMessage(args[1]);

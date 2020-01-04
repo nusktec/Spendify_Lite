@@ -10,6 +10,9 @@
     <string name="dummy_firstbank">
         Your Acct 200XXXX145 Has Been Credited with NGN500.00 On 10-DEC-2019 22:37:45 By FIP:UTY/OGBAAH ODACHI CHAR/USSD-00001119. Bal: NGN954.23CR
     </string>
+    <string name="share_caption">
+        I don’t know my monthly expense, I can’t track my daily expense, what am I really spending on? Spendify will answers your questions with a click of download\n\n
+    </string>
 
     <string name="rate_dialog_title">Hi, User ?</string>
     <string name="rate_dialog_message">If you enjoy using this app, would you mind taking a moment to rate &amp; share it ? It won\'t take more than a minute. Thanks for your support !</string>

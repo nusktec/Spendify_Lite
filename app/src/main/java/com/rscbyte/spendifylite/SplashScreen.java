@@ -15,13 +15,12 @@ import com.orm.SugarContext;
 import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.activities.Dashboard;
-import com.rscbyte.spendifylite.activities.ScreenLock;
 import com.rscbyte.spendifylite.models.MProfile;
 import com.rscbyte.spendifylite.services.SMSService;
 
 public class SplashScreen extends AppCompatActivity {
     boolean firstCheck = false;
-    public static int DELAY_TIME_SEC = 200;
+    public static int DELAY_TIME_SEC = 4000;
 
     @SuppressLint("SetTextI18n")
     @Override
