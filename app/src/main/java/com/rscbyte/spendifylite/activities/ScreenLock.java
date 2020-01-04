@@ -60,6 +60,9 @@ public class ScreenLock extends AppCompatActivity {
                 if (km.isKeyguardSecure()) {
                     Intent authIntent = km.createConfirmDeviceCredentialIntent("Spendify Protects", "Enter your device PIN to unlock");
                     startActivityForResult(authIntent, INTENT_AUTHENTICATE);
+                } else {
+                    //no password
+                    finish();
                 }
             }
         });
@@ -88,7 +91,7 @@ public class ScreenLock extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Tools.showToast(this, "Can only exit !");
     }
 
     @Override

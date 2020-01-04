@@ -2,6 +2,7 @@ package com.rscbyte.spendifylite.activities;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -244,16 +245,23 @@ public class Dashboard extends AppCompatActivity {
             }
         });
         bdx.mainViewPager.setCurrentItem(_scrolled_nun);
-        checkNewThing();
+        checkDefaultThing();
     }
 
     //check for newer things
-    private void checkNewThing() {
+    private void checkDefaultThing() {
         int getNewAlert = getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).getInt(Constants.SHARED_ALERT_KEY, 0);
         if (getNewAlert > 0) {
             Tools.msgDialog(ctx, "New Alert Sync.", getNewAlert + " alert(s) were sync and added to your transaction time ago, check your list...", R.drawable.ic_textsms, R.color.green_600);
         }
         getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit().putInt(Constants.SHARED_ALERT_KEY, 0).apply();
+        //check apply settings
+        if (isLogged) {
+            //check lock screen
+            if (this.profile.getProtects() == 1) {
+                startActivity(new Intent(ctx, ScreenLock.class));
+            }
+        }
     }
 
     //animations switcher
