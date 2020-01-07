@@ -21,7 +21,7 @@ import java.io.File;
 
 import static android.content.ContentValues.TAG;
 
-public class Synchronizer {
+public class Synchronize {
 
     //backup db
     public static void doBackupDb(final Activity ctx, String email) {
@@ -34,7 +34,7 @@ public class Synchronizer {
             //start uploads
             AndroidNetworking.upload(Constants.API_DOMAIN_URL + "/backup")
                     .addMultipartFile("backupdb", dbFile)
-                    .addMultipartParameter("userinfo", email)
+                    .addMultipartParameter("user", email)
                     .setTag("uploadDb")
                     .setPriority(Priority.HIGH)
                     .build()
@@ -42,7 +42,7 @@ public class Synchronizer {
                         @Override
                         public void onProgress(long bytesUploaded, long totalBytes) {
                             // do anything with progress
-                            Tools.showToast(ctx, "Please wait...");
+                            Tools.showToast(ctx, "Uploading...");
                         }
                     })
                     .getAsJSONObject(new JSONObjectRequestListener() {

@@ -33,7 +33,6 @@ public class Adscene {
                 dialog.dismiss();
             }
         });
-
         //display info
         dialog.show();
         dialog.getWindow().setAttributes(lp);

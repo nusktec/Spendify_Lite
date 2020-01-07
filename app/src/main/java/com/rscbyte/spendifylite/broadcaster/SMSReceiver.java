@@ -11,7 +11,6 @@ public class SMSReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         //start service
-        Toast.makeText(context, "Hello, sms received it was shocked", Toast.LENGTH_LONG).show();
         context.stopService(new Intent(context, SMSService.class));
     }
 }

@@ -20,7 +20,7 @@ import com.rscbyte.spendifylite.services.SMSService;
 
 public class SplashScreen extends AppCompatActivity {
     boolean firstCheck = false;
-    public static int DELAY_TIME_SEC = 1500;
+    public static int DELAY_TIME_SEC = 2500;
 
     @SuppressLint("SetTextI18n")
     @Override

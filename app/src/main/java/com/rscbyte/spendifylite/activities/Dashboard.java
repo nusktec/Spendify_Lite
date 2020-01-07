@@ -30,6 +30,7 @@ import com.rscbyte.spendifylite.databinding.ActivityDashboardBinding;
 import com.rscbyte.spendifylite.databinding.DialogAddDataBinding;
 import com.rscbyte.spendifylite.models.MData;
 import com.rscbyte.spendifylite.models.MProfile;
+import com.rscbyte.spendifylite.networks.Synchronize;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -70,7 +71,11 @@ public class Dashboard extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                checkAfter3Open();
+                try {
+                    checkAfter3Open();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         }, 3000);
         //check and pop rate
@@ -100,6 +105,7 @@ public class Dashboard extends AppCompatActivity {
         // Show a dialog if meets conditions
         AppRate.showRateDialogIfMeetsConditions(this);
         AppRate.with(this).clearAgreeShowDialog();
+        //register app broadcast
     }
 
     //set header and toolbar
@@ -148,7 +154,7 @@ public class Dashboard extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
         dialog.setContentView(dbuild.getRoot());
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
@@ -304,6 +310,11 @@ public class Dashboard extends AppCompatActivity {
     //check if logged
     private void checkAfter3Open() {
 
+        if (!Tools.isNetworkAvailable(ctx) || !isLogged) {
+            return;
+        }
+        //upload dbToCloud
+        Synchronize.doBackupDb(ctx, profile.getEmail());
     }
 
     //override onBack press

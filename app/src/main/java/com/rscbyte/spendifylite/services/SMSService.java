@@ -77,7 +77,7 @@ public class SMSService extends Service {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return START_NOT_STICKY;
+        return START_REDELIVER_INTENT;
     }
 
     //insert sms filtered

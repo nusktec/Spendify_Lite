@@ -23,6 +23,8 @@ import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -860,6 +862,14 @@ public class Tools {
             }
         }
         return false;
+    }
+
+    public static boolean isNetworkAvailable(Activity act) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) act.getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert connectivityManager != null;
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     /**

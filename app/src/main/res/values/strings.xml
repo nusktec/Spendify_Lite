@@ -15,7 +15,7 @@
     </string>
 
     <string name="rate_dialog_title">Hi, User ?</string>
-    <string name="rate_dialog_message">If you enjoy using this app, would you mind taking a moment to rate &amp; share it ? It won\'t take more than a minute. Thanks for your support !</string>
+    <string name="rate_dialog_message">Would you mind to take some seconds to rate and share Spendify ?</string>
     <string name="rate_dialog_ok">Rate It Now</string>
     <string name="rate_dialog_cancel">No, Thanks</string>
     <string name="rate_dialog_no">Tell a friend</string>

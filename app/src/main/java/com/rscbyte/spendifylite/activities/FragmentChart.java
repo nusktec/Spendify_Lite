@@ -29,6 +29,7 @@ import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.databinding.ActivityFragmentChartBinding;
 import com.rscbyte.spendifylite.models.MData;
 import com.rscbyte.spendifylite.models.MProfile;
+import com.rscbyte.spendifylite.networks.Synchronize;
 import com.rscbyte.spendifylite.objects.OChartPage;
 import com.tooltip.Tooltip;
 
@@ -46,6 +47,7 @@ public class FragmentChart extends Fragment {
     private Activity ctx = null;
     //Default settings
     private MProfile mProfile = new MProfile();
+    private boolean isLogged = false;
 
     @Nullable
     @Override
@@ -326,11 +328,16 @@ public class FragmentChart extends Fragment {
             Tools.showToast(ctx, "Please enable sms auto sync.");
             return;
         }
+        if (!isLogged) {
+            Tools.showToast(ctx, "Please complete your profile to backup");
+            return;
+        }
         //Objects.requireNonNull(getActivity()).stopService(new Intent(ctx, SMSService.class));
         //getActivity().startService(new Intent(ctx, SMSService.class));
         bdx.menuSyncSms.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.rotate_infinite));
         bdx.btnSync.setEnabled(false);
         bdx.menuSyncSms.setEnabled(false);
+        Synchronize.doBackupDb(ctx, mProfile.getEmail());
         Tools.showToast(ctx, "Synchronizing...");
         //post delay
         new Handler().postDelayed(new Runnable() {
@@ -341,7 +348,7 @@ public class FragmentChart extends Fragment {
                 bdx.menuSyncSms.clearAnimation();
                 Tools.showToast(ctx, "Sync completed.");
             }
-        }, 3000);
+        }, 5000);
         //backup system
 
     }
@@ -396,6 +403,7 @@ public class FragmentChart extends Fragment {
         MProfile check = MProfile.findById(MProfile.class, 1);
         if (check != null) {
             mProfile = check;
+            isLogged = true;
         } else {
             mProfile.setSms(1);
             mProfile.setNotifications(1);
