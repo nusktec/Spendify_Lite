@@ -81,9 +81,9 @@ public class Dashboard extends AppCompatActivity {
         //check and pop rate
         try {
             AppRate.with(this)
-                    .setInstallDays(0) // default 10, 0 means install day.
-                    .setLaunchTimes(1) // default 10
-                    .setRemindInterval(0) // default 1
+                    .setInstallDays(4) // default 10, 0 means install day.
+                    .setLaunchTimes(3) // default 10
+                    .setRemindInterval(4) // default 1
                     .setShowLaterButton(true) // default true
                     .setDebug(false) // default false
                     .setTitle(this.isLogged ? "Hey, " + this.profile.getNames().split(" ")[0] + " !" : "Spendify Token")

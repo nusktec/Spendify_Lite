@@ -42,7 +42,7 @@ public class Synchronize {
                         @Override
                         public void onProgress(long bytesUploaded, long totalBytes) {
                             // do anything with progress
-                            Tools.showToast(ctx, "Uploading...");
+                            //Tools.showToast(ctx, "Uploading...");
                         }
                     })
                     .getAsJSONObject(new JSONObjectRequestListener() {
@@ -50,15 +50,16 @@ public class Synchronize {
                         public void onResponse(JSONObject response) {
                             // below code will be executed in the executor provided
                             // do anything with response
+                            Log.e("dshbfsdkhbgsbdgjsdgj", response.toString());
                             try {
                                 if (response.getBoolean("status")) {
-                                    Tools.showToast(ctx, "Backup updated");
+                                    //Tools.showToast(ctx, "Backup updated");
                                 } else {
-                                    Tools.showToast(ctx, "Unable to backup at the moment");
+                                    //Tools.showToast(ctx, "Unable to backup at the moment");
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Tools.showToast(ctx, "Backup system refactored, try again");
+                                //Tools.showToast(ctx, "Backup system refactored, try again");
                             }
                         }
 
