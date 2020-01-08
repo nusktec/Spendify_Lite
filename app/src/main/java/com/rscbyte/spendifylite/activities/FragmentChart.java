@@ -332,8 +332,9 @@ public class FragmentChart extends Fragment {
             Tools.showToast(ctx, "Please complete your profile to backup");
             return;
         }
-        //Objects.requireNonNull(getActivity()).stopService(new Intent(ctx, SMSService.class));
-        //getActivity().startService(new Intent(ctx, SMSService.class));
+        if (!Tools.isNetworkAvailable(ctx)) {
+            return;
+        }
         bdx.menuSyncSms.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.rotate_infinite));
         bdx.btnSync.setEnabled(false);
         bdx.menuSyncSms.setEnabled(false);

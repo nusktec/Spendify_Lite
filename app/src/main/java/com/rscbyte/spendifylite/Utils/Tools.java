@@ -31,6 +31,7 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Base64;
 import android.util.Base64OutputStream;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -442,6 +443,14 @@ public class Tools {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(timestamp);
         return c;
+    }
+
+    //specify hours to callback
+    public static boolean isTimeCheck() {
+        Date d = new Date();
+        CharSequence s = DateFormat.getTimeInstance(DateFormat.MEDIUM).format(d.getTime());
+        Log.e("sdkbfskdbfdbkdsaf", s.toString());
+        return s.toString().equals("06:00:00") || s.toString().equals("06:00:01") || s.toString().equals("06:00:02") || s.toString().equals("03:00:00");
     }
 
     public static String timeStampStr(Long time) {

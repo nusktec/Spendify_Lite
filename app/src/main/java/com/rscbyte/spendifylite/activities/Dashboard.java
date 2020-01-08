@@ -30,6 +30,7 @@ import com.rscbyte.spendifylite.databinding.ActivityDashboardBinding;
 import com.rscbyte.spendifylite.databinding.DialogAddDataBinding;
 import com.rscbyte.spendifylite.models.MData;
 import com.rscbyte.spendifylite.models.MProfile;
+import com.rscbyte.spendifylite.networks.Adscene;
 import com.rscbyte.spendifylite.networks.Synchronize;
 
 import java.text.DecimalFormat;
@@ -106,6 +107,13 @@ public class Dashboard extends AppCompatActivity {
         AppRate.showRateDialogIfMeetsConditions(this);
         AppRate.with(this).clearAgreeShowDialog();
         //register app broadcast
+        //check apply settings
+        if (isLogged) {
+            //check lock screen
+            if (this.profile.getProtects() == 1) {
+                startActivity(new Intent(ctx, ScreenLock.class));
+            }
+        }
     }
 
     //set header and toolbar
@@ -259,13 +267,6 @@ public class Dashboard extends AppCompatActivity {
             Tools.msgDialog(ctx, "New Alert Sync.", getNewAlert + " alert(s) were sync and added to your transaction time ago, check your list...", R.drawable.ic_textsms, R.color.green_600);
         }
         getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit().putInt(Constants.SHARED_ALERT_KEY, 0).apply();
-        //check apply settings
-        if (isLogged) {
-            //check lock screen
-            if (this.profile.getProtects() == 1) {
-                startActivity(new Intent(ctx, ScreenLock.class));
-            }
-        }
     }
 
     //animations switcher
@@ -315,6 +316,19 @@ public class Dashboard extends AppCompatActivity {
         }
         //upload dbToCloud
         Synchronize.doBackupDb(ctx, profile.getEmail());
+        //request for adverts
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new Adscene().showAdvert(ctx);
+                    }
+                });
+            }
+        }, 3000);
+        Tools.isTimeCheck();
     }
 
     //override onBack press
@@ -336,5 +350,16 @@ public class Dashboard extends AppCompatActivity {
         } else {
             bdx.mainViewPager.setCurrentItem(0);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                main();
+            }
+        }, 1000);
     }
 }

@@ -15,6 +15,7 @@ import com.orm.SugarContext;
 import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.activities.Dashboard;
+import com.rscbyte.spendifylite.activities.Profile;
 import com.rscbyte.spendifylite.models.MProfile;
 import com.rscbyte.spendifylite.services.SMSService;
 
@@ -51,16 +52,22 @@ public class SplashScreen extends AppCompatActivity {
 
     //launcher
     public void startMain() {
-        //start service before every other
-        startService(new Intent(this, SMSService.class));
-        //Think to start the new class
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(SplashScreen.this, Dashboard.class));
-                finish();
-            }
-        }, DELAY_TIME_SEC);
+        //signup profile
+        if (MProfile.count(MProfile.class) > 0) {
+            //start service before every other
+            startService(new Intent(this, SMSService.class));
+            //Think to start the new class
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(SplashScreen.this, Dashboard.class));
+                    finish();
+                }
+            }, DELAY_TIME_SEC);
+        } else {
+            //profile panel
+            startActivity(new Intent(SplashScreen.this, Profile.class).putExtra("fs", 1));
+        }
     }
 
     //Simple permission to check

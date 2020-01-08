@@ -11,6 +11,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
+import com.rscbyte.spendifylite.Interfaces.CallBacks;
 import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
 
@@ -50,13 +51,11 @@ public class Synchronize {
                         public void onResponse(JSONObject response) {
                             // below code will be executed in the executor provided
                             // do anything with response
-                            Log.e("dshbfsdkhbgsbdgjsdgj", response.toString());
                             try {
                                 if (response.getBoolean("status")) {
-                                    //Tools.showToast(ctx, "Backup updated");
-                                } else {
-                                    //Tools.showToast(ctx, "Unable to backup at the moment");
-                                }
+                                    Tools.showToast(ctx, "Server connected");
+                                } //Tools.showToast(ctx, "Unable to backup at the moment");
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                                 //Tools.showToast(ctx, "Backup system refactored, try again");

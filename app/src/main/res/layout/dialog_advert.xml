@@ -9,34 +9,35 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="350dp"
-        app:cardCornerRadius="@dimen/spacing_middle"
+        app:cardCornerRadius="@dimen/spacing_large"
         app:cardElevation="3dp"
         app:cardUseCompatPadding="true">
 
         <RelativeLayout
             android:layout_width="280dp"
-            android:layout_height="match_parent"
+            android:layout_height="350dp"
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/imgUrl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="TODO"
                 android:scaleType="fitXY"
                 android:src="@drawable/image_4" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_close"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_margin="5dp"
-                android:background="#77FFFFFF"
-                android:contentDescription="TODO"
+                android:background="@drawable/btn_round_32"
+                android:enabled="false"
                 android:text="X"
+                android:textColor="#000000"
                 android:textSize="15sp"
-                android:tint="@color/light_white" />
+                android:textStyle="bold" />
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

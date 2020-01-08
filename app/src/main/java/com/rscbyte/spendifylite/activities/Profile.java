@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 
@@ -16,6 +17,8 @@ import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.adapters.CountryList;
 import com.rscbyte.spendifylite.databinding.ActivityProfileBinding;
 import com.rscbyte.spendifylite.models.MProfile;
+
+import java.util.ArrayList;
 
 public class Profile extends AppCompatActivity {
 
@@ -50,6 +53,20 @@ public class Profile extends AppCompatActivity {
         //setup countries
         final CountryList countryList = new CountryList(ctx);
         bdx.spinnerCountry.setAdapter(countryList);
+        bdx.spinnerCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String[] cur = getResources().getStringArray(R.array.countries_curr_array);
+                currency = position;
+                symbol = cur[position];
+                country = getResources().getStringArray(R.array.countries_name_array)[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         bdx.setSmsState(true);
         if (MProfile.count(MProfile.class) < 1) {
             Tools.showToast(ctx, "You have not setup user profile");
@@ -89,7 +106,11 @@ public class Profile extends AppCompatActivity {
         bdx.toolbarLeftBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                if (getIntent().getIntExtra("fs", 0) == 1) {
+                    Tools.showToast(ctx, "You must complete your profile");
+                } else {
+                    finish();
+                }
             }
         });
     }

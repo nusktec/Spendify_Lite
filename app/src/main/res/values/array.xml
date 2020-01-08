@@ -207,9 +207,9 @@
     </string-array>
 
     <string-array name="countries_curr_array">
-        <item>NGN</item>
-        <item>USD</item>
-        <item>CDF</item>
+        <item>₦</item>
+        <item>$</item>
+        <item>FC</item>
         <item>CFA</item>
         <item>DRC</item>
         <item>CFA</item>
