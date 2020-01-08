@@ -58,7 +58,6 @@ public class Synchronize {
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                //Tools.showToast(ctx, "Backup system refactored, try again");
                             }
                         }
 

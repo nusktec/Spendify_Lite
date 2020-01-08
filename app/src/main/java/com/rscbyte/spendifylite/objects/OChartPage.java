@@ -67,12 +67,12 @@ public class OChartPage extends BaseObservable {
         return txtColor;
     }
 
-    @BindingAdapter({"app:color"})
+    @BindingAdapter({"color"})
     public static void setTxtColorBinder(TextView view, int txtColor) {
         //view.setCardBackgroundColor(view.getContext().getResources().getColor(txtColor));
     }
 
-    @BindingAdapter({"app:colorbg"})
+    @BindingAdapter({"colorbg"})
     public static void setTxtColorBg(CardView view, int txtColor) {
         view.setCardBackgroundColor(view.getContext().getResources().getColor(txtColor));
     }

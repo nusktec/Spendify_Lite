@@ -346,7 +346,7 @@
                         android:id="@+id/switch_protect"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:checked="true"
+                        android:checked="false"
                         android:text="Spendify Protecs" />
 
                 </LinearLayout>

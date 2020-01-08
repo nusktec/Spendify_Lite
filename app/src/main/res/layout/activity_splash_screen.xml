@@ -54,6 +54,7 @@
         android:layout_marginTop="50dp"
         android:padding="5dp"
         android:text=""
+        android:textAllCaps="true"
         android:textColor="@color/light_white"
         android:textSize="13sp"
         android:textStyle="bold" />

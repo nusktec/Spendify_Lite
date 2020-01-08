@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.rscbyte.spendifylite.R;
+import com.rscbyte.spendifylite.SplashScreen;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.databinding.ActivityScreenLockBinding;
 
@@ -62,6 +63,7 @@ public class ScreenLock extends AppCompatActivity {
                     startActivityForResult(authIntent, INTENT_AUTHENTICATE);
                 } else {
                     //no password
+                    startActivity(new Intent(ctx, Dashboard.class));
                     finish();
                 }
             }
@@ -76,6 +78,7 @@ public class ScreenLock extends AppCompatActivity {
                     .callback(new FingerprintDialogCallback() {
                         @Override
                         public void onAuthenticationSucceeded() {
+                            startActivity(new Intent(ctx, Dashboard.class));
                             finish();
                         }
 
@@ -100,6 +103,7 @@ public class ScreenLock extends AppCompatActivity {
         if (requestCode == INTENT_AUTHENTICATE) {
             if (resultCode == RESULT_OK) {
                 //do something you want when pass the security
+                startActivity(new Intent(ctx, Dashboard.class));
                 finish();
             }
         }

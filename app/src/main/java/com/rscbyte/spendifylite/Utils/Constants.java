@@ -4,7 +4,7 @@ import com.rscbyte.spendifylite.models.MProfile;
 
 public class Constants {
     //global variables
-    public static String API_DOMAIN_URL = "http://192.168.8.102/spendify_api/api";
+    public static String API_DOMAIN_URL = "http://192.168.0.114/spendify_api/api";
     public static String SHARED_PREF_NAME = "rscshared_spendify";
     public static String SHARED_ALERT_KEY = "newAlert";
 

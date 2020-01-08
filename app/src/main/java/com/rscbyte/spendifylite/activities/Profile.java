@@ -29,7 +29,7 @@ public class Profile extends AppCompatActivity {
     public String gender = "M";
     public int notifications = 1;
     public int sms = 1;
-    public int protects = 1;
+    public int protects = 0;
     public int currency = 0;
     public String country = "Nigeria (NGN)";
     public String symbol = "NGN";

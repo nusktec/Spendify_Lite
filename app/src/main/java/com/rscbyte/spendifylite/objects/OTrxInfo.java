@@ -70,7 +70,7 @@ public class OTrxInfo extends BaseObservable {
         notifyPropertyChanged(BR.source);
     }
 
-    @BindingAdapter({"app:colorswitch"})
+    @BindingAdapter({"colorswitch"})
     public static void changeBG(LinearLayout layout, String s) {
         if (s.contains("Credit")) {
             layout.setBackgroundColor(layout.getContext().getResources().getColor(R.color.green_600));

@@ -11,10 +11,10 @@
         android:layout_height="350dp"
         app:cardCornerRadius="@dimen/spacing_large"
         app:cardElevation="3dp"
-        app:cardUseCompatPadding="true">
+        app:cardUseCompatPadding="false">
 
         <RelativeLayout
-            android:layout_width="280dp"
+            android:layout_width="250dp"
             android:layout_height="350dp"
             android:orientation="vertical">
 
@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/image_4" />
+                android:src="@drawable/ads_baner" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_close"
@@ -31,13 +31,26 @@
                 android:layout_height="40dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="5dp"
+                android:layout_margin="0dp"
                 android:background="@drawable/btn_round_32"
                 android:enabled="false"
-                android:text="X"
+                android:text="!"
                 android:textColor="#000000"
                 android:textSize="15sp"
                 android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_link"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="0dp"
+                android:background="@drawable/btn_round_32"
+                android:text="Click for more details"
+                android:textColor="#000000"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

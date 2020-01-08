@@ -62,10 +62,16 @@ public class Dashboard extends AppCompatActivity {
         this.ctx = this;
         //inflate layout
         bdx = DataBindingUtil.setContentView(ctx, R.layout.activity_dashboard);
+        //run check profile
+        if (MProfile.count(MProfile.class) > 0) {
+            this.profile = MProfile.findById(MProfile.class, 1);
+            this.isLogged = true;
+        }
         //initialize toolbar
         initToolBar();
         //initialize components
         componentsInit();
+        //check apply settings
         //initialize main methods
         main();
         //wait and run
@@ -106,14 +112,6 @@ public class Dashboard extends AppCompatActivity {
         // Show a dialog if meets conditions
         AppRate.showRateDialogIfMeetsConditions(this);
         AppRate.with(this).clearAgreeShowDialog();
-        //register app broadcast
-        //check apply settings
-        if (isLogged) {
-            //check lock screen
-            if (this.profile.getProtects() == 1) {
-                startActivity(new Intent(ctx, ScreenLock.class));
-            }
-        }
     }
 
     //set header and toolbar
@@ -224,11 +222,6 @@ public class Dashboard extends AppCompatActivity {
 
     //main control
     public void main() {
-        //run check profile
-        if (MProfile.count(MProfile.class) > 0) {
-            this.profile = MProfile.findById(MProfile.class, 1);
-            this.isLogged = true;
-        }
         //prepare view pager
         final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), 1);
         adapter.addFragment(new FragmentChart());
@@ -323,7 +316,7 @@ public class Dashboard extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        new Adscene().showAdvert(ctx);
+                        new Adscene().showAdvert(ctx, profile.getEmail());
                     }
                 });
             }
@@ -360,6 +353,6 @@ public class Dashboard extends AppCompatActivity {
             public void run() {
                 main();
             }
-        }, 1000);
+        }, 500);
     }
 }

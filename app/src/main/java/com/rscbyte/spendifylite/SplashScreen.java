@@ -16,12 +16,14 @@ import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.activities.Dashboard;
 import com.rscbyte.spendifylite.activities.Profile;
+import com.rscbyte.spendifylite.activities.ScreenLock;
 import com.rscbyte.spendifylite.models.MProfile;
 import com.rscbyte.spendifylite.services.SMSService;
 
 public class SplashScreen extends AppCompatActivity {
     boolean firstCheck = false;
-    public static int DELAY_TIME_SEC = 2500;
+    public static int DELAY_TIME_SEC = 1500;
+    private MProfile profile;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -42,7 +44,8 @@ public class SplashScreen extends AppCompatActivity {
         }, DELAY_TIME_SEC);
         //load license copy text
         if (MProfile.count(MProfile.class) > 0) {
-            String name = (MProfile.findById(MProfile.class, 1)).getNames();
+            profile = MProfile.findById(MProfile.class, 1);
+            String name = profile.getNames();
             ((TextView) findViewById(R.id.txt_license)).setText("licensed to " + name.toLowerCase());
         }
         //clear preference
@@ -60,8 +63,13 @@ public class SplashScreen extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    startActivity(new Intent(SplashScreen.this, Dashboard.class));
-                    finish();
+                    if (profile.getProtects() == 1) {
+                        startActivity(new Intent(SplashScreen.this, ScreenLock.class));
+                        finish();
+                    } else {
+                        startActivity(new Intent(SplashScreen.this, Dashboard.class));
+                        finish();
+                    }
                 }
             }, DELAY_TIME_SEC);
         } else {
