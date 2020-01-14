@@ -23,23 +23,25 @@ import java.util.Calendar;
 import java.util.List;
 
 public class SMSService extends Service {
-    private static final String UBA_BANK = "UBA"; //"8164242320" //Revelation;
-    private static final String ACCESS_BANK = "ACCESS";//"8175868104"; // sweetness friend
-    private static final String UNION_BANK = "UNION";//"7011278753" //Sweetness;
-    private static final String GT_BANK = "GTBANK"; //"9090232814"; //Vera
-    private static final String POLARIS_BANK = "POLARIS";//"8108032812"; //Bridget Friend
-    private static final String FCMB_BANK = "FCMB"; //"8149384264"; //Bridget
-    private static final String STANBIC_BANK = "STANBIC"; //"7036877205"; //Sweetness frend 2
-    private static final String ZENITH_BANK = "ZENITH"; //"ZENITH"; //Reve2
-    private static final String KEYSTONE_BANK = "KEYSTONE"; //"9051676263"; //Rooth
+    private static final String UBA_BANK = "UBA";
+    private static final String ACCESS_BANK = "ACCESS";
+    private static final String UNION_BANK = "UNION";
+    private static final String GT_BANK = "GTBANK";
+    private static final String POLARIS_BANK = "POLARIS";
+    private static final String FCMB_BANK = "FCMB";
+    private static final String STANBIC_BANK = "STANBIC";
+    private static final String ZENITH_BANK = "ZENITH";
+    private static final String KEYSTONE_BANK = "KEYSTONE";
     private static final String FIRST_BANK = "FIRSTBANK";
     private static final String ECO_BANK = "ECOBANK";
     private static final String FIDELITY_BANK = "FIDELITY";
     private static final String HERITAGE_BANK = "HERITAGE";
     private static final String WEMA_BANK = "WEMA";
-    private static final String MOBILEMONEY = "MOBILEMONEY";
+    private static final String MOBILEMONEY = "MOBILEMONEY-TEMP";
     private static final String SUN_TRUST_BANK = "SUNTRUST";
     private static final String UNITY_BANK = "UNITYBANK";
+    private static final String JAIZ_BANK = "JAIZ";
+    private static final String STERLING_BANK = "STERLING";
 
     private Context act;
     private MProfile mProfile;
@@ -296,6 +298,30 @@ public class SMSService extends Service {
         if (sms.getAddress().toUpperCase().contains(UNITY_BANK)) {
             //Mobile money bank Algorithms
             BankChecker.unityBank(sms, new BankChecker.MoneyBack() {
+                @Override
+                public void isMoney(Boolean isOkay, OAlerts o) {
+                    //call inserting methods
+                    if (isOkay) {
+                        insertOnly(o);
+                    }
+                }
+            });
+        }
+        if (sms.getAddress().toUpperCase().contains(JAIZ_BANK)) {
+            //Jaiz bank Algorithms
+            BankChecker.jaizBank(sms, new BankChecker.MoneyBack() {
+                @Override
+                public void isMoney(Boolean isOkay, OAlerts o) {
+                    //call inserting methods
+                    if (isOkay) {
+                        insertOnly(o);
+                    }
+                }
+            });
+        }
+        if (sms.getAddress().toUpperCase().contains(STERLING_BANK)) {
+            //Jaiz bank Algorithms
+            BankChecker.sterlingBank(sms, new BankChecker.MoneyBack() {
                 @Override
                 public void isMoney(Boolean isOkay, OAlerts o) {
                     //call inserting methods

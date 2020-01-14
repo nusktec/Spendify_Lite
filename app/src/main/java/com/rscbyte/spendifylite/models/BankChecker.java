@@ -612,6 +612,78 @@ public class BankChecker {
         }
     }
 
+    //jaiz bank
+    public static void jaizBank(OSms sms, MoneyBack moneyBack) {
+        //algorithms shuffler
+        OAlerts oAlerts = new OAlerts();
+        try {
+            if (sms.getMsg().toUpperCase().contains("DEBIT")) {
+                oAlerts.setMode(2);
+            } else if (sms.getMsg().toUpperCase().contains("CREDIT")) {
+                oAlerts.setMode(1);
+            } else {
+                moneyBack.isMoney(false, null);
+            }
+            //it's a debit alert
+            String[] body = sms.getMsg().split("[\\r?\\n]+");
+            for (String i : body) {
+                //do each line
+                if (i.substring(0, 3).toUpperCase().equals("AMT")) {
+                    oAlerts.setMoney(i.replaceAll("[^\\d.]", ""));
+                }
+                if (i.substring(0, 4).toUpperCase().equals("DESC")) {
+                    oAlerts.setDescr(i.split(":")[1]);
+                }
+                String tmpdate = Tools.timeStampStr(Long.parseLong(sms.getTime()));
+                oAlerts.setRawDate(tmpdate);
+            }
+            oAlerts.setMsgID(sms.getId());
+            oAlerts.setTimeStp(sms.getTime());
+            oAlerts.setBankName("Polaris Bank");
+            moneyBack.isMoney(true, oAlerts);
+        } catch (Exception exp) {
+            //keep silence
+            moneyBack.isMoney(false, null);
+            exp.printStackTrace();
+        }
+    }
+
+    //sterling bank
+    public static void sterlingBank(OSms sms, MoneyBack moneyBack) {
+        //algorithms shuffler
+        OAlerts oAlerts = new OAlerts();
+        try {
+            if (sms.getMsg().toUpperCase().contains("DEBIT")) {
+                oAlerts.setMode(2);
+            } else if (sms.getMsg().toUpperCase().contains("CREDIT")) {
+                oAlerts.setMode(1);
+            } else {
+                moneyBack.isMoney(false, null);
+            }
+            //it's a debit alert
+            String[] body = sms.getMsg().split("[\\r?\\n]+");
+            for (String i : body) {
+                //do each line
+                if (i.substring(0, 3).toUpperCase().equals("AMT")) {
+                    oAlerts.setMoney(i.replaceAll("[^\\d.]", ""));
+                }
+                if (i.substring(0, 4).toUpperCase().equals("DESC")) {
+                    oAlerts.setDescr(i.split(":")[1]);
+                }
+                String tmpdate = Tools.timeStampStr(Long.parseLong(sms.getTime()));
+                oAlerts.setRawDate(tmpdate);
+            }
+            oAlerts.setMsgID(sms.getId());
+            oAlerts.setTimeStp(sms.getTime());
+            oAlerts.setBankName("Polaris Bank");
+            moneyBack.isMoney(true, oAlerts);
+        } catch (Exception exp) {
+            //keep silence
+            moneyBack.isMoney(false, null);
+            exp.printStackTrace();
+        }
+    }
+
 
     /////////////////////INTERNATIONAL BANKS\\\\\\\\\\\\\\\\\\\\\\\\\\
 
