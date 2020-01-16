@@ -246,7 +246,6 @@
                     android:orientation="vertical"
                     android:paddingTop="10dp">
 
-
                     <EditText
                         android:id="@+id/txt_quote"
                         style="@style/EditText.GreySoft"
@@ -258,12 +257,11 @@
                         android:inputType="textMultiLine"
                         android:lines="3"
                         android:singleLine="false"
+                        android:text="@string/it_s_my_money"
                         android:textColor="@color/grey_500"
                         android:textColorHint="@color/grey_700"
                         android:textStyle="italic" />
-
                 </LinearLayout>
-
 
                 <TextView
                     android:layout_width="wrap_content"

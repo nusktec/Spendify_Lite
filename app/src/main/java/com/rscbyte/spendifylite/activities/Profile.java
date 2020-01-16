@@ -107,12 +107,17 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (getIntent().getIntExtra("fs", 0) == 1) {
+                    bdx.toolbarLeftBtn.setVisibility(View.GONE);
                     Tools.showToast(ctx, "You must complete your profile");
                 } else {
                     finish();
                 }
             }
         });
+        //hide components
+        if (getIntent().getIntExtra("fs", 0) == 1) {
+            bdx.toolbarLeftBtn.setVisibility(View.GONE);
+        }
     }
 
     //components initializer

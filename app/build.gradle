@@ -10,6 +10,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                onesignal_app_id: 'b7b58ba9-4c05-4ec8-aa60-02e597a707e7',
+                // Project number pulled from dashboard, local value is ignored.
+                onesignal_google_project_number: 'REMOTE'
+        ]
     }
     dataBinding {
         enabled = true
@@ -44,7 +49,9 @@ dependencies {
     implementation 'com.amitshekhar.android:android-networking:1.0.2' //network
     implementation 'me.aflak.libraries:fingerprint:2.5.3' //fingerprint
     implementation 'com.github.bumptech.glide:glide:4.10.0' //image loader glide
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0' //glide cmpiller
+    implementation 'com.onesignal:OneSignal:[3.11.2, 3.99.99]' //one signal
+
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0' //glide compiler
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

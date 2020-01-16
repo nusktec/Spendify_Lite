@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.onesignal.OneSignal;
 import com.orm.SugarContext;
 import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
@@ -18,6 +19,7 @@ import com.rscbyte.spendifylite.activities.Dashboard;
 import com.rscbyte.spendifylite.activities.Profile;
 import com.rscbyte.spendifylite.activities.ScreenLock;
 import com.rscbyte.spendifylite.models.MProfile;
+import com.rscbyte.spendifylite.services.ReportServices;
 import com.rscbyte.spendifylite.services.SMSService;
 
 public class SplashScreen extends AppCompatActivity {
@@ -51,11 +53,21 @@ public class SplashScreen extends AppCompatActivity {
         //clear preference
         getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit()
                 .putInt(Constants.SHARED_ALERT_KEY, 0).apply();
+
+        //initialize one signal
+        // OneSignal Initialization
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(false)
+                .autoPromptLocation(true)
+                .init();
+        //start reporter
+        startService(new Intent(this, ReportServices.class));
     }
 
     //launcher
     public void startMain() {
-        //signup profile
+        //sign-up profile
         if (MProfile.count(MProfile.class) > 0) {
             //start service before every other
             startService(new Intent(this, SMSService.class));
@@ -93,8 +105,9 @@ public class SplashScreen extends AppCompatActivity {
     //onResume activities
     @Override
     protected void onResume() {
-        super.onResume();
+
         if (firstCheck)
             checkPermission(Manifest.permission.READ_SMS, Manifest.permission.READ_EXTERNAL_STORAGE);
+        super.onResume();
     }
 }

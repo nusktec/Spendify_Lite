@@ -24,4 +24,5 @@
     <string name="r01_encrypt">R01 Encrypt</string>
     <string name="pin_code">Pin Code</string>
     <string name="spendify_locked">Spendify Locked</string>
+    <string name="it_s_my_money">It\'s my money !</string>
 </resources>
