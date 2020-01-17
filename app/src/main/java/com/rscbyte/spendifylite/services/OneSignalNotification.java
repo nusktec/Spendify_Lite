@@ -20,6 +20,7 @@ public class OneSignalNotification extends NotificationExtenderService {
             }
         } catch (Exception ex) {
             //go silence from here
+            Tools.Notification(getBaseContext(), notification.payload.title, "Notification", notification.payload.body, 3, Dashboard.class, "No Data");
         }
         return true;
     }

@@ -53,7 +53,7 @@ public class Synchronize {
                             // do anything with response
                             try {
                                 if (response.getBoolean("status")) {
-                                    Tools.showToast(ctx, "Server connected");
+                                    Tools.showToast(ctx, "Welcome !");
                                 } //Tools.showToast(ctx, "Unable to backup at the moment");
 
                             } catch (JSONException e) {
