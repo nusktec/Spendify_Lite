@@ -54,21 +54,19 @@ public class SplashScreen extends AppCompatActivity {
         getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit()
                 .putInt(Constants.SHARED_ALERT_KEY, 0).apply();
 
-        //initialize one signal
-        // OneSignal Initialization
-        OneSignal.startInit(this)
-                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                .unsubscribeWhenNotificationsAreDisabled(false)
-                .autoPromptLocation(true)
-                .init();
+        getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit()
+                .putInt(Constants.SHARED_NEW_OPEN_KEY, 0).apply();
         //start reporter
         startService(new Intent(this, ReportServices.class));
     }
 
     //launcher
     public void startMain() {
+        //reinitialize
+        profile = MProfile.findById(MProfile.class, 1);
         //sign-up profile
         if (MProfile.count(MProfile.class) > 0) {
+            Tools.showToast(this, "Really came here...");
             //start service before every other
             startService(new Intent(this, SMSService.class));
             //Think to start the new class
@@ -94,6 +92,8 @@ public class SplashScreen extends AppCompatActivity {
     public void checkPermission(String... permission) {
         // Checking if permission is not granted
         if (ContextCompat.checkSelfPermission(this, permission[0]) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(this, permission[1]) == PackageManager.PERMISSION_DENIED) {
+            //mark as new lunch
+            getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit().putInt(Constants.SHARED_NEW_OPEN_KEY, 1).apply();
             //Open permission screen
             firstCheck = true;
             startActivity(new Intent(SplashScreen.this, Permissions.class).putExtra("permission", Manifest.permission.READ_SMS + "~" + Manifest.permission.READ_EXTERNAL_STORAGE));
@@ -105,8 +105,8 @@ public class SplashScreen extends AppCompatActivity {
     //onResume activities
     @Override
     protected void onResume() {
-
         if (firstCheck)
+            //recreate();
             checkPermission(Manifest.permission.READ_SMS, Manifest.permission.READ_EXTERNAL_STORAGE);
         super.onResume();
     }

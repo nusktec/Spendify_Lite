@@ -124,7 +124,7 @@ public class FragmentChart extends Fragment {
     }
 
     //prepare chart entries
-    Tooltip tooltip = null; //tooltip;
+    private Tooltip tooltip = null; //tooltip;
 
     void showToolTips(final String msg, final int color) {
         new Handler().postDelayed(new Runnable() {
@@ -320,6 +320,13 @@ public class FragmentChart extends Fragment {
                 syncAction();
             }
         });
+        //show help
+        bdx.menuHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.msgDialog(ctx, "Quick Help !", "1. Click on + icon to add new transaction\n\n2. Usual is same as last month expense\n\n3. Monthly Average is same as previous 4 months average", R.drawable.ic_help, R.color.blue_700);
+            }
+        });
     }
 
     //auto sync.
@@ -333,6 +340,7 @@ public class FragmentChart extends Fragment {
             return;
         }
         if (!Tools.isNetworkAvailable(ctx)) {
+            Tools.showToast(ctx, "No Internet Access !");
             return;
         }
         bdx.menuSyncSms.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.rotate_infinite));

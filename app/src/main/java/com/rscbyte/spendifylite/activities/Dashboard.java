@@ -2,7 +2,6 @@ package com.rscbyte.spendifylite.activities;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +20,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.onesignal.OneSignal;
 import com.orm.SugarContext;
 import com.orm.SugarRecord;
 import com.rscbyte.spendifylite.R;
@@ -112,6 +112,12 @@ public class Dashboard extends AppCompatActivity {
         // Show a dialog if meets conditions
         AppRate.showRateDialogIfMeetsConditions(this);
         AppRate.with(this).clearAgreeShowDialog();
+        //one-signal initializer
+        // OneSignal Initialization
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(false)
+                .init();
     }
 
     //set header and toolbar
@@ -260,6 +266,21 @@ public class Dashboard extends AppCompatActivity {
             Tools.msgDialog(ctx, "New Alert Sync.", getNewAlert + " alert(s) were sync and added to your transaction time ago, check your list...", R.drawable.ic_textsms, R.color.green_600);
         }
         getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit().putInt(Constants.SHARED_ALERT_KEY, 0).apply();
+        //fire first launched
+        firstLaunched();
+    }
+
+    //fire first launched
+    private void firstLaunched() {
+        int firstLaunched = getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).getInt(Constants.SHARED_NEW_OPEN_KEY, 0);
+        if (firstLaunched > 0) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Tools.msgDialog(ctx, "Quick Help !", "1. Click on + icon to add new transaction\n\n2. Usual is same as last month expense\n\n3. Monthly Average is same as previous 4 months average", R.drawable.ic_help, R.color.blue_700);
+                }
+            }, 2000);
+        }
     }
 
     //animations switcher

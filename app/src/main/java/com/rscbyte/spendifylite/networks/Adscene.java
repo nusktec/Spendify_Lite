@@ -3,12 +3,10 @@ package com.rscbyte.spendifylite.networks;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Handler;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,9 +20,7 @@ import androidx.databinding.DataBindingUtil;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.ParsedRequestListener;
-import com.androidnetworking.interfaces.StringRequestListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -32,11 +28,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.rscbyte.spendifylite.R;
 import com.rscbyte.spendifylite.Utils.Constants;
-import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.databinding.DialogAdvertBinding;
 import com.rscbyte.spendifylite.models.MAdscene;
-
-import org.json.JSONObject;
 
 import okhttp3.OkHttpClient;
 
@@ -79,7 +72,7 @@ public class Adscene {
                     @Override
                     public void onResponse(final MAdscene response) {
                         Glide.with(ctx)
-                                .load(response.getAimg())
+                                .load(Constants.API_IMG_DOMAIN_URL + "/adverts/" + response.getAid() + ".jpg")
                                 .listener(new RequestListener<Drawable>() {
                                     @Override
                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
