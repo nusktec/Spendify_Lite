@@ -83,7 +83,7 @@ public class SplashScreen extends AppCompatActivity {
             }, DELAY_TIME_SEC);
         } else {
             //profile panel
-            //startActivity(new Intent(SplashScreen.this, Profile.class).putExtra("fs", 1));
+            startActivity(new Intent(SplashScreen.this, Profile.class).putExtra("fs", 1));
         }
     }
 

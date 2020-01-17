@@ -84,7 +84,7 @@ public class Dashboard extends AppCompatActivity {
                     ex.printStackTrace();
                 }
             }
-        }, 3000);
+        }, 10000);
         //check and pop rate
         try {
             AppRate.with(this)
@@ -277,7 +277,7 @@ public class Dashboard extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Tools.msgDialog(ctx, "Quick Help !", "1. Click on + icon to add new transaction\n\n2. Usual is same as last month expense\n\n3. Monthly Average is same as previous 4 months average", R.drawable.ic_help, R.color.blue_700);
+                    Tools.msgDialog(ctx, "Quick Help !", "1. Click on + icon to add new transaction\n\n2. Usual is same as last month expense\n\n3. Monthly Average is same as previous 4 months average\n\n4. Remember to press the synchronise button top right corner to keep your data safe on cloud.", R.drawable.ic_help, R.color.blue_700);
                 }
             }, 2000);
         }

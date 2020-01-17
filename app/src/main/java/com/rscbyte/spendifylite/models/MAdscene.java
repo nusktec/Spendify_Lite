@@ -1,13 +1,30 @@
 package com.rscbyte.spendifylite.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class MAdscene {
 
+    @SerializedName("aid")
+    @Expose
     private String aid;
+    @SerializedName("aurl")
+    @Expose
     private String aurl;
-    private String aimg;
+    @SerializedName("acompany")
+    @Expose
+    private String acompany;
+    @SerializedName("atime")
+    @Expose
     private String atime;
+    @SerializedName("aviews")
+    @Expose
     private String aviews;
+    @SerializedName("astatus")
+    @Expose
     private String astatus;
+    @SerializedName("adate")
+    @Expose
     private String adate;
 
     public String getAid() {
@@ -26,12 +43,12 @@ public class MAdscene {
         this.aurl = aurl;
     }
 
-    public String getAimg() {
-        return aimg;
+    public String getAcompany() {
+        return acompany;
     }
 
-    public void setAimg(String aimg) {
-        this.aimg = aimg;
+    public void setAcompany(String acompany) {
+        this.acompany = acompany;
     }
 
     public String getAtime() {

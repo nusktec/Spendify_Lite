@@ -64,7 +64,7 @@ public class Synchronize {
                         @Override
                         public void onError(ANError error) {
                             // handle error
-                            error.printStackTrace();
+                            Log.e("rtyutrt-3", error.getErrorDetail());
                         }
                     });
         } catch (PackageManager.NameNotFoundException e) {

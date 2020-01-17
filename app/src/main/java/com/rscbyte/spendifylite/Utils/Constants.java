@@ -4,8 +4,8 @@ import com.rscbyte.spendifylite.models.MProfile;
 
 public class Constants {
     //global variables
-    public static String API_DOMAIN_URL = "http://spendify.ng//api";
-    public static String API_IMG_DOMAIN_URL = "http://spendify.ng//uploads";
+    public static String API_DOMAIN_URL = "http://spendify.ng/index.php/api";
+    public static String API_IMG_DOMAIN_URL = "http://spendify.ng/uploads";
     public static String SHARED_PREF_NAME = "rscshared_spendify";
     public static String SHARED_ALERT_KEY = "newAlert";
     public static String SHARED_NEW_OPEN_KEY = "newLaunched";

@@ -11,7 +11,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
-                onesignal_app_id: 'b7b58ba9-4c05-4ec8-aa60-02e597a707e7',
+                onesignal_app_id               : 'b7b58ba9-4c05-4ec8-aa60-02e597a707e7',
                 // Project number pulled from dashboard, local value is ignored.
                 onesignal_google_project_number: 'REMOTE'
         ]
@@ -40,19 +40,20 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.1.0' //Lottie files
     implementation 'com.facebook.shimmer:shimmer:0.5.0' //Shimmer
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0' // chart
-    implementation 'com.squareup.retrofit2:retrofit:2.6.2' //retrofit
     implementation 'com.google.code.gson:gson:2.8.6' //Gson converter
     implementation 'com.ekn.gruzer.gaugelibrary:gaugelibrary:0.1.0' //Gauge meters
     implementation 'in.unicodelabs.sorbh:kdgaugeview:1.0.0' //sweet gauge
     implementation 'com.github.vihtarb:tooltip:0.2.0' //tooltip
     implementation 'com.github.hotchemi:android-rate:1.0.1' //app rate
     implementation 'com.amitshekhar.android:android-networking:1.0.2' //network
+    implementation 'com.squareup.okhttp3:okhttp:4.3.1'
+    implementation 'com.amitshekhar.android:jackson-android-networking:1.0.2'
     implementation 'me.aflak.libraries:fingerprint:2.5.3' //fingerprint
     implementation 'com.github.bumptech.glide:glide:4.10.0' //image loader glide
     implementation 'com.onesignal:OneSignal:[3.11.2, 3.99.99]' //one signal
+    //retrofit
 
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0' //glide compiler
-
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

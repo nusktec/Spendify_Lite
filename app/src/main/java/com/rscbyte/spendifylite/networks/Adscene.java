@@ -21,13 +21,14 @@ import androidx.databinding.DataBindingUtil;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
+import com.androidnetworking.interceptors.HttpLoggingInterceptor;
 import com.androidnetworking.interfaces.ParsedRequestListener;
-import com.androidnetworking.interfaces.StringRequestListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.jacksonandroidnetworking.JacksonParserFactory;
 import com.rscbyte.spendifylite.R;
 import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.databinding.DialogAdvertBinding;
@@ -46,7 +47,12 @@ public class Adscene {
 
     public void setCtx(Activity ctx) {
         this.ctx = ctx;
-        AndroidNetworking.initialize(ctx, new OkHttpClient());
+        // Adding an Network Interceptor for Debugging purpose :
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .addNetworkInterceptor(new HttpLoggingInterceptor())
+                .build();
+        AndroidNetworking.initialize(ctx, okHttpClient);
+        AndroidNetworking.setParserFactory(new JacksonParserFactory());
     }
 
     public void showAdvert(final Activity ctx, String email) {
@@ -66,24 +72,9 @@ public class Adscene {
         dialog.getWindow().getAttributes().windowAnimations = R.style.WindowAnimationTransition;
 
         AndroidNetworking.get(Constants.API_DOMAIN_URL + "/adverts")
-                .build()
-                .getAsString(new StringRequestListener() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.e("jhsdkhskdds", response);
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        anError.printStackTrace();
-                    }
-                });
-
-        //network caller
-        AndroidNetworking.get(Constants.API_DOMAIN_URL + "/adverts")
                 .addQueryParameter("email", email)
                 .setTag(ctx)
-                .setPriority(Priority.IMMEDIATE)
+                .setPriority(Priority.HIGH)
                 .build()
                 .getAsObject(MAdscene.class, new ParsedRequestListener<MAdscene>() {
                     @Override
@@ -110,6 +101,7 @@ public class Adscene {
 
                     @Override
                     public void onError(ANError anError) {
+                        Log.e("Error From Adverts", "See Below");
                         anError.printStackTrace();
                     }
                 });
