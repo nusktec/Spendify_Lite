@@ -57,7 +57,7 @@ public class SplashScreen extends AppCompatActivity {
         getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit()
                 .putInt(Constants.SHARED_NEW_OPEN_KEY, 0).apply();
         //start reporter
-        startService(new Intent(this, ReportServices.class));
+        //startService(new Intent(this, ReportServices.class));
     }
 
     //launcher
@@ -66,7 +66,6 @@ public class SplashScreen extends AppCompatActivity {
         profile = MProfile.findById(MProfile.class, 1);
         //sign-up profile
         if (MProfile.count(MProfile.class) > 0) {
-            Tools.showToast(this, "Really came here...");
             //start service before every other
             startService(new Intent(this, SMSService.class));
             //Think to start the new class
@@ -84,7 +83,7 @@ public class SplashScreen extends AppCompatActivity {
             }, DELAY_TIME_SEC);
         } else {
             //profile panel
-            startActivity(new Intent(SplashScreen.this, Profile.class).putExtra("fs", 1));
+            //startActivity(new Intent(SplashScreen.this, Profile.class).putExtra("fs", 1));
         }
     }
 

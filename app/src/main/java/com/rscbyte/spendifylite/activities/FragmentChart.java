@@ -68,7 +68,7 @@ public class FragmentChart extends Fragment {
         bdx.toolbarLeftBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ctx, Profile.class));
+                startActivityForResult(new Intent(ctx, Profile.class), 230);
             }
         });
         //set today's time
@@ -92,6 +92,8 @@ public class FragmentChart extends Fragment {
 
     //formulate data set
     private void printChart() {
+        //redeclare profile
+        mProfile = new MProfile();
         //initialize
         pieChart = bdx.pieChart;
         prepareChart();

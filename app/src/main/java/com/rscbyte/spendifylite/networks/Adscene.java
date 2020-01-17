@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Handler;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -62,11 +64,26 @@ public class Adscene {
         dialog.getWindow().setGravity(Gravity.BOTTOM);
         dialog.getWindow().setAttributes(lp);
         dialog.getWindow().getAttributes().windowAnimations = R.style.WindowAnimationTransition;
+
+        AndroidNetworking.get(Constants.API_DOMAIN_URL + "/adverts")
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("jhsdkhskdds", response);
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        anError.printStackTrace();
+                    }
+                });
+
         //network caller
         AndroidNetworking.get(Constants.API_DOMAIN_URL + "/adverts")
                 .addQueryParameter("email", email)
                 .setTag(ctx)
-                .setPriority(Priority.MEDIUM)
+                .setPriority(Priority.IMMEDIATE)
                 .build()
                 .getAsObject(MAdscene.class, new ParsedRequestListener<MAdscene>() {
                     @Override
@@ -93,7 +110,7 @@ public class Adscene {
 
                     @Override
                     public void onError(ANError anError) {
-
+                        anError.printStackTrace();
                     }
                 });
     }

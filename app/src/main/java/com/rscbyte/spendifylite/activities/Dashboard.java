@@ -149,6 +149,7 @@ public class Dashboard extends AppCompatActivity {
             }
         });
         //make control (misc)
+        checkDefaultThing();
     }
 
     //global runner
@@ -256,7 +257,6 @@ public class Dashboard extends AppCompatActivity {
             }
         });
         bdx.mainViewPager.setCurrentItem(_scrolled_nun);
-        checkDefaultThing();
     }
 
     //check for newer things
@@ -342,7 +342,7 @@ public class Dashboard extends AppCompatActivity {
                 });
             }
         }, 3000);
-        Tools.isTimeCheck();
+        //Tools.isTimeCheck();
     }
 
     //override onBack press
@@ -366,14 +366,19 @@ public class Dashboard extends AppCompatActivity {
         }
     }
 
+    boolean hasOpen = false;
+
     @Override
     protected void onResume() {
         super.onResume();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                main();
-            }
-        }, 500);
+        if (hasOpen) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    main();
+                }
+            }, 500);
+        }
+        hasOpen = true;
     }
 }
