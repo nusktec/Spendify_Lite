@@ -53,6 +53,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.rscbyte.spendifylite.R;
 import com.rscbyte.spendifylite.activities.Dashboard;
 import com.rscbyte.spendifylite.databinding.DialogInfoBinding;
+import com.rscbyte.spendifylite.models.MProfile;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.ByteArrayOutputStream;
@@ -709,6 +710,11 @@ public class Tools {
 
     //Notification Service
     public static int Notification(Context context, String title, String small_title, String message, int id, Class aClass, String meta_data) {
+        //check db if notification is allowed
+        MProfile mProfile = MProfile.findById(MProfile.class, 1);
+        if (mProfile != null && mProfile.getNotifications() == 0) {
+            return 0;
+        }
         Bitmap largeIcon = Tools.getCircleImage(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             largeIcon = Tools.getCircleImage(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
