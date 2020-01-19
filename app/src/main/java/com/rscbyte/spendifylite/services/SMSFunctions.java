@@ -1,19 +1,13 @@
 package com.rscbyte.spendifylite.services;
 
-import android.app.IntentService;
-import android.app.Service;
-import android.content.Context;
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Handler;
-import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 
 import com.orm.SugarContext;
 import com.orm.SugarRecord;
 import com.orm.util.NamingHelper;
+import com.rscbyte.spendifylite.Interfaces.CallBacksArgs;
 import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.activities.Dashboard;
@@ -27,7 +21,9 @@ import com.rscbyte.spendifylite.objects.OSms;
 import java.util.Calendar;
 import java.util.List;
 
-public class SMSService extends IntentService {
+import static android.content.Context.MODE_PRIVATE;
+
+public class SMSFunctions {
     private static final String UBA_BANK = "UBA";
     private static final String ACCESS_BANK = "ACCESS";
     private static final String UNION_BANK = "UNION";
@@ -48,30 +44,22 @@ public class SMSService extends IntentService {
     private static final String JAIZ_BANK = "JAIZ";
     private static final String STERLING_BANK = "STERLING";
 
-    private Context act;
+    private Activity act;
     private MProfile mProfile;
 
-    public SMSService() {
-        super("sms-intent-service");
+    //callback listener
+    private CallBacksArgs callBacks;
+
+    public SMSFunctions(Activity context, CallBacksArgs callBacks) {
+        this.callBacks = callBacks;
+        this.act = context;
+        //run your app
+        runSMS();
     }
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
-
-    }
-
-    @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-        //do nothing
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
-        this.act = getApplicationContext();
-        SugarContext.init(this);
+    //fire sms functions
+    private void runSMS() {
+        SugarContext.init(act);
         //check user settings
         tester();
         MProfile chkUser = MProfile.findById(MProfile.class, 1);
@@ -86,16 +74,19 @@ public class SMSService extends IntentService {
                 }
                 if ((data != null ? data.getSms() : 0) == 1) {
                     startSMSFiltering();
+                } else {
+                    //sms check up is off
+                    callBacks.onOkay(3);
                 }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return START_REDELIVER_INTENT;
     }
 
+
     //insert sms filtered
-    void startSMSFiltering() {
+    private void startSMSFiltering() {
         MSms mSms = new MSms(act);
         List<OSms> oSmsList = mSms.getAllSms();
         for (OSms ms : oSmsList) {
@@ -108,6 +99,13 @@ public class SMSService extends IntentService {
             }
         }
         //synchronizing is completed
+        callBacks.onOkay(2);
+        //Fire notifications
+        if (_counter > 0) {
+            if (mProfile == null || mProfile.getNotifications() == 1) {
+                Tools.Notification(act, "New Analysis", "Transactions Synchronized", _counter + " Transactions synchronized seconds ago, tap to view", 1, Dashboard.class, "No Data");
+            }
+        }
     }
 
     //void do banking format and insert
@@ -385,20 +383,16 @@ public class SMSService extends IntentService {
             //insert into db
             SugarRecord.save(data);
             _counter++;
-            getBaseContext().getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit()
+            act.getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit()
                     .putInt(Constants.SHARED_ALERT_KEY, _counter).apply();
-            Log.e("Alert Saved", "Inserted " + o.getMsgID() + " : " + o.getBankName());
-            //Fire notifications
-            if (mProfile == null || mProfile.getNotifications() == 1) {
-                Tools.Notification(act, "New Bank Alert", "SMS Synchronized", _counter + " Alert(s) was synchronized seconds ago, tap to view", 1, Dashboard.class, "No Data");
-            }
+            //Log.e("Alert Saved", "Inserted " + o.getMsgID() + " : " + o.getBankName());
         } catch (Exception ex) {
             ex.printStackTrace();
             Tools.Notification(act, "Error Bank Alert", "SMS Synchronized", "Error encounter with bad sms alert integrity", 2, Dashboard.class, "No Data");
         }
     }
 
-    protected String dbName(String s) {
+    private String dbName(String s) {
         return NamingHelper.toSQLNameDefault(s);
     }
 
@@ -406,7 +400,7 @@ public class SMSService extends IntentService {
     //Completed {UBA, UNION, GTBank, Stanbic Bank, Access Bank, Polaris, FCMB, Zenith, Keystone, Fidelity, Heritage, Wema, SunTrust, Eco Bank, FBN, Mobile Money}
 
 
-    protected void tester() {
+    private void tester() {
 
     }
 }

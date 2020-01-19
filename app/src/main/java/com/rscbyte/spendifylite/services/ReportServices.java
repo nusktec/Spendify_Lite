@@ -75,6 +75,5 @@ public class ReportServices extends Service {
             _statemen = "Dear " + Tools.capsfLetter(mp.getNames().split(" ")[0]) + ".... You have no expense as of yesterday";
         }
         Tools.Notification(getBaseContext(), "Expense Manager", "Expense Reporter", _statemen, 4, Dashboard.class, "No Data");
-
     }
 }

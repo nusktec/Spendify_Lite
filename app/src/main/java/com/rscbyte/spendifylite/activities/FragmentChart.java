@@ -277,6 +277,7 @@ public class FragmentChart extends Fragment {
         configGauge(_spent_so_far, Float.parseFloat(Tools.doFloat(_typicalSolve)));
     }
 
+
     //initialize components
     private boolean switcher = true;
 

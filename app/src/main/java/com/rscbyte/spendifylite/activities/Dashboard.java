@@ -375,7 +375,7 @@ public class Dashboard extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    main();
+                    //main(); avoid overloading
                 }
             }, 500);
         }
