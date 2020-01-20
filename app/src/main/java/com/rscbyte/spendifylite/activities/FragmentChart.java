@@ -107,11 +107,9 @@ public class FragmentChart extends Fragment {
                 }
                 if (mode == 1 && isOkay) {
                     bdx.topLoader.setVisibility(View.GONE);
-                    if (mHome.getData_counter() == 0) {
-                        bdx.getD().setTxtStatement("No Transaction(s), Tap + button to begin");
-                    } else {
-                        rollerData(mHome);
-                    }
+                    bdx.getD().setTxtStatement("No Transaction(s), Tap + button to begin");
+                    bdx.notifyChange();
+                    rollerData(mHome);
                 }
             }
         }).execute();
@@ -121,6 +119,10 @@ public class FragmentChart extends Fragment {
     private void rollerData(MHome mHome) {
         if (mHome == null) {
             return;
+        }
+        //override default
+        if (mHome.getVariesTypical().isEmpty()) {
+            mHome.setVariesTypical("Balance");
         }
         bdx.getD().setTxtVariesTyical(mHome.getVariesTypical());
         bdx.getD().setTxtColor(mHome.getTxtColor());
@@ -335,6 +337,9 @@ public class FragmentChart extends Fragment {
     private void prepareChartAsync(LoaderAsyncCaller asyncCaller) {
         int counter_ = 0;
         MHome home = new MHome();
+        //set default
+        home.setTxtStatement("No previous transaction to determine usual expense");
+        home.setTxtBelowTypical("0.00");
         //fetch strictly on moving date
         float _moving_average3 = 0;
         //monthly moving average

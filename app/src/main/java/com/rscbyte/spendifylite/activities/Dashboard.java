@@ -261,9 +261,17 @@ public class Dashboard extends AppCompatActivity {
 
     //check for newer things
     private void checkDefaultThing() {
-        int getNewAlert = getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).getInt(Constants.SHARED_ALERT_KEY, 0);
+        final int getNewAlert = getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).getInt(Constants.SHARED_ALERT_KEY, 0);
         if (getNewAlert > 0) {
-            Tools.msgDialog(ctx, "New Alert Sync.", getNewAlert + " alert(s) were sync and added to your transaction time ago, check your list...", R.drawable.ic_textsms, R.color.green_600);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    int firstLaunched = getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).getInt(Constants.SHARED_NEW_OPEN_KEY, 0);
+                    if (firstLaunched == 0) {
+                        Tools.msgDialog(ctx, "New Alert Sync.", getNewAlert + " alert(s) were sync and added to your transaction time ago, check your list...", R.drawable.ic_textsms, R.color.green_600);
+                    }
+                }
+            }, 5000);
         }
         getSharedPreferences(Constants.SHARED_PREF_NAME, MODE_PRIVATE).edit().putInt(Constants.SHARED_ALERT_KEY, 0).apply();
         //fire first launched
@@ -279,7 +287,7 @@ public class Dashboard extends AppCompatActivity {
                 public void run() {
                     Tools.msgDialog(ctx, "Quick Help !", "1. Click on + icon to add new transaction\n\n2. Usual is same as last month expense\n\n3. Monthly Average is same as previous 4 months average\n\n4. Remember to press the synchronise button at the top right corner to keep your data safe on cloud.", R.drawable.ic_help, R.color.blue_700);
                 }
-            }, 2000);
+            }, 10000);
         }
     }
 
