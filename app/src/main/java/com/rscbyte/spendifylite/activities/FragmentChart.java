@@ -1,9 +1,11 @@
 package com.rscbyte.spendifylite.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -28,6 +30,7 @@ import com.rscbyte.spendifylite.Utils.Constants;
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.databinding.ActivityFragmentChartBinding;
 import com.rscbyte.spendifylite.models.MData;
+import com.rscbyte.spendifylite.models.MHome;
 import com.rscbyte.spendifylite.models.MProfile;
 import com.rscbyte.spendifylite.networks.Synchronize;
 import com.rscbyte.spendifylite.objects.OChartPage;
@@ -96,8 +99,43 @@ public class FragmentChart extends Fragment {
         mProfile = new MProfile();
         //initialize
         pieChart = bdx.pieChart;
-        prepareChart();
-        pieDataSet = new PieDataSet(pieEntries, "");
+        new LoaderAsync(new LoaderAsyncCaller() {
+            @Override
+            public void loaded(MHome mHome, int mode, boolean isOkay) {
+                if (mode == 0) {
+                    bdx.getD().setTxtStatement("Loading transactions, Please wait...");
+                }
+                if (mode == 1 && isOkay) {
+                    bdx.topLoader.setVisibility(View.GONE);
+                    if (mHome.getData_counter() == 0) {
+                        bdx.getD().setTxtStatement("No Transaction(s), Tap + button to begin");
+                    } else {
+                        rollerData(mHome);
+                    }
+                }
+            }
+        }).execute();
+    }
+
+    //roller
+    private void rollerData(MHome mHome) {
+        if (mHome == null) {
+            return;
+        }
+        bdx.getD().setTxtVariesTyical(mHome.getVariesTypical());
+        bdx.getD().setTxtColor(mHome.getTxtColor());
+        bdx.getD().setTxtStatement(mHome.getTxtStatement());
+        //assign to dedicated one
+        bdx.getD().setTxtSpentSoFar(mHome.getTxtSpentSoFar()); //display spent so far
+        bdx.getD().setTxtTypical2(mHome.getTxtTypical2()); //display typical 3 months
+        bdx.getD().setTxtTypical(mHome.getTxtTypical()); //display typical 3 months
+        bdx.getD().setTxtBelowTypical(mHome.getTxtBelowTypical()); //below typical
+        bdx.getD().setTxtIncomeThisM(mHome.getTxtIncomeThisM()); //this months
+        bdx.txtIncomeThis.setText(mHome.getTxtIncomeThis());
+        showToolTips(mHome.getTxtStatement(), mHome.getTooltipColor());
+        //sum up your data
+        configGauge(mHome.get_spent_sofar(), Float.parseFloat(Tools.doFloat(mHome.get_typical_solve())));
+        pieDataSet = new PieDataSet(mHome.getPieEntries(), "");
         pieData = new PieData(pieDataSet);
         pieChart.setCenterText("Monthly\nExpense");
         pieChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
@@ -123,6 +161,8 @@ public class FragmentChart extends Fragment {
         pieDataSet.setValueTypeface(Typeface.DEFAULT_BOLD);
         pieChart.setHoleColor(Color.WHITE);
         bdx.pieChart.animate();
+        //re-caller
+        bdx.getD().notifyChange();
     }
 
     //prepare chart entries
@@ -146,137 +186,6 @@ public class FragmentChart extends Fragment {
             }
         }, 2000);
     }
-
-    private void prepareChart() {
-        //fetch strictly on moving date
-        float _moving_average3 = 0;
-        //monthly moving average
-        int _monthly_average_target = 1;
-        //assign dictionary value holder
-        Map<String, Float> tmpValue = new HashMap<>();
-        //get 3 months way back
-        long passedMonth = Long.parseLong(Tools.getVariesTimeStamp(-4));
-        //iterate last 3 month expense data
-        float _spent_for_the_month = 0;
-        String _month_name = "";
-        int month_changes = 0;
-        float _moving_average = 0;
-        Select select = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(passedMonth)).and(Condition.prop("TRX_MONTH").notEq(Tools.getMonth())).and(Condition.prop("TRX_TYPE").eq(2));
-        List<MData> mData = select.list();
-        for (MData t : mData) {
-            //check date and break if passed today
-            if (Integer.parseInt(t.getTrxDay()) <= Tools.getDay()) {
-                //check for data different
-                if (month_changes == 0) {
-                    month_changes = Integer.parseInt(t.getTrxMonth());
-                }
-                //reset as data changed
-                if (month_changes != Integer.parseInt(t.getTrxMonth())) {
-                    _spent_for_the_month = 0;
-                    month_changes = 0;
-                    _monthly_average_target++;
-                }
-                //check for debit data only
-                if (t.getTrxType() == 2) {
-                    //add to map
-                    _spent_for_the_month += Float.parseFloat(t.getTrxValue());
-                    _month_name = Tools.getMonthAscAlpha(Integer.parseInt(t.getTrxMonth()));
-                    tmpValue.put(_month_name, _spent_for_the_month);
-                    //check for the last month
-                    if (Integer.parseInt(t.getTrxMonth()) == Tools.timepstamp2Month(Long.parseLong(Tools.getVariesTimeStamp(-1)))) {
-                        _moving_average += Float.parseFloat(t.getTrxValue());
-                    }
-                }
-            }
-        }
-        //get how many months in total
-        _monthly_average_target = tmpValue.size();
-        float _spent_so_far = 0;
-        float _income_this_month = 0;
-        //get this month account total expense
-        Select select2 = Select.from(MData.class).where(Condition.prop("TRX_MONTH").eq(Tools.getMonth() + "")).and(Condition.prop("TRX_YEAR").eq(Tools.getYear() + ""));
-        List<MData> mData2 = select2.list();
-        for (MData t2 : mData2) {
-            //work for the current month
-            //calculations for income
-            if (t2.getTrxType() == 2) _spent_so_far += Float.parseFloat(t2.getTrxValue());
-            else _income_this_month += Float.parseFloat(t2.getTrxValue());
-        }
-
-        //solve for typical
-        float _typicalSolve = (_moving_average / 1);
-        //solve for differences
-        float _variesTypical = _spent_so_far - _typicalSolve;
-        //determine over spent or less
-        if (_spent_so_far > _typicalSolve) {
-            //you above typical
-            if (_typicalSolve > 0) {
-                bdx.getD().setTxtVariesTyical("Above Usual");
-                bdx.getD().setTxtColor(R.color.red_800);
-                //remark statement
-                bdx.getD().setTxtStatement("You are in the red zone.\nReview your past spending to stay on track");
-                //show tooltip
-                showToolTips("You are in the red zone.\nReview your past spending to stay on track", R.color.red_800);
-            } else {
-                bdx.getD().setTxtVariesTyical("Difference");
-                bdx.getD().setTxtColor(R.color.orange_800);
-                //remark statement
-                bdx.getD().setTxtStatement("No previous transaction to determine usual expense");
-                //show tooltip
-                showToolTips("No previous transaction to determine usual expense", R.color.orange_800);
-            }
-        } else if (_spent_so_far < _typicalSolve) {
-            //you are below typical
-            bdx.getD().setTxtVariesTyical("Below Usual");
-            bdx.getD().setTxtColor(R.color.green_700);
-            bdx.getD().setTxtStatement("You are in the green zone. fantastic!!!\nContinue to keep your spending in check");
-            showToolTips("You are in the green zone. fantastic!!!\nContinue to keep your spending in check", R.color.green_700);
-            if (((_typicalSolve / 2) + (_typicalSolve / 4)) < _spent_so_far) {
-                //change color to yellow
-                bdx.getD().setTxtColor(R.color.orange_800);
-                bdx.getD().setTxtStatement("You are close to typical, Easy with  your expenses");
-                showToolTips("You are close to typical, Easy with  your expenses", R.color.orange_800);
-            }
-        }
-
-       /*
-        Select select3 = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(passedMonth)).and(Condition.prop("TRX_MONTH").notEq(Tools.getMonth()));
-        List<MData> mData3 = select3.list();
-        for (MData t : mData3) {
-            //check for debit data only
-            if (t.getTrxType() == 2) {
-                //add to map
-                _moving_average3 += Float.parseFloat(t.getTrxValue());
-            }
-        }
-        */
-
-        //prepare chart
-        pieEntries = new ArrayList<>();
-        Iterator iterator = tmpValue.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry entry = (Map.Entry) iterator.next();
-            //put to chart
-            pieEntries.add(new PieEntry(Float.parseFloat(entry.getValue().toString()), String.valueOf(entry.getKey())));
-            _moving_average3 += Float.parseFloat(entry.getValue().toString());
-            iterator.remove();
-        }
-        //solve for income this months as percentage
-        float incom_percentage = (_spent_so_far < 1 ? 1 : _spent_so_far);
-        incom_percentage = (_income_this_month / incom_percentage) * 100;
-        //start assignment
-        bdx.getD().setTxtSpentSoFar(Constants.getCurrency() + Tools.doCuurency(_spent_so_far)); //display spent so far
-        bdx.getD().setTxtTypical2(Constants.getCurrency() + Tools.doCuurency(_moving_average3 / (_monthly_average_target > 4 ? 4 : _monthly_average_target))); //display typical 3 months
-        bdx.getD().setTxtTypical(Constants.getCurrency() + Tools.doCuurency(_typicalSolve)); //display typical 3 months
-        bdx.getD().setTxtBelowTypical(Constants.getCurrency() + Tools.doCuurency(Math.abs(_variesTypical))); //below typical
-        bdx.getD().setTxtIncomeThisM(String.format("%.1f", incom_percentage) + "%"); //this months
-        bdx.txtIncomeThis.setText("Total Income this month: " + Constants.getCurrency() + Tools.doCuurency(Math.abs(_income_this_month)));
-        //add spent so far
-        pieEntries.add(new PieEntry(_spent_so_far, Tools.getMonthAscAlpha(Tools.getMonth())));
-        //gauge meter
-        configGauge(_spent_so_far, Float.parseFloat(Tools.doFloat(_typicalSolve)));
-    }
-
 
     //initialize components
     private boolean switcher = true;
@@ -420,5 +329,211 @@ public class FragmentChart extends Fragment {
             mProfile.setSms(1);
             mProfile.setNotifications(1);
         }
+    }
+
+    //silence loader functions
+    private void prepareChartAsync(LoaderAsyncCaller asyncCaller) {
+        int counter_ = 0;
+        MHome home = new MHome();
+        //fetch strictly on moving date
+        float _moving_average3 = 0;
+        //monthly moving average
+        int _monthly_average_target = 1;
+        //assign dictionary value holder
+        Map<String, Float> tmpValue = new HashMap<>();
+        //get 3 months way back
+        long passedMonth = Long.parseLong(Tools.getVariesTimeStamp(-4));
+        //iterate last 3 month expense data
+        float _spent_for_the_month = 0;
+        String _month_name = "";
+        int month_changes = 0;
+        float _moving_average = 0;
+        Select select = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(passedMonth)).and(Condition.prop("TRX_MONTH").notEq(Tools.getMonth())).and(Condition.prop("TRX_TYPE").eq(2));
+        List<MData> mData = select.list();
+        for (MData t : mData) {
+            counter_++;
+            //check date and break if passed today
+            if (Integer.parseInt(t.getTrxDay()) <= Tools.getDay()) {
+                //check for data different
+                if (month_changes == 0) {
+                    month_changes = Integer.parseInt(t.getTrxMonth());
+                }
+                //reset as data changed
+                if (month_changes != Integer.parseInt(t.getTrxMonth())) {
+                    _spent_for_the_month = 0;
+                    month_changes = 0;
+                    _monthly_average_target++;
+                }
+                //check for debit data only
+                if (t.getTrxType() == 2) {
+                    //add to map
+                    _spent_for_the_month += Float.parseFloat(t.getTrxValue());
+                    _month_name = Tools.getMonthAscAlpha(Integer.parseInt(t.getTrxMonth()));
+                    tmpValue.put(_month_name, _spent_for_the_month);
+                    //check for the last month
+                    if (Integer.parseInt(t.getTrxMonth()) == Tools.timepstamp2Month(Long.parseLong(Tools.getVariesTimeStamp(-1)))) {
+                        _moving_average += Float.parseFloat(t.getTrxValue());
+                    }
+                }
+            }
+        }
+        //get how many months in total
+        _monthly_average_target = tmpValue.size();
+        float _spent_so_far = 0;
+        float _income_this_month = 0;
+        //get this month account total expense
+        Select select2 = Select.from(MData.class).where(Condition.prop("TRX_MONTH").eq(Tools.getMonth() + "")).and(Condition.prop("TRX_YEAR").eq(Tools.getYear() + ""));
+        List<MData> mData2 = select2.list();
+        for (MData t2 : mData2) {
+            //work for the current month
+            //calculations for income
+            if (t2.getTrxType() == 2) _spent_so_far += Float.parseFloat(t2.getTrxValue());
+            else _income_this_month += Float.parseFloat(t2.getTrxValue());
+        }
+
+        //solve for typical
+        float _typicalSolve = (_moving_average / 1);
+        //solve for differences
+        float _variesTypical = _spent_so_far - _typicalSolve;
+        //determine over spent or less
+        if (_spent_so_far > _typicalSolve) {
+            //you above typical
+            if (_typicalSolve > 0) {
+                home.setVariesTypical("Above Usual");
+                //bdx.getD().setTxtVariesTyical("Above Usual");
+                home.setTxtColor(R.color.red_800);
+                //bdx.getD().setTxtColor(R.color.red_800);
+                //remark statement
+                home.setTxtStatement("You are in the red zone.\nReview your past spending to stay on track");
+                //bdx.getD().setTxtStatement("You are in the red zone.\nReview your past spending to stay on track");
+                //show tooltip
+                home.setTooltipColor(R.color.red_800);
+                //showToolTips("You are in the red zone.\nReview your past spending to stay on track", R.color.red_800);
+            } else {
+                home.setVariesTypical("Difference");
+                //bdx.getD().setTxtVariesTyical("Difference");
+                home.setTxtColor(R.color.red_800);
+                //bdx.getD().setTxtColor(R.color.orange_800);
+                //remark statement
+                home.setTxtStatement("No previous transaction to determine usual expense");
+                //bdx.getD().setTxtStatement("No previous transaction to determine usual expense");
+                //show tooltip
+                home.setTooltipColor(R.color.red_800);
+                //showToolTips("No previous transaction to determine usual expense", R.color.orange_800);
+            }
+        } else if (_spent_so_far < _typicalSolve) {
+            //you are below typical
+            home.setVariesTypical("Below Usual");
+            //bdx.getD().setTxtVariesTyical("Below Usual");
+            home.setTxtColor(R.color.green_700);
+            //bdx.getD().setTxtColor(R.color.green_700);
+            //bdx.getD().setTxtStatement("You are in the green zone. fantastic!!!\nContinue to keep your spending in check");
+            home.setTxtStatement("You are in the green zone. fantastic!!!\nContinue to keep your spending in check");
+            home.setTooltipColor(R.color.green_700);
+            //showToolTips("You are in the green zone. fantastic!!!\nContinue to keep your spending in check", R.color.green_700);
+            if (((_typicalSolve / 2) + (_typicalSolve / 4)) < _spent_so_far) {
+                //change color to yellow
+                home.setTxtColor(R.color.orange_800);
+                home.setTooltipColor(R.color.orange_800);
+                home.setTxtStatement("You are close to typical, Easy with  your expenses");
+                //bdx.getD().setTxtColor(R.color.orange_800);
+                //bdx.getD().setTxtStatement("You are close to typical, Easy with  your expenses");
+                //showToolTips("You are close to typical, Easy with  your expenses", R.color.orange_800);
+            }
+
+        }
+
+       /*
+        Select select3 = Select.from(MData.class).where(Condition.prop("TRX_STP").gt(passedMonth)).and(Condition.prop("TRX_MONTH").notEq(Tools.getMonth()));
+        List<MData> mData3 = select3.list();
+        for (MData t : mData3) {
+            //check for debit data only
+            if (t.getTrxType() == 2) {
+                //add to map
+                _moving_average3 += Float.parseFloat(t.getTrxValue());
+            }
+        }
+        */
+
+        //prepare chart
+        pieEntries = new ArrayList<>();
+        Iterator iterator = tmpValue.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry entry = (Map.Entry) iterator.next();
+            //put to chart
+            home.setPieEntries(new PieEntry(Float.parseFloat(entry.getValue().toString()), String.valueOf(entry.getKey())));
+            _moving_average3 += Float.parseFloat(entry.getValue().toString());
+            iterator.remove();
+        }
+        //solve for income this months as percentage
+        float incom_percentage = (_spent_so_far < 1 ? 1 : _spent_so_far);
+        incom_percentage = (_income_this_month / incom_percentage) * 100;
+        //start assignment
+        home.setTxtSpentSoFar(Constants.getCurrency() + Tools.doCuurency(_spent_so_far));
+        //bdx.getD().setTxtSpentSoFar(Constants.getCurrency() + Tools.doCuurency(_spent_so_far)); //display spent so far
+        home.setTxtTypical2(Constants.getCurrency() + Tools.doCuurency(_moving_average3 / (_monthly_average_target > 4 ? 4 : _monthly_average_target)));
+        //bdx.getD().setTxtTypical2(Constants.getCurrency() + Tools.doCuurency(_moving_average3 / (_monthly_average_target > 4 ? 4 : _monthly_average_target))); //display typical 3 months
+        home.setTxtTypical(Constants.getCurrency() + Tools.doCuurency(_typicalSolve));
+        //bdx.getD().setTxtTypical(Constants.getCurrency() + Tools.doCuurency(_typicalSolve)); //display typical 3 months
+        home.setTxtBelowTypical(Constants.getCurrency() + Tools.doCuurency(Math.abs(_variesTypical)));
+        //bdx.getD().setTxtBelowTypical(Constants.getCurrency() + Tools.doCuurency(Math.abs(_variesTypical))); //below typical
+        home.setTxtIncomeThisM(String.format("%.1f", incom_percentage) + "%");
+        //bdx.getD().setTxtIncomeThisM(String.format("%.1f", incom_percentage) + "%"); //this months
+        home.setTxtIncomeThis("Total Income this month: " + Constants.getCurrency() + Tools.doCuurency(Math.abs(_income_this_month)));
+        //bdx.txtIncomeThis.setText("Total Income this month: " + Constants.getCurrency() + Tools.doCuurency(Math.abs(_income_this_month)));
+        //add spent so far
+        home.setPieEntries(new PieEntry(_spent_so_far, Tools.getMonthAscAlpha(Tools.getMonth())));
+        //pieEntries.add(new PieEntry(_spent_so_far, Tools.getMonthAscAlpha(Tools.getMonth())));
+        home.set_spent_sofar(_spent_so_far);
+        //set counter
+        home.setData_counter(counter_);
+        //gauge meter
+        asyncCaller.loaded(home, 1, true);
+    }
+
+    //async class
+    private class LoaderAsync extends AsyncTask<Void, MHome, Integer> {
+        private LoaderAsyncCaller loaderAsync;
+
+        //initialize
+        LoaderAsync(LoaderAsyncCaller loaderAsync) {
+            this.loaderAsync = loaderAsync;
+        }
+
+        //first test
+        @Override
+        protected void onPreExecute() {
+            loaderAsync.loaded(null, 0, false);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            //call prepare chat async
+            prepareChartAsync(new LoaderAsyncCaller() {
+                @Override
+                public void loaded(MHome mHome, int mode, boolean isOkay) {
+                    publishProgress(mHome);
+                }
+            });
+            return 1;
+        }
+
+        @Override
+        protected void onProgressUpdate(MHome... values) {
+            loaderAsync.loaded(values[0], 1, true);
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            loaderAsync.loaded(null, 2, true);
+            super.onPostExecute(integer);
+        }
+    }
+
+    //async callback
+    public interface LoaderAsyncCaller {
+        void loaded(MHome mHome, int mode, boolean isOkay);
     }
 }

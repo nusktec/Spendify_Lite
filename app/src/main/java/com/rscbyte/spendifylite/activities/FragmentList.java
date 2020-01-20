@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -85,18 +86,44 @@ public class FragmentList extends Fragment {
     //simple main
     private void main() {
         //make list item
-        List<OData> oData = new ArrayList<>();
-        //read from db, stored data
-        List<MData> mData = MData.listAll(MData.class);
-        main(mData);
+        new ListAsync(new ListDataCaller() {
+            @Override
+            public void listed(boolean isRead, List<OData> oData) {
+                if (isRead) {
+                    bdx.topLoader.setVisibility(View.GONE);
+                    main(oData);
+                } else {
+                    bdx.topLoader.setVisibility(View.GONE);
+                }
+            }
+        }).execute();
     }
 
-    //main methods
-    public void main(List<MData> mData) {
-        try {
+    public interface ListDataCaller {
+        void listed(boolean isRead, List<OData> oData);
+    }
+
+    //run async task
+    ///////////////////////////////////////////////////////////////////////////
+    public class ListAsync extends AsyncTask<Void, List<OData>, Integer> {
+        private ListDataCaller dataCaller;
+
+        public ListAsync(ListDataCaller dataCaller) {
+            this.dataCaller = dataCaller;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            this.dataCaller.listed(false, null);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            //read from db, stored data
+            List<MData> mData = MData.listAll(MData.class);
             Collections.reverse(mData);
             List<OData> oData = new ArrayList<>();
-            bdx.txtNodata.setVisibility(mData.size() > 0 ? View.INVISIBLE : View.VISIBLE); //hide no data text
             for (MData md : mData) {
                 OData oData1 = new OData();
                 oData1.setTitle(md.getTrxType() == 1 ? "Credit" : "Debit");
@@ -109,6 +136,28 @@ public class FragmentList extends Fragment {
                 oData1.setmData(md);
                 oData.add(oData1);
             }
+            publishProgress(oData);
+            return 0;
+        }
+
+        @SafeVarargs
+        @Override
+        protected final void onProgressUpdate(List<OData>... values) {
+            this.dataCaller.listed(true, values[0]);
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////
+
+    //main methods
+    public void main(List<OData> oData) {
+        try {
+            bdx.txtNodata.setVisibility(oData.size() > 0 ? View.INVISIBLE : View.VISIBLE); //hide no data text
             //set recycler view
             aSimpleList = new ASimpleList(oData, dataClicked);
             bdx.listItemView.setAdapter(aSimpleList);
@@ -162,13 +211,14 @@ public class FragmentList extends Fragment {
             ex.printStackTrace();
             Tools.showToast(ctx, "Error with data integrity");
         }
+        bdx.notifyChange();
     }
 
     //start searching in database
     private void searchDataBase(String... args) {
         List<MData> md = Select.from(MData.class).where(Condition.prop("TRX_YEAR").eq(args[0])).and(Condition.prop("TRX_MONTH").eq(args[1])).list();
         //make list item
-        main(md);
+        main();
         Tools.showToast(ctx, Tools.getMonthAscAlpha(Integer.parseInt(args[1])) + " data queried...");
     }
 

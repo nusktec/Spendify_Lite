@@ -74,9 +74,19 @@
             <!--Divider line-->
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/app_color_1_1_0"
-                android:elevation="1dp" />
+                android:layout_height="1px"
+                android:background="@color/green_500" />
+
+            <!--Divider line-->
+            <ProgressBar
+                android:id="@+id/top_loader"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dip"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/blue_500"
+                android:indeterminateTintMode="src_in" />
+
 
             <!--main body-->
             <androidx.recyclerview.widget.RecyclerView

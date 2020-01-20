@@ -17,27 +17,27 @@
         tools:context=".Permissions">
         <!--First layout-->
         <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/light_white">
+            android:background="@color/light_white"
+            android:gravity="center"
+            android:orientation="vertical">
             <!--Header Style-->
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Permission Control"
+                android:textAlignment="center"
                 android:textColor="@color/app_color_1Dp"
                 android:textSize="25sp"
-                android:textStyle="bold"
-                android:textAlignment="center"
-                android:text="Permission Control"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:textStyle="bold" />
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                app:lottie_colorFilter="@color/app_color_2"
                 app:lottie_autoPlay="true"
+                app:lottie_colorFilter="@color/app_color_2"
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/lt_statistics" />
         </LinearLayout>
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="-20dp"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:background="@drawable/bg_gradient_top_radius"
             android:gravity="center"
             android:orientation="vertical">
@@ -60,18 +60,18 @@
                 android:padding="10dp"
                 android:text="Spendify mobile app needs your permission to access your inbox (SMS) and your storage location for the system to work properly, remember we vowed not to share your data."
                 android:textAlignment="center"
-                android:textSize="15sp"
-                android:textColor="@color/light_white"/>
+                android:textColor="@color/light_white"
+                android:textSize="15sp" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:layout_gravity="center"
                 android:id="@+id/btn_start_continue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@drawable/btn_woutline"
                 android:text="@string/btn_allow_access"
-                android:textStyle="bold"
-                android:textColor="@color/light_white" />
+                android:textColor="@color/light_white"
+                android:textStyle="bold" />
 
         </LinearLayout>
     </LinearLayout>

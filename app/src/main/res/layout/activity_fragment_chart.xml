@@ -82,13 +82,21 @@
                     android:tint="@color/grey_500" />
             </RelativeLayout>
 
-            <!--Divider line-->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/app_color_1_1_0"
-                android:elevation="0px" />
-       
+                android:background="@color/green_500" />
+
+            <!--Divider line-->
+            <ProgressBar
+                android:id="@+id/top_loader"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dip"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/blue_500"
+                android:indeterminateTintMode="src_in" />
+
             <!--Main content-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -366,7 +374,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Calculating..."
+                            android:text="No Income..."
                             android:textColor="@color/grey_600"
                             android:textSize="15sp"
                             android:textStyle="bold" />
