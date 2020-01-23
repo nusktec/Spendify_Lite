@@ -7,8 +7,8 @@ android {
         applicationId "com.rscbyte.spendifylite"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 2
-        versionName '2.0'
+        versionCode 3
+        versionName '3.0'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
                 onesignal_app_id               : 'b7b58ba9-4c05-4ec8-aa60-02e597a707e7',

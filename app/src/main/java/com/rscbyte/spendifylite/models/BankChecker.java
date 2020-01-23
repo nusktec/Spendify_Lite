@@ -1,7 +1,5 @@
 package com.rscbyte.spendifylite.models;
 
-import android.util.Log;
-
 import com.rscbyte.spendifylite.Utils.Tools;
 import com.rscbyte.spendifylite.objects.OAlerts;
 import com.rscbyte.spendifylite.objects.OSms;
@@ -16,9 +14,9 @@ public class BankChecker {
         //algorithms shuffler
         OAlerts oAlerts = new OAlerts();
         try {
-            if (sms.getMsg().toUpperCase().contains("DEBIT")) {
+            if (sms.getMsg().toUpperCase().contains("TXN: DEBIT")) {
                 oAlerts.setMode(2);
-            } else if (sms.getMsg().toUpperCase().contains("CREDIT")) {
+            } else if (sms.getMsg().toUpperCase().contains("TXN: CREDIT")) {
                 oAlerts.setMode(1);
             } else {
                 moneyBack.isMoney(false, null);
